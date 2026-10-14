@@ -1,0 +1,255 @@
+{
+  "_comment": "Ručně kurátorovaný výběr 12 ETF kotovaných na NYSE / NYSE Arca a jejich evropských dvojčat. Burza kotace se ověřuje automaticky (Alpha Vantage LISTING_STATUS). Údaje o dvojčatech ověřeny 14. 10. 2026; před nákupem vždy ověřte aktuální KID u emitenta.",
+  "twinsVerifiedAt": "2026-10-14",
+  "etfs": [
+    {
+      "ticker": "VOO",
+      "nameCz": "Vanguard S&P 500",
+      "issuer": "Vanguard",
+      "category": "sp500",
+      "categoryCz": "500 největších firem USA",
+      "pitch": "Nejpopulárnější ETF na světě mezi drobnými investory.",
+      "issuerUrl": "https://investor.vanguard.com/investment-products/etfs/profile/voo",
+      "twin": {
+        "name": "Vanguard S&P 500 UCITS ETF (Acc)",
+        "ticker": "VUAA",
+        "isin": "IE00BFMXXD54",
+        "ter": 0.0007,
+        "policy": "acc",
+        "replication": "fyzická",
+        "match": "exact",
+        "note": "Stejný index i správce. Dividendy se automaticky reinvestují.",
+        "sourceUrl": "https://www.wallstreet-online.de/etf/a2pfn2-vanguard-s-p-500-ucits-etf-usd",
+        "free": true
+      }
+    },
+    {
+      "ticker": "SPY",
+      "nameCz": "SPDR S&P 500 ETF Trust",
+      "issuer": "State Street",
+      "category": "sp500",
+      "categoryCz": "500 největších firem USA",
+      "pitch": "Nejstarší a nejobchodovanější ETF na světě (od roku 1993).",
+      "issuerUrl": "https://www.ssga.com/us/en/intermediary/etfs/spdr-sp-500-etf-trust-spy",
+      "twin": {
+        "name": "iShares Core S&P 500 UCITS ETF (Acc)",
+        "ticker": "CSPX / SXR8",
+        "isin": "IE00B5BMR087",
+        "ter": 0.0007,
+        "policy": "acc",
+        "replication": "fyzická",
+        "match": "exact",
+        "note": "Největší evropské S&P 500 ETF. Na Xetře v EUR jako SXR8.",
+        "sourceUrl": "https://etfstream.com/etf-screener/CSPX"
+      }
+    },
+    {
+      "ticker": "IVV",
+      "nameCz": "iShares Core S&P 500",
+      "issuer": "iShares (BlackRock)",
+      "category": "sp500",
+      "categoryCz": "500 největších firem USA",
+      "pitch": "Stejný index jako VOO a SPY, jiný správce.",
+      "issuerUrl": "https://www.ishares.com/us/products/239726/ishares-core-sp-500-etf",
+      "twin": {
+        "name": "iShares Core S&P 500 UCITS ETF (Acc)",
+        "ticker": "CSPX / SXR8",
+        "isin": "IE00B5BMR087",
+        "ter": 0.0007,
+        "policy": "acc",
+        "replication": "fyzická",
+        "match": "exact",
+        "note": "Evropská verze od stejného správce (BlackRock).",
+        "sourceUrl": "https://etfstream.com/etf-screener/CSPX"
+      }
+    },
+    {
+      "ticker": "VTI",
+      "nameCz": "Vanguard Total Stock Market",
+      "issuer": "Vanguard",
+      "category": "us-total",
+      "categoryCz": "celý americký trh",
+      "pitch": "Přes 3 500 amerických firem včetně těch menších.",
+      "issuerUrl": "https://investor.vanguard.com/investment-products/etfs/profile/vti",
+      "twin": {
+        "name": "Invesco MSCI USA UCITS ETF (Acc)",
+        "ticker": "MXUS / SC0J",
+        "isin": "IE00B60SX170",
+        "ter": 0.0005,
+        "policy": "acc",
+        "replication": "syntetická (swap)",
+        "match": "closest",
+        "note": "Pokrývá asi 85 % amerického trhu, bez nejmenších firem.",
+        "sourceUrl": "https://www.trackingdifferences.com/ETF/ISIN/IE00B60SX170"
+      }
+    },
+    {
+      "ticker": "VT",
+      "nameCz": "Vanguard Total World Stock",
+      "issuer": "Vanguard",
+      "category": "world",
+      "categoryCz": "celý svět jedním fondem",
+      "pitch": "Téměř 10 000 firem z celého světa v jednom ETF.",
+      "issuerUrl": "https://investor.vanguard.com/investment-products/etfs/profile/vt",
+      "twin": {
+        "name": "Vanguard FTSE All-World UCITS ETF (Acc)",
+        "ticker": "VWCE",
+        "isin": "IE00BK5BQT80",
+        "ter": 0.0014,
+        "policy": "acc",
+        "replication": "fyzická (výběrová)",
+        "match": "exact",
+        "note": "Poplatek snížen z 0,19 % na 0,14 % od 28. 7. 2026.",
+        "sourceUrl": "https://etfexpress.com/2026/07/21/vanguard-reduces-fees-on-vanguard-ftse-all-world-ucits-etf/"
+      }
+    },
+    {
+      "ticker": "VEA",
+      "nameCz": "Vanguard FTSE Developed Markets",
+      "issuer": "Vanguard",
+      "category": "developed-ex-us",
+      "categoryCz": "vyspělé trhy mimo USA",
+      "pitch": "Evropa, Japonsko, Kanada, Austrálie: svět bez Ameriky.",
+      "issuerUrl": "https://investor.vanguard.com/investment-products/etfs/profile/vea",
+      "twin": {
+        "name": "iShares MSCI World ex-USA UCITS ETF (Acc)",
+        "ticker": null,
+        "isin": "IE000R4ZNTN3",
+        "ter": 0.0015,
+        "policy": "acc",
+        "replication": "fyzická",
+        "match": "closest",
+        "note": "Jiný poskytovatel indexu (MSCI vs. FTSE), velmi podobné složení.",
+        "sourceUrl": "https://www.finanzen.net/etf/ishares-msci-world-ex-usa-etf-ie000r4zntn3"
+      }
+    },
+    {
+      "ticker": "VWO",
+      "nameCz": "Vanguard FTSE Emerging Markets",
+      "issuer": "Vanguard",
+      "category": "emerging",
+      "categoryCz": "rozvíjející se trhy",
+      "pitch": "Čína, Indie, Tchaj-wan, Brazílie a další.",
+      "issuerUrl": "https://investor.vanguard.com/investment-products/etfs/profile/vwo",
+      "twin": {
+        "name": "iShares Core MSCI EM IMI UCITS ETF (Acc)",
+        "ticker": "EIMI",
+        "isin": "IE00BKM4GZ66",
+        "ter": 0.0018,
+        "policy": "acc",
+        "replication": "fyzická (výběrová)",
+        "match": "closest",
+        "note": "Index MSCI místo FTSE a navíc i menší firmy (IMI). Složení zemí se mírně liší.",
+        "sourceUrl": "https://www.finanzen.net/etf/ishares-core-msci-em-imi-etf-ie00bkm4gz66/xetra"
+      }
+    },
+    {
+      "ticker": "SCHD",
+      "nameCz": "Schwab U.S. Dividend Equity",
+      "issuer": "Charles Schwab",
+      "category": "dividend",
+      "categoryCz": "dividendové firmy USA",
+      "pitch": "Miláček dividendových investorů na Redditu a YouTube.",
+      "issuerUrl": "https://www.schwabassetmanagement.com/products/schd",
+      "twin": {
+        "name": "SPDR S&P US Dividend Aristocrats UCITS ETF (Dist)",
+        "ticker": "USDV / UDVD",
+        "isin": "IE00B6YX5D40",
+        "ter": 0.0035,
+        "policy": "dist",
+        "replication": "fyzická",
+        "match": "closest",
+        "note": "Přesné dvojče SCHD v Evropě neexistuje. Tohle je nejbližší: jiný index, podobná filozofie.",
+        "sourceUrl": "https://www.ssga.com/ch/de_ch/intermediary/etfs/state-street-spdr-sp-us-dividend-aristocrats-ucits-etf-dist-spyd-gy"
+      }
+    },
+    {
+      "ticker": "VIG",
+      "nameCz": "Vanguard Dividend Appreciation",
+      "issuer": "Vanguard",
+      "category": "dividend-growth",
+      "categoryCz": "firmy s rostoucí dividendou",
+      "pitch": "Firmy, které zvyšují dividendu alespoň 10 let v řadě.",
+      "issuerUrl": "https://investor.vanguard.com/investment-products/etfs/profile/vig",
+      "twin": {
+        "name": "WisdomTree US Quality Dividend Growth UCITS ETF (Acc)",
+        "ticker": "DGRA",
+        "isin": "IE00BZ56RG20",
+        "ter": 0.0033,
+        "policy": "acc",
+        "replication": "fyzická",
+        "match": "closest",
+        "note": "Jiný index, ale podobná filozofie: kvalitní firmy s rostoucí dividendou.",
+        "sourceUrl": "https://www.finanzen.net/etf/wisdomtree-us-quality-dividend-growth-etf-ie00bz56rg20/xetra"
+      }
+    },
+    {
+      "ticker": "VNQ",
+      "nameCz": "Vanguard Real Estate",
+      "issuer": "Vanguard",
+      "category": "reit",
+      "categoryCz": "americké nemovitosti (REIT)",
+      "pitch": "Nemovitosti bez hypotéky a nájemníků.",
+      "issuerUrl": "https://investor.vanguard.com/investment-products/etfs/profile/vnq",
+      "twin": {
+        "name": "iShares US Property Yield UCITS ETF (Dist)",
+        "ticker": "IUSP",
+        "isin": "IE00B1FZSF77",
+        "ter": 0.004,
+        "policy": "dist",
+        "replication": "fyzická",
+        "match": "closest",
+        "note": "Americké REITy s dividendovým výnosem nad 2 %.",
+        "sourceUrl": "https://extraetf.com/de/etf-profile/IE00B1FZSF77"
+      }
+    },
+    {
+      "ticker": "GLD",
+      "nameCz": "SPDR Gold Shares",
+      "issuer": "State Street",
+      "category": "gold",
+      "categoryCz": "fyzické zlato",
+      "pitch": "Zlato v trezoru, bez starostí se skladováním.",
+      "issuerUrl": "https://www.spdrgoldshares.com/usa/gld/",
+      "twin": {
+        "name": "iShares Physical Gold ETC",
+        "ticker": "SGLN / IGLN",
+        "isin": "IE00B4ND3602",
+        "ter": 0.0012,
+        "policy": "acc",
+        "replication": "fyzické zlato v trezoru",
+        "match": "exact",
+        "note": "Jde o ETC (komoditní cenný papír), ne o UCITS fond, ale kryté fyzickým zlatem.",
+        "sourceUrl": "https://www.fidelity.co.uk/factsheet-data/factsheet/IE00B4ND3602-ishares-physical-metals-plc"
+      }
+    },
+    {
+      "ticker": "AGG",
+      "nameCz": "iShares Core U.S. Aggregate Bond",
+      "issuer": "iShares (BlackRock)",
+      "category": "bonds",
+      "categoryCz": "americké dluhopisy",
+      "pitch": "Stabilizátor portfolia: státní i firemní dluhopisy USA.",
+      "issuerUrl": "https://www.ishares.com/us/products/239458/ishares-core-total-us-bond-market-etf",
+      "twin": {
+        "name": "iShares US Aggregate Bond UCITS ETF (Dist)",
+        "ticker": "SUAG",
+        "isin": "IE00B44CGS96",
+        "ter": 0.0025,
+        "policy": "dist",
+        "replication": "fyzická (výběrová)",
+        "match": "exact",
+        "note": "Sleduje stejný dluhopisový index (Bloomberg US Aggregate).",
+        "sourceUrl": "https://extraetf.com/ch/etf-profile/IE00B44CGS96"
+      }
+    }
+  ],
+  "benchmarks": {
+    "czechFundTer": {
+      "value": 0.0198,
+      "label": "průměrný poplatek za správu 57 akciových podílových fondů v ČR",
+      "source": "Consequ (2022) dle E15",
+      "sourceUrl": "https://www.e15.cz/byznys/finance-a-bankovnictvi/tri-pismena-ktera-rozhodnou-o-duchodu-cesi-se-rozinvestovali-riskuji-zbytecne-utracene-miliony-1434277"
+    }
+  }
+}

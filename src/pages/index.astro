@@ -1,0 +1,271 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Logo from '../components/Logo.astro';
+import TahakPreview from '../components/TahakPreview.astro';
+import TickerBar from '../components/islands/TickerBar';
+import HeroTwin from '../components/islands/HeroTwin';
+import HeroFees from '../components/islands/HeroFees';
+import EtfCompare from '../components/islands/EtfCompare';
+import Calculators from '../components/islands/Calculators';
+import LeadForm from '../components/islands/LeadForm';
+import LeadSheet from '../components/islands/LeadSheet';
+import StickyCta from '../components/islands/StickyCta';
+import ConsentBar from '../components/islands/ConsentBar';
+import DebugPanel from '../components/islands/DebugPanel';
+import { etfs, etfsLite, etfByTicker, fx, listing, tickerFeed, czechFund, cheapTwinTer, pricesAsOf, twinsVerifiedAt, generatedAt } from '../lib/market';
+import { COMPARE_INITIAL, GROSS_RETURN, HERO_TICKERS, HERO_YEARS, MACHINE_TICKERS, BRAND } from '../lib/config';
+import { dateCz, fmtInt, pct, ter } from '../lib/format';
+
+const heroEtfs = etfsLite.filter((e) => HERO_TICKERS.includes(e.ticker));
+const minTwinTer = Math.min(...etfs.map((e) => e.twin.ter));
+const spyY20 = etfByTicker.SPY?.returns.y20 ?? null;
+const dataLine = `Data: Alpha Vantage, ČNB, emitenti ETF · ceny k ${dateCz(pricesAsOf)}`;
+
+const faq = [
+  {
+    q: 'Je tahák opravdu zdarma?',
+    a: 'Ano. Zaplatíte jen e-mailovou adresou. Pošleme na ni PDF a nic dalšího, pokud si sami nezaškrtnete krátkou sérii e-mailů. Z té se odhlásíte jedním klikem.',
+  },
+  {
+    q: 'Proč si VOO nebo SPY v Česku nekoupím?',
+    a: 'Evropské nařízení PRIIPs vyžaduje, aby fond nabízený drobným investorům měl dokument KID v jazyce klienta. Americké fondy ho nevydávají, takže je evropští brokeři drobným investorům neprodají. Výjimkou bývá status profesionálního klienta, který ale přináší menší ochranu.',
+  },
+  {
+    q: 'Je dvojče opravdu totéž?',
+    a: 'U dvojčat označených „stejný index“ ano: sledují stejný index, liší se hlavně sídlem fondu (Irsko místo USA) a poplatkem. U „nejbližší alternativy“ přesná kopie v Evropě neexistuje. Ukážeme fond s nejpodobnější strategií a rozdíl vždy popíšeme.',
+  },
+  {
+    q: 'Jak je to s daněmi?',
+    a: 'Zisk z prodeje ETF je v ČR osvobozený, pokud ho držíte déle než 3 roky (časový test), nebo pokud vaše celkové příjmy z prodeje cenných papírů za rok nepřesáhnou 100 000 Kč. Akumulační fondy dividendy reinvestují uvnitř fondu, takže je v přiznání neřešíte. Shrnutí najdete v taháku. Nejde o daňové poradenství.',
+  },
+  {
+    q: 'Kde dvojčata koupím?',
+    a: 'U brokera s přístupem na evropské burzy (Xetra, London Stock Exchange, Borsa Italiana, Euronext). Stačí do vyhledávání zadat ISIN z taháku. Postup krok za krokem je v PDF.',
+  },
+  {
+    q: 'Proč ve srovnání chybí QQQ nebo BND?',
+    a: 'Protože nejsou kotované na NYSE, ale na burze Nasdaq. Burzu u každého ETF ověřujeme automaticky z dat Alpha Vantage.',
+  },
+  {
+    q: 'Kdo za tím stojí?',
+    a: `${BRAND.name} je nezávislý projekt o investování pro lidi, ne pro makléře. Nejsme broker ani investiční poradce a ukazujeme srovnání, ne doporučení. (Koncept: firma a údaje v patičce jsou fiktivní.)`,
+  },
+];
+---
+<Layout
+  title="ETF z NYSE a jejich česká dvojčata | BestBrookies"
+  description="VOO, SPY nebo SCHD v Česku nekoupíte. Porovnejte 12 nejznámějších ETF z NYSE a zjistěte, jaké evropské dvojče si koupíte místo nich. Tahák zdarma."
+>
+  <div class="sticky top-0 z-30">
+    <TickerBar client:load avgDailyUsd={tickerFeed.avgDailyUsd} etfCount={tickerFeed.etfCount} usdczk={fx.usdczk} method={tickerFeed.method} asOf={pricesAsOf} />
+  </div>
+
+  <header class="mx-auto flex max-w-6xl items-center justify-between px-4 pt-3.5 md:pt-5">
+    <a href="/" aria-label="BestBrookies, úvod"><Logo /></a>
+    <a href="#tahak" class="kicker !text-[var(--color-ink)] underline decoration-[var(--color-stamp)] decoration-2 underline-offset-4" data-track="header_cta">Tahák zdarma ↓</a>
+  </header>
+
+  <main>
+    <!-- ============================================================ 1. HERO -->
+    <section data-section="hero" class="mx-auto grid max-w-6xl gap-x-12 gap-y-4 px-4 pt-4 pb-10 md:grid-cols-[1.05fr_1fr] md:items-center md:pt-12 md:pb-16">
+      <div>
+        <p class="kicker">ETF z newyorské burzy · pro české investory</p>
+
+        <div data-variant="dvojce">
+          <h1 class="mt-2 text-[2.15rem] leading-[1.02] font-semibold md:text-[3.6rem]">
+            Chcete VOO? V&nbsp;Česku ho nekoupíte. <em class="underline-ink font-medium">Tady je jeho dvojče.</em>
+          </h1>
+          <p class="mt-3 text-[16.5px] leading-snug text-[var(--color-ink-2)] md:mt-5 md:text-[19px]">
+            Slavná americká ETF evropští brokeři drobným investorům kvůli regulaci neprodají. Ke každému z 12 nejznámějších vám ukážeme <strong>evropské dvojče</strong>: stejný index, podobný poplatek.
+          </p>
+        </div>
+        <div data-variant="poplatky">
+          <h1 class="mt-2 text-[2.15rem] leading-[1.02] font-semibold md:text-[3.6rem]">
+            Kolik vám za {HERO_YEARS} let <em class="underline-ink font-medium">ukousnou poplatky?</em>
+          </h1>
+          <p class="mt-3 text-[16.5px] leading-snug text-[var(--color-ink-2)] md:mt-5 md:text-[19px]">
+            Typický český akciový fond si bere kolem {pct(czechFund.value, 0)} ročně. Evropské ETF na stejný trh od {ter(minTwinTer)}. Zvolte částku a uvidíte rozdíl v korunách.
+          </p>
+        </div>
+
+        <div class="mt-5 hidden md:block">
+          <LeadForm client:visible placement="hero_desktop" showConsent={false} />
+          <p class="mt-4 text-[12px] text-[var(--color-muted)]">{dataLine}</p>
+        </div>
+      </div>
+
+      <div class="md:pl-4">
+        <div data-variant="dvojce"><HeroTwin client:visible etfs={heroEtfs} tickers={HERO_TICKERS} /></div>
+        <div data-variant="poplatky"><HeroFees client:visible cheapFee={cheapTwinTer} fundFee={czechFund.value} gross={GROSS_RETURN} years={HERO_YEARS} /></div>
+
+        <div class="mt-4 md:hidden">
+          <LeadForm client:visible placement="hero" showConsent={false} />
+        </div>
+        <div class="mt-4 flex items-center gap-3.5">
+          <TahakPreview size="sm" class="ml-1 shrink-0" />
+          <p class="text-[13.5px] leading-snug text-[var(--color-ink-2)]">
+            <strong class="text-[var(--color-ink)]">ETF tahák 2026</strong> · PDF zdarma<br />
+            Všech 12 dvojčat s ISIN, srovnání poplatků a daně v ČR na jedné stránce.
+          </p>
+        </div>
+        <p class="mt-3 text-[12px] text-[var(--color-muted)] md:hidden">{dataLine}</p>
+      </div>
+    </section>
+
+    <!-- ============================================================ 2. SROVNÁNÍ -->
+    <section id="srovnani" data-section="compare" class="border-t-[3px] border-double border-[var(--color-ink)] bg-[var(--color-paper)]">
+      <div class="mx-auto max-w-6xl px-4 py-10 md:py-16">
+        <div class="grid gap-6 md:grid-cols-[1.3fr_1fr] md:items-end">
+          <div>
+            <p class="kicker">01 · Souboj ETF</p>
+            <h2 class="mt-2 text-[1.95rem] leading-[1.05] font-semibold md:text-[2.8rem]">Stejný index, jiný poplatek. A&nbsp;koupit nejde ani jedno.</h2>
+            <p class="mt-3 text-[16.5px] text-[var(--color-ink-2)]">Vyberte až tři ETF z NYSE. Ukážeme poplatky, výnosy i to podstatné: co si místo nich koupit u svého brokera.</p>
+          </div>
+          <dl class="grid grid-cols-3 divide-x divide-[var(--color-rule)] border-y border-[var(--color-rule)] py-3 text-center">
+            <div><dt class="sr-only">ETF kotovaných na NYSE</dt><dd class="num text-[1.5rem] font-bold">{listing.nyseEtfCount ? fmtInt(listing.nyseEtfCount) : '3 000+'}</dd><p class="text-[11.5px] leading-tight text-[var(--color-muted)]">ETF kotovaných na NYSE</p></div>
+            <div><dt class="sr-only">Ve srovnání</dt><dd class="num text-[1.5rem] font-bold">{etfs.length}</dd><p class="text-[11.5px] leading-tight text-[var(--color-muted)]">nejznámějších ve srovnání</p></div>
+            <div><dt class="sr-only">Dvojčat</dt><dd class="num text-[1.5rem] font-bold text-[var(--color-up)]">{etfs.length}</dd><p class="text-[11.5px] leading-tight text-[var(--color-muted)]">evropských dvojčat</p></div>
+          </dl>
+        </div>
+        <div class="mt-7">
+          <EtfCompare client:visible etfs={etfsLite} initial={COMPARE_INITIAL} />
+        </div>
+        <p class="mt-4 text-[12px] leading-snug text-[var(--color-muted)]">
+          Poplatky, majetek a dividendy: Alpha Vantage (ETF_PROFILE). Výnosy v USD vč. reinvestovaných dividend k {dateCz(pricesAsOf)}, za 5 a 10 let jako průměr ročně. Burza kotace ověřena z Alpha Vantage LISTING_STATUS k {dateCz(listing.asOf)}. Dvojčata ověřena {dateCz(twinsVerifiedAt)}, před nákupem si vždy přečtěte aktuální KID.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================================================ 3. KALKULAČKY -->
+    <section id="kalkulacka" data-section="calculators" class="bg-[var(--color-paper-2)]">
+      <div class="mx-auto max-w-6xl px-4 py-10 md:py-16">
+        <p class="kicker">02 · Kalkulačky</p>
+        <h2 class="mt-2 max-w-3xl text-[1.95rem] leading-[1.05] font-semibold md:text-[2.8rem]">Desetiny procenta, které stojí statisíce.</h2>
+        <p class="mt-3 max-w-2xl text-[16.5px] text-[var(--color-ink-2)]">Spočítejte si, kolik vám vezmou poplatky. Nebo se podívejte, co by udělala pravidelná investice v minulosti, na reálných datech v korunách.</p>
+        <div class="mt-6">
+          <Calculators
+            client:visible
+            cheapFee={cheapTwinTer}
+            fundFee={czechFund.value}
+            fundSource={czechFund.label + ', ' + czechFund.source}
+            fundSourceUrl={czechFund.sourceUrl}
+            usdczk={fx.usdczk}
+            machineTickers={MACHINE_TICKERS}
+            spyY20={spyY20}
+          />
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ 4. TAHÁK + FORMULÁŘ -->
+    <section id="tahak" data-section="tahak" class="border-t-[3px] border-double border-[var(--color-ink)]">
+      <div class="mx-auto grid max-w-6xl gap-8 px-4 py-10 md:grid-cols-[1fr_1.1fr] md:items-center md:py-16">
+        <div class="order-2 flex justify-center md:order-1">
+          <TahakPreview size="lg" />
+        </div>
+        <div class="order-1 md:order-2">
+          <p class="kicker">03 · ETF tahák 2026</p>
+          <h2 class="mt-2 text-[1.95rem] leading-[1.05] font-semibold md:text-[2.8rem]">Všechno podstatné na 6 stranách. Zdarma do e-mailu.</h2>
+          <ol class="mt-5 divide-y divide-[var(--color-rule)] border-y border-[var(--color-rule)]">
+            {[
+              ['Překladač NYSE → Česko', '12 ETF a jejich dvojčata: ticker, ISIN, poplatek, typ'],
+              ['Kolik stojí poplatky', '0,07 % vs. 2 % za 10, 20 a 30 let v korunách'],
+              ['Daně v ČR na jedné stránce', 'časový test, limit 100 000 Kč, akumulace, DIP'],
+              ['Jak koupit za 5 minut', 'od ISIN k první pravidelné investici'],
+            ].map(([t, d], i) => (
+              <li class="flex gap-4 py-3">
+                <span class="num w-6 shrink-0 pt-0.5 text-[var(--color-stamp)]">{String(i + 1).padStart(2, '0')}</span>
+                <span><strong class="block leading-tight">{t}</strong><span class="text-[14.5px] text-[var(--color-muted)]">{d}</span></span>
+              </li>
+            ))}
+          </ol>
+          <div class="mt-6" data-sticky-hide>
+            <LeadForm client:visible placement="tahak" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ 5. DŮVĚRA -->
+    <section id="metodika" data-section="trust" class="bg-[var(--color-ink)] text-[var(--color-paper)]">
+      <div class="mx-auto max-w-6xl px-4 py-10 md:py-16">
+        <p class="kicker !text-[#9a9488]">04 · Proč nám věřit</p>
+        <h2 class="mt-2 max-w-3xl text-[1.95rem] leading-[1.05] font-semibold md:text-[2.6rem]">Žádné „zaručené tipy“. Jen data, zdroje a&nbsp;hranice.</h2>
+        <div class="mt-7 grid gap-6 md:grid-cols-3">
+          <div class="border-t border-[#3a3833] pt-4">
+            <h3 class="text-[1.2rem] font-semibold">Reálná data se zdrojem</h3>
+            <p class="mt-2 text-[15px] leading-snug text-[#c9c2b4]">Ceny, poplatky a objemy z Alpha Vantage, kurzy z ČNB, dvojčata z dokumentů emitentů. U každého čísla uvádíme zdroj a datum. Data se aktualizují každý obchodní den.</p>
+          </div>
+          <div class="border-t border-[#3a3833] pt-4">
+            <h3 class="text-[1.2rem] font-semibold">Srovnáváme, neradíme</h3>
+            <p class="mt-2 text-[15px] leading-snug text-[#c9c2b4]">Nejsme broker ani investiční poradce a za výběr fondu od nikoho nic nedostáváme. Ukazujeme fakta a rozhodnutí necháváme na vás.</p>
+          </div>
+          <div class="border-t border-[#3a3833] pt-4">
+            <h3 class="text-[1.2rem] font-semibold">Píšeme i to nepříjemné</h3>
+            <p class="mt-2 text-[15px] leading-snug text-[#c9c2b4]">Když přesné dvojče neexistuje (třeba u SCHD), řekneme to. Investice nesou riziko ztráty a minulé výnosy nejsou zárukou budoucích.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ 6. FAQ -->
+    <section id="faq" data-section="faq" class="mx-auto max-w-3xl px-4 py-10 md:py-16">
+      <p class="kicker">05 · Časté otázky</p>
+      <h2 class="mt-2 text-[1.95rem] leading-[1.05] font-semibold md:text-[2.6rem]">Na co se lidé ptají nejčastěji</h2>
+      <div class="mt-6 divide-y divide-[var(--color-rule)] border-y border-[var(--color-rule)]">
+        {faq.map((f) => (
+          <details class="group py-1" data-faq={f.q}>
+            <summary class="flex min-h-14 cursor-pointer list-none items-center justify-between gap-4 py-2 text-[17px] font-semibold [&::-webkit-details-marker]:hidden">
+              {f.q}
+              <span class="num shrink-0 text-xl text-[var(--color-stamp)] transition-transform group-open:rotate-45">+</span>
+            </summary>
+            <p class="pb-4 text-[15.5px] leading-relaxed text-[var(--color-ink-2)]">{f.a}</p>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <!-- ============================================================ 7. FINÁLNÍ CTA -->
+    <section data-section="final" class="px-4 pb-14">
+      <div class="terminal mx-auto max-w-3xl p-6 md:p-10" data-sticky-hide>
+        <p class="kicker !text-[var(--color-phosphor)]">● Poslední krok</p>
+        <h2 class="mt-2 text-[1.9rem] leading-[1.05] font-semibold text-white md:text-[2.5rem]">Za minutu víte, co si koupit místo VOO.</h2>
+        <p class="mt-3 text-[16px] text-[#b9c7c0]">Všech 12 dvojčat, srovnání poplatků a daně v ČR v jednom PDF. Zdarma.</p>
+        <div class="mt-5"><LeadForm client:visible placement="final" dark /></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-[var(--color-rule)] bg-[var(--color-paper-2)] pb-24 md:pb-8">
+    <div class="mx-auto max-w-6xl space-y-4 px-4 py-8 text-[12.5px] leading-relaxed text-[var(--color-muted)]">
+      <Logo />
+      <p>
+        <strong class="text-[var(--color-ink-2)]">Upozornění:</strong> Obsah stránky má informační a vzdělávací charakter a není investičním doporučením ani daňovým poradenstvím. Investice do ETF nesou riziko ztráty včetně měnového rizika (USD/CZK). Minulá výkonnost nezaručuje budoucí výnosy. Před investicí si přečtěte sdělení klíčových informací (KID) daného fondu.
+      </p>
+      <p>
+        <strong class="text-[var(--color-ink-2)]">Zdroje:</strong>{' '}
+        <a class="underline" href="https://www.alphavantage.co/documentation/" target="_blank" rel="noopener">Alpha Vantage</a> (ceny, poplatky, objemy, burza kotace) ·{' '}
+        <a class="underline" href={`https://www.cnb.cz/cs/financni-trhy/devizovy-trh/kurzy-devizoveho-trhu/kurzy-devizoveho-trhu/`} target="_blank" rel="noopener">ČNB</a> (kurz USD/CZK {String(fx.usdczk).replace('.', ',')} k {dateCz(fx.date)}) ·{' '}
+        <a class="underline" href="https://www.justetf.com/en/news/etf/us-domiciled-etfs.html" target="_blank" rel="noopener">justETF</a> (PRIIPs) ·{' '}
+        <a class="underline" href={czechFund.sourceUrl} target="_blank" rel="noopener">E15 / Consequ</a> (poplatky českých fondů) · emitenti ETF (dvojčata).
+        {generatedAt && <> Data aktualizována {dateCz(generatedAt)}.</>}
+      </p>
+      <p>
+        {BRAND.legal}, IČO {BRAND.ico} · <a class="underline" href={`mailto:${BRAND.email}`}>{BRAND.email}</a> · <a class="underline" href="/ochrana-udaju">Ochrana osobních údajů a cookies</a> · <a class="underline" href="/reklama">Reklamní kreativy</a>
+      </p>
+    </div>
+  </footer>
+
+  <LeadSheet client:idle />
+  <StickyCta client:idle />
+  <ConsentBar client:idle />
+  <DebugPanel client:idle />
+
+  <script>
+    import { initTracking, track } from '../lib/track';
+    initTracking();
+    document.querySelectorAll<HTMLDetailsElement>('details[data-faq]').forEach((d) =>
+      d.addEventListener('toggle', () => d.open && track('faq_open', { q: d.dataset.faq })),
+    );
+  </script>
+</Layout>

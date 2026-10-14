@@ -1,0 +1,39 @@
+{
+  "name": "bestbrookies-etf-landing",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "data": "node scripts/fetch-data.mjs",
+    "pdf": "node scripts/render-pdf.mjs",
+    "ads": "node scripts/render-ads.mjs"
+  },
+  "dependencies": {
+    "@astrojs/preact": "^4.1.3",
+    "@astrojs/vercel": "^8.2.11",
+    "@fontsource-variable/fraunces": "^5.3.0",
+    "@fontsource-variable/instrument-sans": "^5.3.0",
+    "@fontsource-variable/jetbrains-mono": "^5.3.0",
+    "@nanostores/preact": "^1.1.1",
+    "@vercel/speed-insights": "^2.0.0",
+    "astro": "^5.18.2",
+    "nanostores": "^1.5.5",
+    "posthog-js": "^1.438.9",
+    "preact": "^10.29.8"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "@tailwindcss/vite": "^4.3.3",
+    "@types/node": "^22.20.5",
+    "playwright-core": "^1.56.1",
+    "tailwindcss": "^4.3.3",
+    "typescript": "^5.9.3"
+  }
+}

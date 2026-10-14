@@ -1,0 +1,69 @@
+name: Aktualizace dat
+
+# Stáhne reálná data (Alpha Vantage + ČNB), přegeneruje PDF tahák a commitne změny.
+# Vercel po commitu automaticky nasadí novou verzi.
+on:
+  schedule:
+    - cron: '30 23 * * 1-5' # po zavření NYSE (běží jen na výchozí větvi)
+  workflow_dispatch:
+    inputs:
+      force_profiles:
+        description: 'Znovu stáhnout profily ETF (TER, aktiva)'
+        type: boolean
+        default: false
+  push:
+    paths:
+      - 'src/data/universe.json'
+      - 'scripts/fetch-data.mjs'
+      - '.github/workflows/data.yml'
+      - '.github/data-refresh'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: data-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Stáhnout data
+        env:
+          ALPHAVANTAGE_API_KEY: ${{ secrets.ALPHAVANTAGE_API_KEY }}
+        run: |
+          if [ -z "$ALPHAVANTAGE_API_KEY" ]; then
+            echo "::warning::Chybí secret ALPHAVANTAGE_API_KEY – stahuji jen kurzy ČNB."
+          fi
+          node scripts/fetch-data.mjs ${{ inputs.force_profiles && '--force-profiles' || '' }}
+
+      - name: Commit dat
+        run: |
+          git config user.name "bestbrookies-data-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/data/market.json
+          git diff --cached --quiet || git commit -m "data: aktualizace tržních dat $(date -u +%Y-%m-%d)"
+
+      - name: Sestavit web a vygenerovat PDF tahák
+        continue-on-error: true
+        env:
+          CHROME_CHANNEL: chrome
+        run: |
+          npm ci
+          npm run build
+          npm run pdf
+
+      - name: Push
+        run: |
+          git add public/*.pdf
+          git diff --cached --quiet || git commit -m "pdf: přegenerování ETF taháku"
+          git push

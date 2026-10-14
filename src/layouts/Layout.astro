@@ -1,0 +1,49 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+  noindex?: boolean;
+  bodyClass?: string;
+}
+const { title, description, noindex = false, bodyClass = '' } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const ogImage = new URL('/og.png', Astro.site);
+---
+<!doctype html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex" />}
+    <meta name="theme-color" content="#f3eee4" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="cs_CZ" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <!-- Varianta hero podle reklamy (?v=poplatky | ?v=dvojce). Běží před vykreslením → žádné probliknutí. -->
+    <script is:inline>
+      (function () {
+        try {
+          var v = new URLSearchParams(location.search).get('v');
+          if (v !== 'poplatky' && v !== 'dvojce') v = sessionStorage.getItem('bb_v') || 'dvojce';
+          sessionStorage.setItem('bb_v', v);
+          document.documentElement.dataset.v = v;
+        } catch (e) {
+          document.documentElement.dataset.v = 'dvojce';
+        }
+      })();
+    </script>
+    <slot name="head" />
+  </head>
+  <body class={bodyClass}>
+    <slot />
+  </body>
+</html>
