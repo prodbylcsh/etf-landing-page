@@ -1,0 +1,18 @@
+---
+import FeeBars from './FeeBars.astro';
+import Brand from './Brand.astro';
+import { cheapTwinTer, czechFund } from '../../lib/market';
+import { feeComparison } from '../../lib/finance';
+import { fmtInt } from '../../lib/format';
+const r = feeComparison(3000, 25, 0.07, cheapTwinTer, czechFund.value);
+---
+<div data-ad="ad-b-story" class="ad h-[1920px] w-[1080px] bg-[var(--color-term)] px-[72px] pt-[250px] text-white">
+  <Brand dark size={54} />
+  <h1 class="mt-[70px] font-[family-name:var(--font-display)] text-[124px] leading-[0.96] font-semibold tracking-[-0.02em]">Kolik vám<br />ukousnou <em class="font-medium text-[var(--color-amber)]">poplatky?</em></h1>
+  <p class="mt-[60px] text-[170px] leading-none font-bold tracking-[-0.045em] tabular-nums text-[var(--color-amber)]">−{fmtInt(Math.round(r.lost / 1000) * 1000)}</p>
+  <p class="mt-[18px] text-[40px] text-[#b9c7c0]">Kč za 25 let při 3 000 Kč měsíčně</p>
+  <div class="mt-[64px]"><FeeBars /></div>
+  <div class="absolute right-[72px] bottom-[320px] left-[72px] text-center">
+    <span class="inline-block rounded-[22px] bg-[var(--color-amber)] px-[56px] py-[32px] text-[42px] font-bold text-[var(--color-term)]">Spočítejte si to sami ↑</span>
+  </div>
+</div>

@@ -108,8 +108,8 @@ export default function LeadForm({ placement, cta = 'Poslat tahák zdarma', dark
             <span>Tahák už máte. Dvojčata jsou odemčená.</span>
           )}
         </p>
-        <div class="mt-3 flex flex-wrap gap-2">
-          <a class="btn btn-primary flex-1" href={PDF_URL} download onClick={() => track('pdf_download', { placement })} data-track="pdf_download">
+        <div class="mt-3 flex flex-col gap-2 sm:flex-row">
+          <a class="btn btn-primary sm:flex-1" href={PDF_URL} download onClick={() => track('pdf_download', { placement })} data-track="pdf_download">
             Stáhnout PDF tahák
           </a>
           <button

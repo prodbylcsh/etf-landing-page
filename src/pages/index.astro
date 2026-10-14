@@ -67,7 +67,7 @@ const faq = [
 
   <main>
     <!-- ============================================================ 1. HERO -->
-    <section data-section="hero" class="mx-auto grid max-w-6xl gap-x-12 gap-y-4 px-4 pt-4 pb-10 md:grid-cols-[1.05fr_1fr] md:items-center md:pt-12 md:pb-16">
+    <section data-section="hero" class="mx-auto grid max-w-6xl grid-cols-1 gap-x-12 gap-y-4 px-4 pt-4 pb-10 md:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] md:items-center md:pt-12 md:pb-16">
       <div>
         <p class="kicker">ETF z newyorské burzy · pro české investory</p>
 
@@ -76,7 +76,7 @@ const faq = [
             Chcete VOO? V&nbsp;Česku ho nekoupíte. <em class="underline-ink font-medium">Tady je jeho dvojče.</em>
           </h1>
           <p class="mt-3 text-[16.5px] leading-snug text-[var(--color-ink-2)] md:mt-5 md:text-[19px]">
-            Slavná americká ETF evropští brokeři drobným investorům kvůli regulaci neprodají. Ke každému z 12 nejznámějších vám ukážeme <strong>evropské dvojče</strong>: stejný index, podobný poplatek.
+            Americká ETF vám evropský broker kvůli regulaci neprodá. Ke 12 nejznámějším ukážeme <strong>evropské dvojče</strong>: stejný index, podobný poplatek.
           </p>
         </div>
         <div data-variant="poplatky">
@@ -115,7 +115,7 @@ const faq = [
     <!-- ============================================================ 2. SROVNÁNÍ -->
     <section id="srovnani" data-section="compare" class="border-t-[3px] border-double border-[var(--color-ink)] bg-[var(--color-paper)]">
       <div class="mx-auto max-w-6xl px-4 py-10 md:py-16">
-        <div class="grid gap-6 md:grid-cols-[1.3fr_1fr] md:items-end">
+        <div class="grid grid-cols-1 gap-6 md:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)] md:items-end">
           <div>
             <p class="kicker">01 · Souboj ETF</p>
             <h2 class="mt-2 text-[1.95rem] leading-[1.05] font-semibold md:text-[2.8rem]">Stejný index, jiný poplatek. A&nbsp;koupit nejde ani jedno.</h2>
@@ -147,7 +147,7 @@ const faq = [
             client:visible
             cheapFee={cheapTwinTer}
             fundFee={czechFund.value}
-            fundSource={czechFund.label + ', ' + czechFund.source}
+            fundSource={`průměrný poplatek za správu 57 akciových fondů v ČR, ${czechFund.source}`}
             fundSourceUrl={czechFund.sourceUrl}
             usdczk={fx.usdczk}
             machineTickers={MACHINE_TICKERS}
@@ -159,7 +159,7 @@ const faq = [
 
     <!-- ============================================================ 4. TAHÁK + FORMULÁŘ -->
     <section id="tahak" data-section="tahak" class="border-t-[3px] border-double border-[var(--color-ink)]">
-      <div class="mx-auto grid max-w-6xl gap-8 px-4 py-10 md:grid-cols-[1fr_1.1fr] md:items-center md:py-16">
+      <div class="mx-auto grid max-w-6xl grid-cols-1 gap-8 px-4 py-10 md:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] md:items-center md:py-16">
         <div class="order-2 flex justify-center md:order-1">
           <TahakPreview size="lg" />
         </div>
@@ -191,7 +191,7 @@ const faq = [
       <div class="mx-auto max-w-6xl px-4 py-10 md:py-16">
         <p class="kicker !text-[#9a9488]">04 · Proč nám věřit</p>
         <h2 class="mt-2 max-w-3xl text-[1.95rem] leading-[1.05] font-semibold md:text-[2.6rem]">Žádné „zaručené tipy“. Jen data, zdroje a&nbsp;hranice.</h2>
-        <div class="mt-7 grid gap-6 md:grid-cols-3">
+        <div class="mt-7 grid grid-cols-1 gap-6 md:grid-cols-3">
           <div class="border-t border-[#3a3833] pt-4">
             <h3 class="text-[1.2rem] font-semibold">Reálná data se zdrojem</h3>
             <p class="mt-2 text-[15px] leading-snug text-[#c9c2b4]">Ceny, poplatky a objemy z Alpha Vantage, kurzy z ČNB, dvojčata z dokumentů emitentů. U každého čísla uvádíme zdroj a datum. Data se aktualizují každý obchodní den.</p>

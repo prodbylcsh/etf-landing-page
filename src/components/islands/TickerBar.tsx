@@ -115,7 +115,7 @@ export default function TickerBar({ avgDailyUsd, etfCount, usdczk, method, asOf 
             </span>
             <span class="truncate text-[#c9d4ce]">
               otevře za <span class="num text-white">{clock(state.opensIn)}</span>
-              <span class="text-[#9db0a7]"> · pak {czkShort(perSecCzk * 60)}/min</span>
+              <span class="hidden text-[#9db0a7] sm:inline"> · pak {czkShort(perSecCzk * 60)} za minutu</span>
             </span>
           </>
         )}

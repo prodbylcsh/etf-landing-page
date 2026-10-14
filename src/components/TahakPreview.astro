@@ -3,10 +3,11 @@
 import { etfs } from '../lib/market';
 interface Props { size?: 'sm' | 'lg'; class?: string }
 const { size = 'lg', class: cls = '' } = Astro.props;
+// malý náhled: zadní stránky přesahují doprava → rezerva vpravo
 const rows = etfs.slice(0, 7);
 const sm = size === 'sm';
 ---
-<div class:list={['relative select-none', sm ? 'h-[92px] w-[78px]' : 'h-[300px] w-[250px] md:h-[360px] md:w-[300px]', cls]} aria-hidden="true">
+<div class:list={['relative select-none', sm ? 'mr-5 h-[92px] w-[74px]' : 'h-[300px] w-[250px] md:h-[360px] md:w-[300px]', cls]} aria-hidden="true">
   <!-- strana 3: daně -->
   <div class="absolute inset-0 origin-bottom-left translate-x-[14%] rotate-[7deg] rounded-[4px] bg-white shadow-md ring-1 ring-black/5">
     {!sm && (
@@ -41,7 +42,7 @@ const sm = size === 'sm';
     {sm ? (
       <div class="flex h-full flex-col justify-between p-2">
         <span class="font-mono text-[6px] font-bold tracking-widest text-[var(--color-phosphor)]">PDF</span>
-        <span class="font-[family-name:var(--font-display)] text-[11px] leading-[1.05] font-semibold text-white">ETF tahák 2026</span>
+        <span class="font-[family-name:var(--font-display)] text-[10.5px] leading-[1.05] font-semibold text-white">ETF tahák<br /><span class="text-[var(--color-amber)]">2026</span></span>
       </div>
     ) : (
       <div class="flex h-full flex-col p-5">

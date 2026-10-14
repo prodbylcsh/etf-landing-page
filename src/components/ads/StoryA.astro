@@ -1,0 +1,13 @@
+---
+import TwinCards from './TwinCards.astro';
+import Brand from './Brand.astro';
+---
+<div data-ad="ad-a-story" class="ad paper-grain h-[1920px] w-[1080px] bg-[var(--color-paper)] px-[72px] pt-[250px] text-[var(--color-ink)]">
+  <Brand size={54} />
+  <h1 class="mt-[90px] font-[family-name:var(--font-display)] text-[128px] leading-[0.96] font-semibold tracking-[-0.02em]">Chcete VOO?<br />V Česku ho<br />nekoupíte.</h1>
+  <p class="mt-[40px] font-[family-name:var(--font-display)] text-[72px] leading-[1.05] italic"><span class="underline-ink">Tady je jeho dvojče.</span></p>
+  <div class="mt-[100px]"><TwinCards /></div>
+  <div class="absolute right-[72px] bottom-[340px] left-[72px] text-center">
+    <span class="inline-block rounded-[22px] bg-[var(--color-stamp)] px-[56px] py-[32px] text-[42px] font-bold text-white">12 dvojčat v taháku zdarma ↑</span>
+  </div>
+</div>

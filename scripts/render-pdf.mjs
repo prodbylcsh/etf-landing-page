@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // Vyrenderuje stránku /tahak (A4 tisková šablona) do PDF v public/.
-// Potřebuje hotový build (npm run build). Spustí `astro preview`, otevře stránku v Chromiu a uloží PDF.
+// Potřebuje hotový build (npm run build). Servíruje dist/, otevře stránku v Chromiu a uloží PDF.
 import http from 'node:http';
 import path from 'node:path';
 import { existsSync } from 'node:fs';
@@ -22,7 +22,7 @@ const MIME = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript', '.
 
 /** Spustí jednoduchý statický server nad dist/ (Vercel adapter nepodporuje `astro preview`). */
 export async function withPreview(fn) {
-  const root = path.resolve('dist');
+  const root = existsSync('dist/client') ? path.resolve('dist/client') : path.resolve('dist');
   if (!existsSync(root)) throw new Error('Chybí dist/ – nejdřív spusťte npm run build');
   const server = http.createServer(async (req, res) => {
     let p = decodeURIComponent(new URL(req.url, 'http://x').pathname);

@@ -1,0 +1,85 @@
+---
+// Reklamní kreativy (Meta: feed 1080×1350, story 1080×1920) + OG obrázek 1200×630.
+// PNG export: npm run ads (scripts/render-ads.mjs screenshotuje prvky [data-ad]).
+import Layout from '../layouts/Layout.astro';
+import Logo from '../components/Logo.astro';
+import AdA from '../components/ads/AdA.astro';
+import AdB from '../components/ads/AdB.astro';
+import StoryA from '../components/ads/StoryA.astro';
+import StoryB from '../components/ads/StoryB.astro';
+import Og from '../components/ads/Og.astro';
+import { cheapTwinTer, czechFund } from '../lib/market';
+import { feeComparison } from '../lib/finance';
+import { czk, ter } from '../lib/format';
+
+const fee = feeComparison(3000, 25, 0.07, cheapTwinTer, czechFund.value);
+const lostRounded = Math.round(fee.lost / 1000) * 1000;
+
+const ads = [
+  {
+    id: 'A',
+    name: 'Varianta A · „Nekoupíte“ (zvědavost)',
+    url: '/?v=dvojce&utm_source=meta&utm_medium=paid_social&utm_campaign=etf_tahak&utm_content=a_dvojce',
+    primary: `Slavné americké ETF VOO u českého brokera nekoupíte. 🇺🇸🚫\n\nExistuje ale jeho evropské dvojče: stejný index, podobný poplatek. Ukážeme vám dvojčata 12 nejznámějších ETF z newyorské burzy.`,
+    headline: 'Chcete VOO? Kupte jeho dvojče.',
+    desc: 'Tahák zdarma · PDF',
+    cta: 'Zjistit více',
+  },
+  {
+    id: 'B',
+    name: 'Varianta B · „Poplatky“ (averze ke ztrátě)',
+    url: '/?v=poplatky&utm_source=meta&utm_medium=paid_social&utm_campaign=etf_tahak&utm_content=b_poplatky',
+    primary: `Typický český akciový fond si bere kolem 2 % ročně. ETF na stejný trh ${ter(cheapTwinTer)}.\n\nPři 3 000 Kč měsíčně je to za 25 let rozdíl ${czk(lostRounded)}. Spočítejte si to za 10 vteřin.`,
+    headline: 'Kolik vám ukousnou poplatky?',
+    desc: 'Kalkulačka + tahák zdarma',
+    cta: 'Zjistit více',
+  },
+];
+---
+<Layout title="Reklamní kreativy | BestBrookies" description="Dvě varianty reklamy pro Meta (feed a story)." noindex>
+  <style is:global>
+    .ad { position: relative; overflow: hidden; flex: none; font-family: var(--font-sans); }
+    .ad-scale { transform-origin: top left; }
+    .preview-frame { overflow: hidden; }
+  </style>
+
+  <main class="mx-auto max-w-6xl px-4 py-8">
+    <a href="/"><Logo /></a>
+    <h1 class="mt-6 text-[2.2rem] leading-tight font-semibold">Reklamní kreativy</h1>
+    <p class="mt-2 max-w-2xl text-[var(--color-ink-2)]">Dvě varianty pro Meta (Instagram/Facebook). Každá vede na vlastní verzi hero sekce (<code>?v=</code>), aby stránka navázala přesně na příslib reklamy. PNG ke stažení: <code>/ads/*.png</code>.</p>
+
+    {ads.map((ad) => (
+      <section class="mt-10 border-t-[3px] border-double border-[var(--color-ink)] pt-6">
+        <h2 class="text-[1.5rem] font-semibold">{ad.name}</h2>
+        <p class="mt-1 text-[13px] break-all text-[var(--color-muted)]">Cílová URL: <a class="underline" href={ad.url}>{ad.url}</a></p>
+
+        <div class="mt-5 flex flex-wrap items-start gap-8">
+          <!-- Náhled příspěvku v Instagram feedu -->
+          <div class="w-[340px] overflow-hidden rounded-xl bg-white shadow-lg ring-1 ring-black/10">
+            <div class="flex items-center gap-2 px-3 py-2.5">
+              <svg viewBox="0 0 32 32" width="30" height="30"><rect width="32" height="32" rx="16" fill="#15171a"/><path d="M7 20.5c2.8 0 3.6-3.4 6.4-3.4s3.1 2.2 5.5 2.2c2 0 2.9-2.8 4.3-5.4L26 10" fill="none" stroke="#f5b700" stroke-width="2.6" stroke-linecap="round"/></svg>
+              <div class="leading-tight"><p class="text-[13px] font-semibold">bestbrookies</p><p class="text-[11px] text-[#737373]">Sponzorováno</p></div>
+            </div>
+            <div class="preview-frame h-[425px] w-[340px]"><div class="ad-scale" style={`transform:scale(${340 / 1080})`}>{ad.id === 'A' ? <AdA /> : <AdB />}</div></div>
+            <div class="flex items-center justify-between bg-[#f0f0f0] px-3 py-2.5">
+              <div class="leading-tight"><p class="text-[13px] font-semibold">{ad.headline}</p><p class="text-[11.5px] text-[#737373]">{ad.desc}</p></div>
+              <span class="rounded-md bg-[#0064e0] px-3 py-1.5 text-[12.5px] font-semibold text-white">{ad.cta}</span>
+            </div>
+            <p class="px-3 py-2.5 text-[13px] leading-snug whitespace-pre-line"><strong>bestbrookies</strong> {ad.primary}</p>
+          </div>
+
+          <!-- Story -->
+          <div>
+            <p class="kicker mb-2">Story / Reels 1080×1920</p>
+            <div class="preview-frame h-[480px] w-[270px] rounded-xl shadow-lg ring-1 ring-black/10"><div class="ad-scale" style={`transform:scale(${270 / 1080})`}>{ad.id === 'A' ? <StoryA /> : <StoryB />}</div></div>
+          </div>
+        </div>
+      </section>
+    ))}
+
+    <section class="mt-10 border-t-[3px] border-double border-[var(--color-ink)] pt-6">
+      <h2 class="text-[1.5rem] font-semibold">OG obrázek (sdílení odkazu)</h2>
+      <div class="preview-frame mt-4 h-[315px] w-[600px] max-w-full rounded-xl shadow-lg"><div class="ad-scale" style="transform:scale(.5)"><Og /></div></div>
+    </section>
+  </main>
+</Layout>

@@ -23,7 +23,7 @@ function insight(list: EtfLite[]): string | null {
     const hi = byTer[byTer.length - 1];
     if (hi.ter! > lo.ter!) {
       const ratio = hi.ter! / lo.ter!;
-      return `Všechna sledují stejný trh (${list[0].categoryCz}). Liší se hlavně poplatkem: ${hi.ticker} je ${ratio >= 1.95 ? `${Math.round(ratio * 10) / 10}× dražší` : 'dražší'} než ${lo.ticker}. A žádné z nich si u českého brokera nekoupíte.`;
+      return `Všechna sledují stejný trh (${list[0].categoryCz}). Liší se hlavně poplatkem: ${hi.ticker} je ${ratio >= 1.95 ? `${(Math.round(ratio * 10) / 10).toLocaleString('cs-CZ')}× dražší` : 'dražší'} než ${lo.ticker}. A žádné z nich si u českého brokera nekoupíte.`;
     }
     return `Všechna sledují stejný trh (${list[0].categoryCz}) se stejným poplatkem. A žádné z nich si u českého brokera nekoupíte.`;
   }
@@ -71,88 +71,125 @@ export default function EtfCompare({ etfs, initial }: Props) {
         </p>
       )}
 
-      <div class="mt-4 grid gap-3 md:grid-cols-3">
-        {list.map((e) => {
-          const open = unlocked || e.twin.free;
-          return (
-            <article key={e.ticker} class="animate-rise flex flex-col overflow-hidden rounded-2xl bg-[var(--color-card)] ring-1 ring-[var(--color-rule)]">
-              <header class="flex items-start justify-between gap-2 px-4 pt-4">
-                <div>
-                  <h3 class="num text-[1.7rem] leading-none font-bold">{e.ticker}</h3>
-                  <p class="mt-1 text-[13.5px] leading-tight text-[var(--color-muted)]">
-                    {e.nameCz} · {e.issuer}
-                  </p>
-                </div>
-                <span class="stamp shrink-0 text-[9.5px]">v ČR ne</span>
-              </header>
-              <p class="px-4 pt-2 text-[13.5px] leading-snug text-[var(--color-ink-2)]">{e.pitch}</p>
-              <dl class="mt-3 divide-y divide-[var(--color-rule)] border-t border-[var(--color-rule)] px-4 text-[14.5px]">
-                <Row k="Poplatek (TER) ročně" v={ter(e.ter)} strong />
-                <Row k="Z 100 000 Kč zaplatíte ročně" v={e.ter != null ? czk(e.ter * 100000) : '—'} />
-                <Row k="Výnos za 1 rok" v={pct(e.returns.y1, 1, true)} tone={e.returns.y1} />
-                <Row k="Výnos 5 let (ročně)" v={pct(e.returns.y5, 1, true)} tone={e.returns.y5} />
-                <Row k="Výnos 10 let (ročně)" v={pct(e.returns.y10, 1, true)} tone={e.returns.y10} />
-                <Row k="Dividendový výnos" v={pct(e.dividendYield, 2)} />
-                <Row k="Spravovaný majetek" v={e.netAssets ? usdShort(e.netAssets) : '—'} />
-                <Row k="Koupíte v ČR?" v="Ne, chybí KID (PRIIPs)" warn />
-              </dl>
-
-              <div class="terminal m-3 mt-auto p-3.5">
-                <p class="kicker !text-[var(--color-phosphor)]">
-                  Evropské dvojče · {e.twin.match === 'exact' ? 'stejný index' : 'nejbližší alternativa'}
-                </p>
-                {open ? (
-                  <div class="animate-rise">
-                    <p class="mt-1.5 text-[15px] leading-tight font-semibold text-white">{e.twin.name}</p>
-                    <dl class="mt-2 grid grid-cols-2 gap-x-3 gap-y-1 text-[12.5px] text-[#b9c7c0]">
-                      <div>
-                        <dt class="text-[#7f948a]">Ticker</dt>
-                        <dd class="num text-white">{e.twin.ticker ?? '—'}</dd>
-                      </div>
-                      <div>
-                        <dt class="text-[#7f948a]">TER</dt>
-                        <dd class="num text-white">{ter(e.twin.ter)}</dd>
-                      </div>
-                      <div class="col-span-2">
-                        <dt class="text-[#7f948a]">ISIN (zadejte u brokera)</dt>
-                        <dd class="num text-[var(--color-amber)]">{e.twin.isin}</dd>
-                      </div>
-                    </dl>
-                    <p class="mt-2 text-[12px] leading-snug text-[#9db0a7]">
-                      {e.twin.note}{' '}
-                      <a href={e.twin.sourceUrl} target="_blank" rel="noopener nofollow" class="underline underline-offset-2">
-                        zdroj
-                      </a>
-                    </p>
-                  </div>
-                ) : (
-                  <button type="button" class="mt-1.5 block w-full text-left" onClick={() => unlock(e)} data-track="compare_lock">
-                    <span class="locked-blur block text-[15px] font-semibold text-white" aria-hidden="true">
-                      Xxxxxxxx Xxxx XXX UCITS ETF (Acc)
-                    </span>
-                    <span class="locked-blur num mt-1 block text-[12.5px] text-[var(--color-amber)]" aria-hidden="true">
-                      IE00XXXXXXX0
-                    </span>
-                    <span class="mt-2.5 flex min-h-11 items-center justify-center gap-2 rounded-lg bg-[var(--color-amber)] px-3 text-[14px] font-bold text-[var(--color-term)]">
-                      🔒 Odemknout dvojče k {e.ticker}
-                    </span>
-                  </button>
-                )}
+      <div class="mt-4 overflow-hidden rounded-2xl bg-[var(--color-card)] ring-1 ring-[var(--color-rule)]">
+        {/* Hlavička: tickery vedle sebe */}
+        <div class="grid grid-cols-[var(--c-sm)] md:grid-cols-[var(--c-md)] border-b-[1.5px] border-[var(--color-ink)] px-3 pt-4 pb-3 md:px-5" style={cols(list.length)}>
+          <span class="hidden md:block" />
+          {list.map((e) => (
+            <div key={e.ticker} class="animate-rise min-w-0">
+              <h3 class="num text-[1.55rem] leading-none font-bold md:text-[2rem]">{e.ticker}</h3>
+              <p class="mt-1 truncate text-[12px] leading-tight text-[var(--color-muted)] md:text-[13.5px]">{e.issuer}</p>
+              <span class="stamp mt-2 !text-[9px]">v ČR ne</span>
+            </div>
+          ))}
+        </div>
+        <dl class="px-3 md:px-5">
+          {ROWS.map((r) => {
+            const vals = list.map((e) => r.get(e));
+            const best = r.best ? bestIndex(vals, r.best) : -1;
+            return (
+              <div class="grid grid-cols-[var(--c-sm)] md:grid-cols-[var(--c-md)] items-baseline gap-y-1 border-b border-[var(--color-rule)] py-2.5" style={cols(list.length)}>
+                <dt class="col-span-full text-[12.5px] text-[var(--color-muted)] md:col-span-1 md:text-[14px]">{r.label}</dt>
+                {list.map((e, i) => (
+                  <dd class={`num text-[15px] md:text-[16px] ${i === best ? 'font-bold text-[var(--color-up)]' : 'font-medium'} ${r.tone ? toneClass(vals[i]) : ''}`}>
+                    {r.fmt(vals[i])}
+                    {i === best && <span class="sr-only"> (nejlepší)</span>}
+                  </dd>
+                ))}
               </div>
-            </article>
-          );
-        })}
+            );
+          })}
+          <div class="grid grid-cols-[var(--c-sm)] md:grid-cols-[var(--c-md)] items-baseline gap-y-1 py-2.5" style={cols(list.length)}>
+            <dt class="col-span-full text-[12.5px] text-[var(--color-muted)] md:col-span-1 md:text-[14px]">Koupíte u evropského brokera? (PRIIPs)</dt>
+            {list.map(() => (
+              <dd class="num text-[15px] font-bold text-[var(--color-stamp)]">✕ ne</dd>
+            ))}
+          </div>
+        </dl>
+
+        {/* Dvojčata */}
+        <div class="terminal m-2 p-3.5 md:m-3 md:p-5">
+          <p class="kicker !text-[var(--color-phosphor)]">Co koupit místo nich · evropská dvojčata</p>
+          <ul class="mt-2 divide-y divide-[var(--color-term-line)]">
+            {list.map((e) => {
+              const open = unlocked || e.twin.free;
+              return (
+                <li key={e.ticker} class="py-2.5">
+                  <div class="flex items-baseline gap-2">
+                    <span class="num w-12 shrink-0 text-[13px] text-[#9db0a7]">{e.ticker} →</span>
+                    {open ? (
+                      <div class="animate-rise min-w-0">
+                        <p class="text-[14.5px] leading-snug font-semibold text-white">{e.twin.name}</p>
+                        <p class="num mt-0.5 text-[12.5px] text-[#b9c7c0]">
+                          <span class="text-[var(--color-amber)]">{e.twin.isin}</span> · TER {ter(e.twin.ter)}
+                          {e.twin.ticker && <> · {e.twin.ticker}</>}
+                        </p>
+                        <p class="mt-1 text-[12px] leading-snug text-[#8fa39a]">
+                          {e.twin.match === 'closest' && 'Nejbližší alternativa. '}
+                          {e.twin.note}{' '}
+                          <a href={e.twin.sourceUrl} target="_blank" rel="noopener nofollow" class="underline underline-offset-2">
+                            zdroj
+                          </a>
+                        </p>
+                      </div>
+                    ) : (
+                      <button type="button" class="min-w-0 flex-1 text-left" onClick={() => unlock(e)} data-track="compare_lock" aria-label={`Odemknout dvojče k ${e.ticker}`}>
+                        <span class="locked-blur block text-[14.5px] font-semibold text-white" aria-hidden="true">
+                          Xxxxxxx Xxxx XXX UCITS ETF
+                        </span>
+                        <span class="mt-0.5 flex items-center gap-1.5 text-[12.5px] font-semibold text-[var(--color-amber)]">🔒 Odemknout dvojče</span>
+                      </button>
+                    )}
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
+          {!unlocked && (
+            <button
+              type="button"
+              class="btn mt-2 w-full bg-[var(--color-amber)] text-[var(--color-term)]"
+              data-track="compare_unlock_all"
+              onClick={() => {
+                track('lock_click', { where: 'compare_all' });
+                openLead({ source: 'compare_lock', tickers: sel, headline: 'Všech 12 dvojčat s ISIN vám pošleme do e-mailu' });
+              }}
+            >
+              🔒 Odemknout všech 12 dvojčat
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );
 }
 
-function Row({ k, v, strong, tone, warn }: { k: string; v: string; strong?: boolean; tone?: number | null; warn?: boolean }) {
-  const color = warn ? 'text-[var(--color-stamp)]' : tone == null ? '' : tone >= 0 ? 'text-[var(--color-up)]' : 'text-[var(--color-down)]';
-  return (
-    <div class="flex items-baseline justify-between gap-3 py-2">
-      <dt class="text-[var(--color-muted)]">{k}</dt>
-      <dd class={`num text-right ${strong ? 'text-[1.05rem] font-bold' : 'font-medium'} ${color}`}>{v}</dd>
-    </div>
-  );
+// Mobil: hodnoty ve sloupcích pod popiskem. Desktop: popisek vlevo + sloupce.
+const cols = (n: number) => ({ '--c-sm': `repeat(${n}, minmax(0, 1fr))`, '--c-md': `minmax(180px, 1.1fr) repeat(${n}, minmax(0, 1fr))` }) as any;
+
+interface RowDef {
+  label: string;
+  get: (e: EtfLite) => number | null;
+  fmt: (v: number | null) => string;
+  best?: 'min' | 'max';
+  tone?: boolean;
 }
+
+const ROWS: RowDef[] = [
+  { label: 'Poplatek (TER) ročně', get: (e) => e.ter, fmt: ter, best: 'min' },
+  { label: 'Z 100 000 Kč zaplatíte ročně', get: (e) => (e.ter != null ? e.ter * 100000 : null), fmt: (v) => (v == null ? '—' : czk(v)), best: 'min' },
+  { label: 'Výnos za 1 rok (USD)', get: (e) => e.returns.y1, fmt: (v) => pct(v, 1, true), tone: true },
+  { label: 'Výnos 5 let, ročně', get: (e) => e.returns.y5, fmt: (v) => pct(v, 1, true), tone: true },
+  { label: 'Výnos 10 let, ročně', get: (e) => e.returns.y10, fmt: (v) => pct(v, 1, true), tone: true },
+  { label: 'Dividendový výnos', get: (e) => e.dividendYield, fmt: (v) => pct(v, 2) },
+  { label: 'Spravovaný majetek (USD)', get: (e) => e.netAssets, fmt: (v) => (v ? usdShort(v).replace(/\s?USD$/, '') : '—') },
+];
+
+function bestIndex(vals: (number | null)[], mode: 'min' | 'max') {
+  const valid = vals.map((v, i) => [v, i] as const).filter(([v]) => v != null) as [number, number][];
+  if (valid.length < 2) return -1;
+  const sorted = valid.sort((a, b) => (mode === 'min' ? a[0] - b[0] : b[0] - a[0]));
+  return sorted[0][0] === sorted[1][0] ? -1 : sorted[0][1];
+}
+
+const toneClass = (v: number | null) => (v == null ? '' : v >= 0 ? 'text-[var(--color-up)]' : 'text-[var(--color-down)]');

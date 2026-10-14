@@ -42,13 +42,13 @@ export default function HeroTwin({ etfs, tickers }: Props) {
         ))}
       </div>
 
-      <div class="mt-3 grid grid-cols-[1fr_auto_1fr] items-stretch gap-2">
+      <div class="mt-3 grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-stretch gap-2">
         {/* USA */}
         <div class="relative overflow-hidden rounded-xl bg-[var(--color-paper-2)] p-3">
           <p class="kicker">NYSE · USA</p>
           <p class="num mt-1 text-2xl font-bold">{etf.ticker}</p>
-          <p class="mt-0.5 line-clamp-2 text-[12.5px] leading-tight text-[var(--color-muted)]">{etf.nameCz}</p>
-          <span key={stampKey} class="stamp animate-stamp absolute right-1.5 bottom-2 bg-[var(--color-paper-2)] text-[10px]">
+          <p class="mt-0.5 truncate text-[12.5px] leading-tight text-[var(--color-muted)]">{etf.nameCz}</p>
+          <span key={stampKey} class="stamp animate-stamp mt-2 text-[10px]">
             v ČR nekoupíte
           </span>
         </div>

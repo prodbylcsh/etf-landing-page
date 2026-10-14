@@ -25,7 +25,7 @@ export default function Calculators(props: Props) {
       <div class="grid grid-cols-2 rounded-xl bg-[var(--color-paper-2)] p-1" role="tablist" aria-label="Kalkulačky">
         {(
           [
-            ['fees', 'Kolik ukousnou poplatky'],
+            ['fees', 'Poplatky'],
             ['machine', 'Stroj času'],
           ] as [Tab, string][]
         ).map(([id, label]) => (
@@ -72,7 +72,7 @@ function FeeCalc({ cheapFee, fundFee, fundSource, fundSourceUrl, spyY20 }: Props
   }, [monthly, years, gross]);
 
   return (
-    <div class="grid gap-5 md:grid-cols-[1fr_1.15fr] md:items-start">
+    <div class="grid grid-cols-1 gap-5 md:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] md:items-start">
       <div class="space-y-4">
         <Slider label="Měsíčně investuji" value={czk(monthly)} min={500} max={20000} step={500} current={monthly} onInput={onChange('monthly', setMonthly)} />
         <Slider label="Po dobu" value={`${years} ${plural(years, ['rok', 'roky', 'let'])}`} min={5} max={40} step={1} current={years} onInput={onChange('years', setYears)} />
@@ -91,7 +91,7 @@ function FeeCalc({ cheapFee, fundFee, fundSource, fundSourceUrl, spyY20 }: Props
         <p class="text-[14px] text-[#b9c7c0]">
           Fond s poplatkem {pct(fundFee, 2)} vám za {years} {plural(years, ['rok', 'roky', 'let'])} ukousne
         </p>
-        <p class="num mt-1 text-[2.4rem] leading-none font-bold text-[var(--color-amber)]">{czk(r.lost)}</p>
+        <p class="bignum mt-1 text-[2.6rem] leading-none text-[var(--color-amber)]">{czk(r.lost)}</p>
         <p class="mt-1 text-[13px] text-[#9db0a7]">oproti ETF s poplatkem {ter(cheapFee)}. Vložíte celkem {czk(r.invested)}.</p>
         <div class="mt-4 space-y-3 text-[13px]">
           <Bar label={`ETF dvojče (${ter(cheapFee)})`} value={r.cheap} max={r.cheap} color="var(--color-phosphor)" />
@@ -111,10 +111,10 @@ function FeeCalc({ cheapFee, fundFee, fundSource, fundSourceUrl, spyY20 }: Props
             });
           }}
         >
-          Poslat výpočet + levná dvojčata e-mailem
+          Poslat výpočet e-mailem →
         </button>
         <p class="mt-3 text-[11.5px] leading-snug text-[#7f948a]">
-          Poplatek fondu = {fundSource.toLowerCase()} (
+          Poplatek fondu: {fundSource} (
           <a href={fundSourceUrl} target="_blank" rel="noopener" class="underline">
             zdroj
           </a>
@@ -175,7 +175,7 @@ function TimeMachine({ usdczk, machineTickers }: Props) {
   if (failed) return <p class="text-[var(--color-muted)]">Historická data se nepodařilo načíst. Zkuste obnovit stránku.</p>;
 
   return (
-    <div class="grid gap-5 md:grid-cols-[1fr_1.15fr] md:items-start">
+    <div class="grid grid-cols-1 gap-5 md:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] md:items-start">
       <div class="space-y-4">
         <Group label="Kdybyste investovali do">
           {machineTickers.map((t) => (
@@ -231,11 +231,11 @@ function TimeMachine({ usdczk, machineTickers }: Props) {
         ) : res ? (
           <>
             <p class="text-[14px] text-[#b9c7c0]">
-              Od {ymCz(startYm!)} jste vložili <span class="num text-white">{czk(res.invested)}</span>. Dnes byste měli
+              Od {ymCz(startYm!)} jste vložili <span class="font-semibold tabular-nums text-white">{czk(res.invested)}</span>. Dnes byste měli
             </p>
-            <p class="num mt-1 text-[2.4rem] leading-none font-bold text-[var(--color-phosphor)]">{czk(res.value)}</p>
+            <p class="bignum mt-1 text-[2.6rem] leading-none text-[var(--color-phosphor)]">{czk(res.value)}</p>
             <p class="mt-1 text-[13px] text-[#9db0a7]">
-              {res.value >= res.invested ? 'zisk' : 'ztráta'} <span class="num text-white">{czk(res.value - res.invested)}</span> ({pct(res.value / res.invested - 1, 0, true)})
+              {res.value >= res.invested ? 'zisk' : 'ztráta'} <span class="font-semibold tabular-nums text-white">{czk(res.value - res.invested)}</span> ({pct(res.value / res.invested - 1, 0, true)})
             </p>
             <Chart points={points} />
             <button
@@ -251,7 +251,7 @@ function TimeMachine({ usdczk, machineTickers }: Props) {
                 });
               }}
             >
-              Jak to koupit v Česku? Poslat dvojče →
+              Kde to koupit v Česku? →
             </button>
             <p class="mt-3 text-[11.5px] leading-snug text-[#7f948a]">
               Reálná data: měsíční ceny {ticker} vč. reinvestovaných dividend (Alpha Vantage) a měsíční kurzy USD/CZK (ČNB), k {data.asOf ? ymCz(data.asOf.slice(0, 7)) : '—'}. Bez poplatků brokera a daní. Minulá výkonnost nezaručuje budoucí výnosy.
@@ -299,7 +299,7 @@ function Chart({ points }: { points: TimeMachinePoint[] }) {
           <span class="inline-block h-0 w-4 border-t-2 border-dashed border-[#8a9a93]" /> Vloženo
         </span>
       </figcaption>
-      <svg viewBox={`0 0 ${W} ${H}`} class="w-full touch-pan-y" role="img" aria-label="Vývoj hodnoty pravidelné investice v čase" onPointerMove={move} onPointerDown={move} onPointerLeave={() => setHover(null)}>
+      <svg viewBox={`0 0 ${W} ${H}`} class="w-full touch-pan-y" role="img" aria-label="Vývoj hodnoty pravidelné investice v čase" onPointerMove={move} onPointerDown={move} onPointerLeave={(e) => e.pointerType === 'mouse' && setHover(null)}>
         <defs>
           <linearGradient id="tm-fill" x1="0" x2="0" y1="0" y2="1">
             <stop offset="0" stop-color="#3ddc84" stop-opacity="0.28" />

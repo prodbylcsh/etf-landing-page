@@ -1,0 +1,19 @@
+---
+import FeeBars from './FeeBars.astro';
+import Brand from './Brand.astro';
+import { cheapTwinTer, czechFund } from '../../lib/market';
+import { feeComparison } from '../../lib/finance';
+import { fmtInt } from '../../lib/format';
+const r = feeComparison(3000, 25, 0.07, cheapTwinTer, czechFund.value);
+---
+<div data-ad="ad-b-feed" class="ad h-[1350px] w-[1080px] bg-[var(--color-term)] p-[72px] text-white">
+  <div class="flex items-center justify-between"><Brand dark /><span class="font-mono text-[24px] tracking-[0.12em] text-[var(--color-phosphor)]">● KALKULAČKA POPLATKŮ</span></div>
+  <h1 class="mt-[80px] font-[family-name:var(--font-display)] text-[108px] leading-[0.98] font-semibold tracking-[-0.02em]">Kolik vám ukousnou <em class="font-medium text-[var(--color-amber)]">poplatky?</em></h1>
+  <p class="mt-[60px] text-[156px] leading-none font-bold tracking-[-0.045em] tabular-nums text-[var(--color-amber)]">−{fmtInt(Math.round(r.lost / 1000) * 1000)}&nbsp;Kč</p>
+  <p class="mt-[18px] text-[34px] text-[#b9c7c0]">za 25 let při 3 000 Kč měsíčně</p>
+  <div class="mt-[64px]"><FeeBars /></div>
+  <div class="absolute right-[72px] bottom-[72px] left-[72px] flex items-end justify-between gap-[30px]">
+    <p class="text-[22px] leading-snug text-[#7f948a]">Předpoklad 7 % ročně před poplatky.<br />Ilustrativní výpočet, ne doporučení.</p>
+    <span class="shrink-0 rounded-[18px] bg-[var(--color-amber)] px-[40px] py-[26px] text-[36px] font-bold text-[var(--color-term)]">Spočítat za 10 s →</span>
+  </div>
+</div>

@@ -40,8 +40,8 @@ export default function HeroFees({ cheapFee, fundFee, gross, years }: Props) {
       </div>
 
       <div class="terminal mt-3 p-3.5">
-        <p class="text-[13px] text-[#b9c7c0]">Za {years} let vám fond s poplatkem {pct(fundFee, 1)} ukousne oproti ETF</p>
-        <p key={amount} class="num animate-rise mt-1 text-[2.1rem] leading-none font-bold text-[var(--color-amber)]">{czk(r.lost)}</p>
+        <p class="text-[13px] text-[#b9c7c0]">Za {years} let vám fond s poplatkem {pct(fundFee, 2)} ukousne oproti ETF</p>
+        <p key={amount} class="bignum animate-rise mt-1 text-[2.3rem] leading-none text-[var(--color-amber)]">{czk(r.lost)}</p>
         <div class="mt-3 space-y-2 text-[12.5px]">
           <Bar label={`ETF (${ter(cheapFee)})`} value={r.cheap} max={max} color="var(--color-phosphor)" />
           <Bar label={`Fond (${pct(fundFee, 2)})`} value={r.expensive} max={max} color="#c68a00" />

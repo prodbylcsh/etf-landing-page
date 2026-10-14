@@ -1,5 +1,5 @@
 // Formátování čísel pro češtinu (mezera jako oddělovač tisíců, desetinná čárka).
-const nbsp = ' ';
+const nbsp = '\u00a0';
 
 const intFmt = new Intl.NumberFormat('cs-CZ', { maximumFractionDigits: 0 });
 
