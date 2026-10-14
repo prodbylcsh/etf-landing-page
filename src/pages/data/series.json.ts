@@ -1,11 +1,8 @@
-// Měsíční řady pro „Stroj času“ – načítají se líně až při otevření kalkulačky (menší HTML).
+// Měsíční řady všech ETF + kurzy ČNB pro graf „Kdybyste před N lety…“. Načítá se líně až u grafu.
 import type { APIRoute } from 'astro';
 import { fx, series, pricesAsOf } from '../../lib/market';
-import { MACHINE_TICKERS } from '../../lib/config';
 
-export const GET: APIRoute = () => {
-  const pick = Object.fromEntries(MACHINE_TICKERS.map((t) => [t.ticker, series[t.ticker] ?? []]));
-  return new Response(JSON.stringify({ fx: fx.monthly, series: pick, asOf: pricesAsOf }), {
+export const GET: APIRoute = () =>
+  new Response(JSON.stringify({ fx: fx.monthly, series, asOf: pricesAsOf }), {
     headers: { 'content-type': 'application/json' },
   });
-};

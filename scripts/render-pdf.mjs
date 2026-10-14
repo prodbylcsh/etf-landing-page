@@ -7,7 +7,7 @@ import { existsSync } from 'node:fs';
 import { readFile, stat } from 'node:fs/promises';
 import { chromium } from 'playwright-core';
 
-export const PDF_NAME = 'bestbrookies-etf-tahak-2026.pdf';
+export const PDF_NAME = 'bestbrookies-etf-checklist-2026.pdf';
 const PORT = 4329;
 
 export function launchBrowser() {

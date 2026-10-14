@@ -1,0 +1,63 @@
+---
+// Náhled lead magnetu: překladač, checklist a šablona. Při najetí myší se karty rozvinou,
+// při odscrollování se v checklistu postupně odškrtnou položky.
+import { etfs } from '../lib/market';
+import { IconCheck } from './icons';
+const rows = etfs.slice(0, 6);
+const checklist = ['Mám rezervu na 3–6 měsíců', 'Vím, na jak dlouho investuji', 'Mám vybrané dvojče (ISIN)', 'Znám celkové náklady', 'Rozumím časovému testu', 'Nastavím pravidelný nákup'];
+---
+<div class="pack group relative mx-auto h-[400px] w-full max-w-[460px] select-none sm:h-[440px]" data-reveal="scale" aria-hidden="true">
+  <!-- 3: šablona (Excel) -->
+  <div class="sheet-card absolute top-6 left-1/2 w-[78%] rounded-2xl bg-white p-4 shadow-[0_20px_40px_-20px_rgba(0,0,0,0.35),0_0_0_1px_var(--color-line)]">
+    <p class="flex items-center justify-between text-[11px] font-medium text-[var(--color-muted)]"><span>Můj ETF plán.xlsx</span><span class="rounded bg-[var(--color-accent-soft)] px-1.5 py-0.5 text-[10px] text-[var(--color-accent-strong)]">EXCEL</span></p>
+    <div class="mt-3 grid grid-cols-4 gap-px overflow-hidden rounded-md bg-[var(--color-line)] text-[10px]">
+      {['Měsíc', 'Vklad', 'ETF', 'Hodnota', '1', '3 000', 'VUAA', '3 018', '2', '3 000', 'VUAA', '6 071', '3', '3 000', 'VWCE', '9 160', '12', '3 000', 'VUAA', '37 400'].map((c, i) => (
+        <span class:list={['mono bg-white px-1.5 py-1', i < 4 && 'bg-[var(--color-soft)] font-semibold']}>{c}</span>
+      ))}
+    </div>
+    <svg viewBox="0 0 120 30" class="mt-3 h-8 w-full"><path d="M0 28 C20 26 30 22 45 20 S70 14 85 10 110 4 120 2" fill="none" stroke="var(--color-s3)" stroke-width="2" /></svg>
+  </div>
+  <!-- 2: checklist (PDF) -->
+  <div class="check-card absolute top-14 left-1/2 w-[78%] rounded-2xl bg-white p-4 shadow-[0_20px_40px_-20px_rgba(0,0,0,0.35),0_0_0_1px_var(--color-line)]">
+    <p class="flex items-center justify-between text-[11px] font-medium text-[var(--color-muted)]"><span>Checklist před nákupem</span><span class="rounded bg-[var(--color-neg-soft)] px-1.5 py-0.5 text-[10px] text-[var(--color-neg)]">PDF</span></p>
+    <ul class="mt-3 space-y-2">
+      {checklist.map((c, i) => (
+        <li class="flex items-center gap-2 text-[12.5px]" style={`--i:${i}`}>
+          <span class="tick flex h-4 w-4 shrink-0 items-center justify-center rounded-[5px] ring-1 ring-[var(--color-line)]"><IconCheck size={11} /></span>
+          {c}
+        </li>
+      ))}
+    </ul>
+  </div>
+  <!-- 1: překladač -->
+  <div class="map-card absolute top-28 left-1/2 w-[82%] rounded-2xl bg-[var(--color-dark)] p-4 text-white shadow-[0_30px_60px_-25px_rgba(0,0,0,0.6)]">
+    <p class="flex items-center justify-between text-[11px] text-zinc-400"><span>Překladač NYSE → Evropa</span><span class="mono">12 ETF</span></p>
+    <div class="mt-3 divide-y divide-[var(--color-dark-line)]">
+      {rows.map((e) => (
+        <div class="flex items-center justify-between py-1.5 text-[12px]">
+          <span class="mono w-12 font-semibold">{e.ticker}</span>
+          <span class="text-zinc-500">→</span>
+          <span class:list={['mono w-[62%] truncate text-right text-[var(--color-lime)]', !e.twin.free && 'blur-[3px]']}>{e.twin.free ? e.twin.isin : 'IE00XXXXXXXX'}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
+
+<style>
+  .pack > div { transition: transform 0.7s var(--ease-out-expo), box-shadow 0.5s; }
+  .sheet-card { transform: translateX(-53%) rotate(-5deg); }
+  .check-card { transform: translateX(-47%) rotate(4deg); }
+  @media (min-width: 640px) {
+    .sheet-card { transform: translateX(-58%) rotate(-7deg); }
+    .check-card { transform: translateX(-42%) rotate(5deg); }
+  }
+  .map-card { transform: translateX(-50%); }
+  @media (hover: hover) {
+    .pack:hover .sheet-card { transform: translateX(-88%) rotate(-12deg) translateY(-6px); }
+    .pack:hover .check-card { transform: translateX(-12%) rotate(10deg) translateY(-14px); }
+    .pack:hover .map-card { transform: translateX(-50%) translateY(18px) scale(1.03); }
+  }
+  .tick { color: transparent; transition: background-color 0.3s, color 0.3s, box-shadow 0.3s; transition-delay: calc(400ms + var(--i) * 220ms); }
+  :global(.pack.in) .tick, :global(html:not(.js)) .tick { background: var(--color-accent); color: #fff; box-shadow: none; }
+</style>

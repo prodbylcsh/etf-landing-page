@@ -1,48 +1,50 @@
 @import 'tailwindcss';
-@import '@fontsource-variable/fraunces/index.css';
-@import '@fontsource-variable/instrument-sans/index.css';
-@import '@fontsource-variable/jetbrains-mono/index.css';
+@import '@fontsource-variable/geist/index.css';
+@import '@fontsource-variable/geist-mono/index.css';
 
-/* ------------------------------------------------------------------ Tokeny */
+/* ------------------------------------------------------------------ Tokeny
+   Minimalistická paleta: bílá, inkoustová černá, škála šedé, jeden zelený akcent.
+   Červená jen pro „nekoupíte“, barvy grafů z ověřené palety (dataviz slot 1–3). */
 @theme {
-  --color-paper: #f3eee4;
-  --color-paper-2: #ebe4d6;
-  --color-card: #fbf8f2;
-  --color-ink: #15171a;
-  --color-ink-2: #3a3833;
-  --color-muted: #6a655b;
-  --color-rule: #d8d0c0;
-  --color-stamp: #d9442b;
-  --color-stamp-dark: #b5341f;
-  --color-up: #0e7a4f;
-  --color-down: #c0392b;
-  --color-term: #0f1214;
-  --color-term-2: #1a1f22;
-  --color-term-line: #2a3236;
-  --color-phosphor: #3ddc84;
-  --color-amber: #f5b700;
+  --color-bg: #ffffff;
+  --color-soft: #f6f6f5;
+  --color-soft-2: #efefed;
+  --color-ink: #0a0a0a;
+  --color-ink-2: #3f3f46;
+  --color-muted: #71717a;
+  --color-faint: #a1a1aa;
+  --color-line: #e8e8e6;
+  --color-accent: #0f9d63;
+  --color-accent-strong: #0b7a4c;
+  --color-accent-soft: #e7f6ee;
+  --color-lime: #c9f24b;
+  --color-neg: #e34948;
+  --color-neg-soft: #fdecec;
+  --color-dark: #0b0c0e;
+  --color-dark-2: #16181b;
+  --color-dark-line: #26292e;
+  --color-s1: #2a78d6;
+  --color-s2: #eb6834;
+  --color-s3: #1baf7a;
 
-  --font-display: 'Fraunces Variable', 'Georgia', serif;
-  --font-sans: 'Instrument Sans Variable', ui-sans-serif, system-ui, sans-serif;
-  --font-mono: 'JetBrains Mono Variable', ui-monospace, 'SFMono-Regular', monospace;
+  --font-sans: 'Geist Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'Geist Mono Variable', ui-monospace, 'SFMono-Regular', monospace;
 
-  --animate-blink: blink 1.2s steps(2, start) infinite;
-  --animate-rise: rise 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) both;
-  --animate-stamp: stamp 0.45s cubic-bezier(0.3, 1.6, 0.5, 1) both;
-  --animate-sheet: sheet 0.32s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 
-  @keyframes blink {
-    to { visibility: hidden; }
-  }
-  @keyframes rise {
-    from { opacity: 0; transform: translateY(10px); }
-  }
-  @keyframes stamp {
-    from { opacity: 0; transform: scale(1.6) rotate(-14deg); }
-    to { opacity: 1; transform: scale(1) rotate(-8deg); }
-  }
+  --animate-sheet: sheet 0.45s var(--ease-out-expo) both;
+  --animate-pop: pop 0.5s var(--ease-spring) both;
+  --animate-fade: fade 0.4s ease both;
+
   @keyframes sheet {
     from { transform: translateY(100%); }
+  }
+  @keyframes pop {
+    from { opacity: 0; transform: scale(0.85); }
+  }
+  @keyframes fade {
+    from { opacity: 0; transform: translateY(6px); }
   }
 }
 
@@ -50,92 +52,141 @@
 @layer base {
   html {
     -webkit-text-size-adjust: 100%;
-    scroll-padding-top: 56px;
+    scroll-padding-top: 80px;
+    interpolate-size: allow-keywords;
   }
   @media (prefers-reduced-motion: no-preference) {
     html { scroll-behavior: smooth; }
   }
   body {
-    background: var(--color-paper);
+    background: var(--color-bg);
     color: var(--color-ink);
     font-family: var(--font-sans);
     font-size: 17px;
-    line-height: 1.55;
+    line-height: 1.6;
     -webkit-font-smoothing: antialiased;
-    text-rendering: optimizeLegibility;
+    font-feature-settings: 'ss01', 'cv11';
     overflow-x: hidden;
   }
-  ::selection { background: var(--color-amber); color: var(--color-ink); }
-  :focus-visible { outline: 3px solid var(--color-stamp); outline-offset: 2px; border-radius: 4px; }
-  h1, h2, h3 { font-family: var(--font-display); font-optical-sizing: auto; letter-spacing: -0.01em; text-wrap: balance; }
+  ::selection { background: var(--color-lime); color: var(--color-ink); }
+  :focus-visible { outline: 2px solid var(--color-ink); outline-offset: 3px; border-radius: 8px; }
+  h1, h2, h3 { letter-spacing: -0.035em; text-wrap: balance; font-weight: 600; line-height: 1.04; }
   p { text-wrap: pretty; }
   input, button, select { font: inherit; }
 }
 
 /* ------------------------------------------------------------------ Komponenty */
 @layer components {
-  .num { font-family: var(--font-mono); font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
-  .bignum { font-family: var(--font-sans); font-variant-numeric: tabular-nums; letter-spacing: -0.035em; font-weight: 700; }
-  .kicker {
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
+  .num { font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
+  .mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.02em;
     color: var(--color-muted);
   }
-  .rule { border-color: var(--color-rule); }
-  .rule-double { border-top: 3px double var(--color-ink); }
-  .paper-grain {
-    background-image:
-      radial-gradient(rgba(21, 23, 26, 0.035) 1px, transparent 1px);
-    background-size: 3px 3px;
-  }
+  .eyebrow::before { content: ''; width: 6px; height: 6px; border-radius: 99px; background: var(--color-accent); }
+  .h-section { font-size: clamp(2.1rem, 4.6vw, 3.6rem); }
+  .lead { font-size: clamp(1.05rem, 1.4vw, 1.25rem); color: var(--color-muted); line-height: 1.55; }
+
   .btn {
-    display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
-    min-height: 52px; padding: 0 1.25rem; border-radius: 10px;
-    font-weight: 650; letter-spacing: -0.005em;
-    transition: transform 0.12s ease, background-color 0.15s ease, box-shadow 0.15s ease;
+    position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+    min-height: 52px; padding: 0 1.4rem; border-radius: 999px;
+    font-weight: 560; letter-spacing: -0.01em; white-space: nowrap;
+    transition: transform 0.25s var(--ease-out-expo), background-color 0.2s, box-shadow 0.3s, color 0.2s;
     -webkit-tap-highlight-color: transparent;
   }
-  .btn:active { transform: translateY(1px) scale(0.99); }
-  .btn-primary { background: var(--color-stamp); color: #fff; box-shadow: 0 2px 0 var(--color-stamp-dark); }
-  .btn-primary:hover { background: var(--color-stamp-dark); }
-  .btn-ghost { border: 1.5px solid var(--color-ink); color: var(--color-ink); background: transparent; }
+  .btn:active { transform: scale(0.97); }
+  .btn .arr { transition: transform 0.3s var(--ease-out-expo); }
+  .btn:hover .arr { transform: translateX(4px); }
+  .btn-primary { background: var(--color-ink); color: #fff; }
+  .btn-primary:hover { box-shadow: 0 8px 24px -8px rgba(10, 10, 10, 0.45), 0 0 0 4px rgba(201, 242, 75, 0.55); }
+  .btn-accent { background: var(--color-lime); color: var(--color-ink); }
+  .btn-accent:hover { box-shadow: 0 10px 30px -10px rgba(201, 242, 75, 0.9); }
+  .btn-ghost { background: var(--color-soft); color: var(--color-ink); }
+  .btn-ghost:hover { background: var(--color-soft-2); }
+
   .chip {
-    display: inline-flex; align-items: center; gap: 0.35rem;
-    min-height: 44px; padding: 0 0.9rem; border-radius: 999px;
-    border: 1.5px solid var(--color-rule); background: var(--color-card);
-    font-family: var(--font-mono); font-size: 0.9rem; font-weight: 600;
-    transition: border-color 0.15s, background-color 0.15s, color 0.15s;
+    display: inline-flex; align-items: center; gap: 0.45rem;
+    min-height: 40px; padding: 0 0.95rem; border-radius: 999px;
+    background: var(--color-soft); color: var(--color-ink-2);
+    font-size: 0.92rem; font-weight: 520;
+    transition: background-color 0.2s, color 0.2s, transform 0.2s var(--ease-out-expo), box-shadow 0.2s;
     -webkit-tap-highlight-color: transparent;
   }
-  .chip[aria-pressed='true'] { background: var(--color-ink); color: var(--color-paper); border-color: var(--color-ink); }
+  .chip:hover { background: var(--color-soft-2); }
+  .chip:active { transform: scale(0.96); }
+  .chip[aria-pressed='true'], .chip[aria-selected='true'] { background: var(--color-ink); color: #fff; }
+
+  .card {
+    background: #fff; border-radius: 24px;
+    box-shadow: 0 0 0 1px var(--color-line), 0 1px 2px rgba(0, 0, 0, 0.03);
+    transition: box-shadow 0.35s var(--ease-out-expo), transform 0.35s var(--ease-out-expo);
+  }
+  .card-hover:hover { transform: translateY(-3px); box-shadow: 0 0 0 1px var(--color-line), 0 20px 40px -20px rgba(0, 0, 0, 0.18); }
+  .card-dark { background: var(--color-dark); color: #f4f4f5; border-radius: 24px; }
+
   .field {
-    width: 100%; min-height: 52px; padding: 0 1rem; border-radius: 10px;
-    border: 1.5px solid var(--color-ink); background: #fff; color: var(--color-ink);
+    width: 100%; min-height: 54px; padding: 0 1.2rem; border-radius: 999px;
+    border: 1px solid var(--color-line); background: #fff; color: var(--color-ink);
     font-size: 17px; /* ≥16px: iOS nezoomuje */
+    transition: border-color 0.2s, box-shadow 0.2s;
   }
-  .field::placeholder { color: #9a9488; }
-  .terminal {
-    background: var(--color-term); color: #e8efe9;
-    border-radius: 14px;
-    box-shadow: inset 0 0 0 1px var(--color-term-line);
-  }
-  .terminal .kicker { color: #8fa39a; }
-  .stamp {
-    display: inline-block; padding: 0.15rem 0.55rem; border: 2.5px solid currentColor; border-radius: 6px;
-    font-family: var(--font-mono); font-weight: 800; font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase;
-    color: var(--color-stamp); transform: rotate(-8deg);
-    mix-blend-mode: multiply;
-  }
-  .locked-blur { filter: blur(6px); user-select: none; pointer-events: none; }
-  .underline-ink { background: linear-gradient(transparent 62%, rgba(245, 183, 0, 0.55) 62%); padding: 0 0.1em; }
+  .field:focus { outline: none; border-color: var(--color-ink); box-shadow: 0 0 0 4px rgba(10, 10, 10, 0.06); }
+  .field::placeholder { color: var(--color-faint); }
+
+  .seg { display: inline-flex; padding: 4px; border-radius: 999px; background: var(--color-soft); gap: 2px; }
+  .seg button { min-height: 36px; padding: 0 0.9rem; border-radius: 999px; font-size: 0.9rem; font-weight: 520; color: var(--color-muted); transition: background-color 0.25s, color 0.25s, box-shadow 0.25s; }
+  .seg button[aria-pressed='true'] { background: #fff; color: var(--color-ink); box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 0 0 1px var(--color-line); }
+
+  .locked { filter: blur(6px); user-select: none; pointer-events: none; }
   .scroll-x { overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
   .scroll-x::-webkit-scrollbar { display: none; }
-  input[type='range'] { accent-color: var(--color-stamp); width: 100%; height: 32px; }
+
+  /* Range slider */
+  .range { -webkit-appearance: none; appearance: none; width: 100%; height: 28px; background: transparent; cursor: pointer; --p: 50%; }
+  .range::-webkit-slider-runnable-track { height: 6px; border-radius: 99px; background: linear-gradient(to right, var(--color-ink) var(--p), var(--color-soft-2) var(--p)); }
+  .range::-moz-range-track { height: 6px; border-radius: 99px; background: var(--color-soft-2); }
+  .range::-moz-range-progress { height: 6px; border-radius: 99px; background: var(--color-ink); }
+  .range::-webkit-slider-thumb { -webkit-appearance: none; width: 24px; height: 24px; margin-top: -9px; border-radius: 99px; background: #fff; border: 1px solid var(--color-line); box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18); transition: transform 0.2s var(--ease-spring); }
+  .range::-moz-range-thumb { width: 24px; height: 24px; border-radius: 99px; background: #fff; border: 1px solid var(--color-line); box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18); }
+  .range:active::-webkit-slider-thumb { transform: scale(1.15); }
+
+  /* Animované otevírání FAQ */
+  details.faq::details-content { block-size: 0; overflow: hidden; transition: block-size 0.4s var(--ease-out-expo), content-visibility 0.4s allow-discrete; }
+  details.faq[open]::details-content { block-size: auto; }
 }
 
-/* Varianta hero podle ?v= (nastaví se inline skriptem před vykreslením, bez probliknutí). */
+/* ------------------------------------------------------------------ Pohyb
+   [data-anim]  = animace při načtení (stagger přes --d)
+   [data-reveal] = animace při scrollu (třída .in přidá IntersectionObserver)
+   .words > span = nadpis po slovech */
+@media (prefers-reduced-motion: no-preference) {
+  [data-anim] { opacity: 0; transform: translateY(18px); filter: blur(8px); animation: enter 0.9s var(--ease-out-expo) forwards; animation-delay: calc(var(--d, 0) * 1ms); }
+  .words > span { display: inline-block; opacity: 0; transform: translateY(0.45em); filter: blur(10px); animation: enter 0.9s var(--ease-out-expo) forwards; animation-delay: calc(var(--d, 0) * 1ms + var(--i, 0) * 55ms); }
+  @keyframes enter { to { opacity: 1; transform: none; filter: blur(0); } }
+
+  html.js [data-reveal] { opacity: 0; transform: translateY(28px); transition: opacity 0.9s var(--ease-out-expo), transform 0.9s var(--ease-out-expo); transition-delay: calc(var(--i, 0) * 90ms); }
+  html.js [data-reveal='scale'] { transform: scale(0.96); }
+  html.js [data-reveal='left'] { transform: translateX(-24px); }
+  html.js [data-reveal].in { opacity: 1; transform: none; }
+
+  .draw { stroke-dasharray: 1; stroke-dashoffset: 1; animation: draw 1.4s var(--ease-out-expo) forwards; animation-delay: calc(var(--d, 0) * 1ms); }
+  html.js [data-reveal] .draw { animation-play-state: paused; }
+  html.js [data-reveal].in .draw { animation-play-state: running; }
+  @keyframes draw { to { stroke-dashoffset: 0; } }
+
+  .flow-dot { offset-rotate: 0deg; animation: flow 2.4s linear infinite; animation-delay: calc(var(--i, 0) * -0.8s); }
+  @keyframes flow { from { offset-distance: 0%; opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } to { offset-distance: 100%; opacity: 0; } }
+
+  .pulse-dot { position: relative; }
+  .pulse-dot::after { content: ''; position: absolute; inset: -4px; border-radius: 99px; background: currentColor; opacity: 0.35; animation: ping 1.8s cubic-bezier(0, 0, 0.2, 1) infinite; }
+  @keyframes ping { 75%, 100% { transform: scale(2.2); opacity: 0; } }
+
+  .float { animation: float 6s ease-in-out infinite; }
+  @keyframes float { 50% { transform: translateY(-8px); } }
+}
+
+/* Varianta hero podle ?v= (nastaví inline skript před vykreslením, bez probliknutí). */
 html[data-v='poplatky'] [data-variant='dvojce'],
 html:not([data-v='poplatky']) [data-variant='poplatky'] { display: none !important; }
 

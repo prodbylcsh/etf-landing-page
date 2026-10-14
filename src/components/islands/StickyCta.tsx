@@ -33,11 +33,11 @@ export default function StickyCta() {
   const show = heroGone && !formVisible && !unlocked && consent !== null;
   return (
     <div
-      class={`fixed inset-x-0 bottom-0 z-40 border-t border-[var(--color-rule)] bg-[rgba(243,238,228,0.94)] px-4 pt-2.5 pb-[max(0.625rem,env(safe-area-inset-bottom))] backdrop-blur transition-transform duration-300 md:hidden ${show ? 'translate-y-0' : 'translate-y-full'}`}
+      class={`fixed inset-x-0 bottom-0 z-40 px-4 pt-2 pb-[max(0.75rem,env(safe-area-inset-bottom))] transition-transform duration-500 ease-[var(--ease-out-expo)] md:hidden ${show ? 'translate-y-0' : 'translate-y-[130%]'}`}
       aria-hidden={!show}
     >
-      <button class="btn btn-primary w-full" tabIndex={show ? 0 : -1} onClick={() => openLead({ source: 'sticky' })} data-track="sticky_cta">
-        Poslat ETF tahák zdarma <span aria-hidden="true">→</span>
+      <button class="btn btn-primary w-full shadow-[0_12px_30px_-10px_rgba(0,0,0,0.5)]" tabIndex={show ? 0 : -1} onClick={() => openLead({ source: 'sticky' })} data-track="sticky_cta">
+        Startovací balíček zdarma <span class="arr">→</span>
       </button>
     </div>
   );

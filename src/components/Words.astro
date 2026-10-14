@@ -1,0 +1,20 @@
+---
+// Nadpis, který se při načtení objeví slovo po slově. `accent` = slova, která dostanou zvýraznění.
+interface Props { text: string; accent?: string; delay?: number; class?: string; as?: 'h1' | 'h2' }
+const { text, accent = '', delay = 0, class: cls = '', as: Tag = 'h1' } = Astro.props;
+const accentWords = new Set(accent.split(' ').filter(Boolean));
+const words = text.split(' ');
+---
+<Tag class:list={['words', cls]} style={`--d:${delay}`} aria-label={text}>
+  {words.map((w, i) => (
+    <>
+      <span aria-hidden="true" style={`--i:${i}`} class:list={[accentWords.has(w) && 'accent-word']}>{w}</span>{i < words.length - 1 ? ' ' : ''}
+    </>
+  ))}
+</Tag>
+<style>
+  .accent-word {
+    background: linear-gradient(transparent 68%, var(--color-lime) 68%, var(--color-lime) 92%, transparent 92%);
+    padding: 0 0.04em;
+  }
+</style>

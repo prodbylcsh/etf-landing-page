@@ -1,9 +1,16 @@
-// Bottom sheet s formulářem – otevírá se z „zámků“ a výsledků kalkulaček (moment nejvyšší zvědavosti).
+// Bottom sheet s formulářem – otevírá se ze zámků a výsledků kalkulaček (moment nejvyšší zvědavosti).
 import { useEffect } from 'preact/hooks';
 import { useStore } from '@nanostores/preact';
 import { $sheet } from '../../lib/store';
 import { track } from '../../lib/track';
 import LeadForm from './LeadForm';
+import { IconChecklist, IconSheet, IconSwap } from '../icons';
+
+const ITEMS = [
+  [IconSwap, 'Překladač 12 ETF → dvojčata', 'ticker, ISIN, poplatek'],
+  [IconChecklist, 'Checklist před prvním nákupem', '10 kroků, nic nevynecháte'],
+  [IconSheet, 'Šablona investičního plánu', 'Excel, stačí vyplnit částku'],
+] as const;
 
 export default function LeadSheet() {
   const ctx = useStore($sheet);
@@ -29,23 +36,31 @@ export default function LeadSheet() {
 
   return (
     <div class="fixed inset-0 z-50 flex items-end justify-center sm:items-center" role="dialog" aria-modal="true" aria-labelledby="sheet-title">
-      <button class="absolute inset-0 bg-[rgba(21,23,26,0.55)] backdrop-blur-[2px]" aria-label="Zavřít" onClick={() => close('backdrop')} />
-      <div class="animate-sheet relative w-full max-w-lg rounded-t-2xl bg-[var(--color-paper)] px-5 pt-3 pb-[max(1.25rem,env(safe-area-inset-bottom))] shadow-2xl sm:rounded-2xl sm:p-7">
-        <div class="mx-auto mb-3 h-1.5 w-10 rounded-full bg-[var(--color-rule)] sm:hidden" />
-        <button class="absolute top-2 right-2 flex h-11 w-11 items-center justify-center text-2xl text-[var(--color-muted)]" onClick={() => close('x')} aria-label="Zavřít">
+      <button class="animate-fade absolute inset-0 bg-black/40 backdrop-blur-sm" aria-label="Zavřít" onClick={() => close('backdrop')} />
+      <div class="animate-sheet relative w-full max-w-lg rounded-t-[28px] bg-white px-6 pt-3 pb-[max(1.5rem,env(safe-area-inset-bottom))] shadow-2xl sm:rounded-[28px] sm:p-8">
+        <div class="mx-auto mb-4 h-1.5 w-10 rounded-full bg-[var(--color-line)] sm:hidden" />
+        <button class="absolute top-3 right-3 flex h-10 w-10 items-center justify-center rounded-full text-xl text-[var(--color-muted)] transition-colors hover:bg-[var(--color-soft)]" onClick={() => close('x')} aria-label="Zavřít">
           ×
         </button>
-        <p class="kicker">ETF tahák 2026 · PDF zdarma</p>
-        <h2 id="sheet-title" class="mt-1 pr-8 text-[1.6rem] leading-[1.1] font-semibold">
-          {ctx.headline ?? 'Pošleme vám všechna dvojčata v jednom PDF'}
+        <p class="eyebrow">Startovací balíček ETF · zdarma</p>
+        <h2 id="sheet-title" class="mt-2 pr-8 text-[1.6rem] leading-[1.1]">
+          {ctx.headline ?? 'Všechna dvojčata, checklist a šablonu vám pošleme do e-mailu'}
         </h2>
-        <ul class="mt-3 space-y-1.5 text-[15px] text-[var(--color-ink-2)]">
-          <li>✓ 12 ETF z NYSE → co si koupíte v Česku (ISIN, poplatek)</li>
-          <li>✓ Kolik vás stojí poplatky za 10, 20 a 30 let</li>
-          <li>✓ Daně v ČR na jedné stránce (časový test, DIP)</li>
+        <ul class="mt-5 space-y-3">
+          {ITEMS.map(([Icon, t, d], i) => (
+            <li class="animate-fade flex items-center gap-3" style={{ animationDelay: `${120 + i * 70}ms` }}>
+              <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[var(--color-soft)]">
+                <Icon size={20} />
+              </span>
+              <span class="leading-tight">
+                <span class="block text-[15px] font-medium">{t}</span>
+                <span class="text-[13px] text-[var(--color-muted)]">{d}</span>
+              </span>
+            </li>
+          ))}
         </ul>
-        <div class="mt-4">
-          <LeadForm placement={`sheet_${ctx.source}`} cta="Odemknout a poslat" autoFocus onDone={() => setTimeout(() => $sheet.set(null), 2600)} />
+        <div class="mt-6">
+          <LeadForm placement={`sheet_${ctx.source}`} cta="Poslat zdarma" autoFocus onDone={() => setTimeout(() => $sheet.set(null), 3200)} />
         </div>
       </div>
     </div>

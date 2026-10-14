@@ -1,0 +1,39 @@
+---
+// „Proč VOO nekoupíte“ jako ikonové schéma – místo odstavce textu 4 kroky.
+import { FlagUS, FlagEU, IconDoc, IconShield, IconCheck, IconX } from './icons';
+const steps = [
+  { icon: 'us', title: 'Americký fond', text: 'VOO, SPY, SCHD… sídlí v USA.' },
+  { icon: 'doc', title: 'Chybí mu KID', text: 'Evropský dokument s riziky a náklady.' },
+  { icon: 'shield', title: 'Broker nesmí', text: 'Nařízení PRIIPs zakazuje prodej drobným investorům.' },
+  { icon: 'eu', title: 'Řešení: dvojče', text: 'Irský fond UCITS se stejným indexem.' },
+];
+---
+<ol class="relative grid gap-4 md:grid-cols-4 md:gap-6">
+  <!-- spojovací čára (desktop) -->
+  <svg class="pointer-events-none absolute top-8 right-[12%] left-[12%] hidden h-2 md:block" viewBox="0 0 100 2" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0 1 H100" stroke="var(--color-line)" stroke-width="2" vector-effect="non-scaling-stroke" stroke-dasharray="4 6" />
+  </svg>
+  {steps.map((s, i) => (
+    <li class="relative flex items-start gap-4 md:flex-col md:items-center md:text-center" data-reveal style={`--i:${i}`}>
+      <span class:list={[
+        'relative z-10 flex h-16 w-16 shrink-0 items-center justify-center rounded-[20px] ring-1 transition-transform duration-500 hover:scale-105',
+        i === 3 ? 'bg-[var(--color-dark)] text-white ring-[var(--color-dark)]' : 'bg-white ring-[var(--color-line)]',
+      ]}>
+        {s.icon === 'us' && <FlagUS size={18} />}
+        {s.icon === 'doc' && <IconDoc size={26} />}
+        {s.icon === 'shield' && <IconShield size={26} />}
+        {s.icon === 'eu' && <FlagEU size={18} />}
+        <span class:list={[
+          'absolute -right-1.5 -bottom-1.5 flex h-6 w-6 items-center justify-center rounded-full text-white ring-2 ring-white',
+          i === 3 ? 'bg-[var(--color-accent)]' : i === 0 ? 'bg-[var(--color-faint)]' : 'bg-[var(--color-neg)]',
+        ]}>
+          {i === 3 ? <IconCheck size={13} /> : i === 0 ? <span class="mono text-[11px]">1</span> : <IconX size={12} />}
+        </span>
+      </span>
+      <span class="md:mt-2">
+        <span class="block text-[17px] font-semibold tracking-[-0.02em]">{s.title}</span>
+        <span class="block text-[14.5px] leading-snug text-[var(--color-muted)]">{s.text}</span>
+      </span>
+    </li>
+  ))}
+</ol>

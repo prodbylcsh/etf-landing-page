@@ -20,18 +20,18 @@ export default function ConsentBar() {
   if (consent !== null || !ready) return null;
   return (
     <div class="fixed inset-x-0 bottom-0 z-40 p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] md:right-auto md:bottom-4 md:left-4 md:max-w-sm md:p-0" role="region" aria-label="Souhlas s cookies">
-      <div class="terminal animate-rise flex flex-col gap-2.5 p-3 text-[13px] leading-snug shadow-xl">
-        <p class="text-[#c9d4ce]">
+      <div class="animate-sheet flex flex-col gap-3 rounded-3xl bg-white p-4 text-[13px] leading-snug shadow-[0_20px_50px_-15px_rgba(0,0,0,0.3),0_0_0_1px_var(--color-line)]">
+        <p class="text-[var(--color-ink-2)]">
           Návštěvnost měříme bez cookies. Smíme použít i cookies pro vyhodnocení reklam?{' '}
           <a href="/ochrana-udaju#cookies" class="underline underline-offset-2">
             Podrobnosti
           </a>
         </p>
         <div class="flex gap-2">
-          <button class="btn h-10 min-h-0 flex-1 bg-[var(--color-phosphor)] text-[var(--color-term)]" onClick={() => setConsent('granted')}>
+          <button class="btn btn-primary h-10 min-h-0 flex-1" onClick={() => setConsent('granted')}>
             Povolit
           </button>
-          <button class="btn h-10 min-h-0 flex-1 border border-[#3a464b] text-[#e8efe9]" onClick={() => setConsent('denied')}>
+          <button class="btn btn-ghost h-10 min-h-0 flex-1" onClick={() => setConsent('denied')}>
             Jen nezbytné
           </button>
         </div>

@@ -1,14 +1,16 @@
 ---
+// Logo: „ukousnutá sušenka“ (brookie) – kousnutí = poplatky, které vám BestBrookies pomůže ušetřit.
 interface Props { class?: string; dark?: boolean }
 const { class: cls = '', dark = false } = Astro.props;
+const fg = dark ? '#ffffff' : '#0a0a0a';
 ---
 <span class:list={['inline-flex items-center gap-2 select-none', cls]} aria-label="BestBrookies">
   <svg viewBox="0 0 32 32" width="26" height="26" aria-hidden="true">
-    <rect width="32" height="32" rx="7" fill={dark ? '#f3eee4' : '#15171a'} />
-    <path d="M5 21.5c3.2 0 4.2-4 7.4-4s3.6 2.6 6.4 2.6c2.4 0 3.4-3.3 5-6.4L27 9" fill="none" stroke={dark ? '#d9442b' : '#f5b700'} stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
-    <path d="M22.4 8.4 27 9l-.5 4.6" fill="none" stroke={dark ? '#d9442b' : '#f5b700'} stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+    <path fill={fg} d="M16 2a14 14 0 1 0 13.6 17.3 4.6 4.6 0 0 1-5.4-5.6 4.6 4.6 0 0 1-5.3-6.6A4.6 4.6 0 0 1 16.6 2Z" />
+    <circle cx="11" cy="12" r="1.9" fill={dark ? '#0a0a0a' : '#ffffff'} />
+    <circle cx="10" cy="20.5" r="1.6" fill={dark ? '#0a0a0a' : '#ffffff'} />
+    <circle cx="18" cy="22" r="2" fill={dark ? '#0a0a0a' : '#ffffff'} />
+    <circle cx="27" cy="7.5" r="2.2" fill="#c9f24b" />
   </svg>
-  <span class="text-[1.15rem] leading-none tracking-tight" style={`color:${dark ? '#f3eee4' : '#15171a'}`}>
-    <span class="font-semibold">Best</span><span class="font-[family-name:var(--font-display)] italic font-medium">Brookies</span>
-  </span>
+  <span class="text-[1.08rem] font-semibold tracking-[-0.03em]" style={`color:${fg}`}>BestBrookies</span>
 </span>

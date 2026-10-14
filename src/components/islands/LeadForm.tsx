@@ -1,31 +1,25 @@
-// Formulář pro získání kontaktu: 1 povinné pole (e-mail) + volitelný souhlas s e-mailovou sérií.
+// Formulář pro získání kontaktu: 1 povinné pole (e-mail) + volitelný souhlas se sérií e-mailů.
 import { useEffect, useRef, useState } from 'preact/hooks';
 import { useStore } from '@nanostores/preact';
 import { $context, $unlocked } from '../../lib/store';
 import { $consent, getVariant, identifyLead, track, trackMetaLead } from '../../lib/track';
-
-export const PDF_URL = '/bestbrookies-etf-tahak-2026.pdf';
+import { PDF_URL, XLSX_URL } from '../../lib/config';
+import { IconCheck, IconChecklist, IconSheet } from '../icons';
 
 interface Props {
   placement: string;
   cta?: string;
-  /** Tmavá varianta (uvnitř terminálového bloku) */
   dark?: boolean;
-  /** Skrýt checkbox (např. v hero kvůli místu – souhlas lze dát i později) */
   showConsent?: boolean;
   autoFocus?: boolean;
   onDone?: () => void;
 }
 
 type Status = 'idle' | 'sending' | 'error' | 'done';
-
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+const uid = () => (crypto as any).randomUUID?.() ?? `${Date.now()}-${Math.random().toString(36).slice(2)}`;
 
-function uid() {
-  return (crypto as any).randomUUID?.() ?? `${Date.now()}-${Math.random().toString(36).slice(2)}`;
-}
-
-export default function LeadForm({ placement, cta = 'Poslat tahák zdarma', dark = false, showConsent = true, autoFocus = false, onDone }: Props) {
+export default function LeadForm({ placement, cta = 'Poslat balíček', dark = false, showConsent = true, autoFocus = false, onDone }: Props) {
   const unlocked = useStore($unlocked);
   const [email, setEmail] = useState('');
   const [marketing, setMarketing] = useState(false);
@@ -37,7 +31,7 @@ export default function LeadForm({ placement, cta = 'Poslat tahák zdarma', dark
   const input = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    if (autoFocus) setTimeout(() => input.current?.focus({ preventScroll: true }), 350);
+    if (autoFocus) setTimeout(() => input.current?.focus({ preventScroll: true }), 400);
   }, []);
 
   async function submit(e: Event) {
@@ -92,58 +86,62 @@ export default function LeadForm({ placement, cta = 'Poslat tahák zdarma', dark
     }
   }
 
-  const text = dark ? 'text-[#e8efe9]' : 'text-[var(--color-ink)]';
-  const muted = dark ? 'text-[#9db0a7]' : 'text-[var(--color-muted)]';
+  const muted = dark ? 'text-zinc-400' : 'text-[var(--color-muted)]';
 
   if (status === 'done' || (unlocked && status === 'idle')) {
     return (
-      <div class={`animate-rise rounded-xl ${dark ? 'bg-[var(--color-term-2)]' : 'bg-[var(--color-card)] ring-1 ring-[var(--color-rule)]'} p-4`} data-form-placement={`${placement}_done`}>
-        <p class={`flex items-start gap-2 font-semibold ${text}`}>
-          <span class="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[var(--color-up)] text-[12px] text-white">✓</span>
+      <div class={`animate-pop rounded-3xl p-5 ${dark ? 'bg-[var(--color-dark-2)] text-white' : 'bg-[var(--color-accent-soft)]'}`} data-form-placement={`${placement}_done`}>
+        <p class="flex items-start gap-2.5 font-medium">
+          <span class="mt-0.5 inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[var(--color-accent)] text-white">
+            <IconCheck size={14} />
+          </span>
           {status === 'done' ? (
             <span>
-              Hotovo. Tahák letí na <span class="break-all">{sentTo}</span>. Dvojčata na stránce jsou odemčená.
+              Hotovo. Balíček letí na <span class="break-all">{sentTo}</span> a dvojčata jsou odemčená.
             </span>
           ) : (
-            <span>Tahák už máte. Dvojčata jsou odemčená.</span>
+            <span>Balíček už máte. Dvojčata jsou odemčená.</span>
           )}
         </p>
-        <div class="mt-3 flex flex-col gap-2 sm:flex-row">
-          <a class="btn btn-primary sm:flex-1" href={PDF_URL} download onClick={() => track('pdf_download', { placement })} data-track="pdf_download">
-            Stáhnout PDF tahák
+        <div class="mt-4 grid gap-2 sm:grid-cols-2">
+          <a class="btn btn-primary" href={PDF_URL} download onClick={() => track('pdf_download', { placement })} data-track="pdf_download">
+            <IconChecklist size={18} /> Checklist (PDF)
           </a>
-          <button
-            type="button"
-            class={`btn ${dark ? 'border border-[#3a464b] text-[#e8efe9]' : 'btn-ghost'}`}
-            onClick={async () => {
-              track('share_click', { placement });
-              const data = { title: 'ETF tahák 2026 – BestBrookies', text: 'Americká ETF a jejich česká dvojčata na jednom místě:', url: location.origin + '/?utm_source=share' };
-              try {
-                if (navigator.share) await navigator.share(data);
-                else {
-                  await navigator.clipboard.writeText(data.url);
-                  alert('Odkaz zkopírován.');
-                }
-              } catch {}
-            }}
-          >
-            Poslat kamarádovi
-          </button>
+          <a class={`btn ${dark ? 'bg-white text-[var(--color-ink)]' : 'bg-white'}`} href={XLSX_URL} download onClick={() => track('xlsx_download', { placement })} data-track="xlsx_download">
+            <IconSheet size={18} /> Šablona (Excel)
+          </a>
         </div>
+        <button
+          type="button"
+          class={`mt-3 text-[13px] underline underline-offset-4 ${muted}`}
+          onClick={async () => {
+            track('share_click', { placement });
+            const d = { title: 'Startovací balíček ETF – BestBrookies', text: 'Americká ETF a jejich evropská dvojčata + checklist:', url: location.origin + '/?utm_source=share' };
+            try {
+              if (navigator.share) await navigator.share(d);
+              else {
+                await navigator.clipboard.writeText(d.url);
+                alert('Odkaz zkopírován.');
+              }
+            } catch {}
+          }}
+        >
+          Poslat odkaz kamarádovi
+        </button>
       </div>
     );
   }
 
   return (
     <form onSubmit={submit} noValidate class="w-full" data-form-placement={placement}>
-      <div class="flex flex-col gap-2 sm:flex-row">
+      <div class={`flex flex-col gap-2 rounded-[28px] p-1.5 sm:flex-row sm:items-center ${dark ? 'bg-[var(--color-dark-2)] ring-1 ring-[var(--color-dark-line)]' : 'bg-white shadow-[0_0_0_1px_var(--color-line),0_10px_30px_-18px_rgba(0,0,0,0.25)]'} transition-shadow focus-within:shadow-[0_0_0_1px_var(--color-ink),0_10px_30px_-14px_rgba(0,0,0,0.35)]`}>
         <label class="sr-only" for={`email-${placement}`}>
           Váš e-mail
         </label>
         <input
           ref={input}
           id={`email-${placement}`}
-          class="field sm:flex-1"
+          class={`min-h-[50px] flex-1 rounded-full bg-transparent px-4 text-[17px] outline-none ${dark ? 'text-white placeholder:text-zinc-500' : 'placeholder:text-[var(--color-faint)]'}`}
           type="email"
           name="email"
           inputMode="email"
@@ -161,26 +159,25 @@ export default function LeadForm({ placement, cta = 'Poslat tahák zdarma', dark
           aria-describedby={`note-${placement}`}
           required
         />
-        {/* Honeypot – lidé ho nevidí, boti ho vyplní */}
         <input type="text" name="company" tabIndex={-1} autoComplete="off" class="absolute -left-[9999px] h-0 w-0 opacity-0" aria-hidden="true" />
-        <button type="submit" class="btn btn-primary whitespace-nowrap" disabled={status === 'sending'} data-track={`submit_${placement}`}>
+        <button type="submit" class={`btn ${dark ? 'btn-accent' : 'btn-primary'} min-h-[50px]`} disabled={status === 'sending'} data-track={`submit_${placement}`}>
           {status === 'sending' ? 'Odesílám…' : cta}
-          {status !== 'sending' && <span aria-hidden="true">→</span>}
+          {status !== 'sending' && <span class="arr">→</span>}
         </button>
       </div>
       {status === 'error' && (
-        <p class="mt-2 text-sm font-medium text-[var(--color-stamp)]" role="alert">
+        <p class="animate-fade mt-2 px-4 text-sm font-medium text-[var(--color-neg)]" role="alert">
           {error}
         </p>
       )}
       {showConsent && (
-        <label class={`mt-3 flex cursor-pointer items-start gap-2.5 text-[13.5px] leading-snug ${muted}`}>
-          <input type="checkbox" class="mt-0.5 h-5 w-5 shrink-0 accent-[var(--color-stamp)]" checked={marketing} onChange={(e) => setMarketing((e.target as HTMLInputElement).checked)} />
-          <span>Chci i krátkou sérii e-mailů o ETF a daních (nejvýš 1× týdně, odhlásíte se jedním klikem).</span>
+        <label class={`mt-3 flex cursor-pointer items-start gap-2.5 px-2 text-[13px] leading-snug ${muted}`}>
+          <input type="checkbox" class="mt-0.5 h-[18px] w-[18px] shrink-0 accent-[var(--color-ink)]" checked={marketing} onChange={(e) => setMarketing((e.target as HTMLInputElement).checked)} />
+          <span>Chci i krátkou sérii e-mailů o ETF a daních (max. 1× týdně, odhlášení jedním klikem).</span>
         </label>
       )}
-      <p id={`note-${placement}`} class={`mt-2 text-[12.5px] leading-snug ${muted}`}>
-        Tahák pošleme jen na tento e-mail. Žádný spam, žádné telefonáty.{' '}
+      <p id={`note-${placement}`} class={`mt-2 px-2 text-[12.5px] leading-snug ${muted}`}>
+        Zdarma. Žádný spam, žádné telefonáty.{' '}
         <a href="/ochrana-udaju" class="underline underline-offset-2">
           Ochrana údajů
         </a>

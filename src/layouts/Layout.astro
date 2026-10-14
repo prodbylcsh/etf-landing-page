@@ -20,7 +20,7 @@ const ogImage = new URL('/og.png', Astro.site);
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
     {noindex && <meta name="robots" content="noindex" />}
-    <meta name="theme-color" content="#f3eee4" />
+    <meta name="theme-color" content="#ffffff" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="cs_CZ" />
@@ -31,6 +31,7 @@ const ogImage = new URL('/og.png', Astro.site);
     <!-- Varianta hero podle reklamy (?v=poplatky | ?v=dvojce). Běží před vykreslením → žádné probliknutí. -->
     <script is:inline>
       (function () {
+        document.documentElement.classList.add('js');
         try {
           var v = new URLSearchParams(location.search).get('v');
           if (v !== 'poplatky' && v !== 'dvojce') v = sessionStorage.getItem('bb_v') || 'dvojce';
@@ -45,5 +46,19 @@ const ogImage = new URL('/og.png', Astro.site);
   </head>
   <body class={bodyClass}>
     <slot />
+    <!-- Odhalování prvků při scrollu ([data-reveal] → .in). Bez JS je vše rovnou vidět. -->
+    <script is:inline>
+      (function () {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (e) {
+            if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+          });
+        }, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 });
+        function scan() { document.querySelectorAll('[data-reveal]:not(.in)').forEach(function (el) { io.observe(el); }); }
+        scan();
+        document.addEventListener('astro:page-load', scan);
+        setTimeout(scan, 1200);
+      })();
+    </script>
   </body>
 </html>
