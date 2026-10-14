@@ -202,14 +202,14 @@ V sandboxu za proxy spouštějte `npm run data` s `NODE_USE_ENV_PROXY=1`.
 
 **Vercel:**
 1. vercel.com → Add New → Project → Import `etf-landing-page`. Framework se detekuje automaticky (Astro).
-2. Settings → Git → Production Branch: `claude/etf-comparison-landing-v5oml3`, nebo větev nejdřív sloučit do `main`.
+2. Produkční větev je `main`. Každý commit do `main` (i ten od datového bota) spustí nové nasazení.
 3. Volitelně Environment Variables podle [`.env.example`](.env.example). Bez nich běží formulář v mock režimu.
 
 Pozn.: Vercel Hobby je podle podmínek pro nekomerční použití. Pro ostrý provoz reklam použijte Vercel Pro nebo Cloudflare Pages.
 
 **Volitelné služby (vše má free tier):**
 - **Alpha Vantage:** klíč z [alphavantage.co/support/#api-key](https://www.alphavantage.co/support/#api-key), uložit do GitHub → Settings → Secrets and variables → Actions jako `ALPHAVANTAGE_API_KEY`.
-- **PostHog:** [eu.posthog.com](https://eu.posthog.com) → nový projekt → Project API key, uložit do Vercelu jako `PUBLIC_POSTHOG_KEY`.
+- **PostHog:** [eu.posthog.com](https://eu.posthog.com) → nový projekt → Project API key, uložit do Vercelu jako `PUBLIC_POSTHOG_KEY` (funguje i `NEXT_PUBLIC_POSTHOG_KEY` / `POSTHOG_KEY` z integrace PostHog ↔ Vercel). Pro projekt v US cloudu nastavte `PUBLIC_POSTHOG_HOST=https://us.i.posthog.com`.
 - **Supabase:** projekt v regionu Frankfurt, spustit [`0001_init.sql`](supabase/migrations/0001_init.sql), do Vercelu dát `SUPABASE_URL` a `SUPABASE_SERVICE_ROLE_KEY`.
 - **Brevo:** ověřit odesílací doménu (SPF/DKIM), vytvořit 2 seznamy, do Vercelu dát `BREVO_API_KEY`, `BREVO_LIST_ID`, `BREVO_NURTURE_LIST_ID` a `BREVO_SENDER_EMAIL`.
 
