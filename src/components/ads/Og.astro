@@ -1,18 +1,13 @@
 ---
 import Brand from './Brand.astro';
-import { etfByTicker } from '../../lib/market';
-import { ter } from '../../lib/format';
-const voo = etfByTicker.VOO;
+import TwinCards from './TwinCards.astro';
 ---
-<div data-ad="og" class="ad paper-grain flex h-[630px] w-[1200px] items-center gap-[60px] bg-[var(--color-paper)] p-[64px] text-[var(--color-ink)]">
-  <div class="flex-1">
+<div data-ad="og" class="ad relative flex h-[630px] w-[1200px] items-center gap-[50px] overflow-hidden bg-white px-[70px] text-[#0a0a0a]">
+  <div class="ad-grid absolute inset-0"></div>
+  <div class="relative flex-1">
     <Brand size={40} />
-    <h1 class="mt-[40px] font-[family-name:var(--font-display)] text-[76px] leading-[0.98] font-semibold tracking-[-0.02em]">VOO v Česku nekoupíte. <em class="underline-ink font-medium">Tady je jeho dvojče.</em></h1>
-    <p class="mt-[28px] text-[28px] text-[var(--color-ink-2)]">12 slavných ETF z NYSE a jejich evropská dvojčata</p>
+    <h1 class="mt-[40px] text-[78px] leading-[0.98] font-semibold tracking-[-0.05em]">Chcete VOO? Kupte si jeho <span class="hl">dvojče.</span></h1>
+    <p class="mt-[26px] text-[26px] text-[#71717a]">12 slavných ETF z NYSE a jejich evropská dvojčata</p>
   </div>
-  <div class="w-[330px] rounded-[24px] bg-[var(--color-term)] p-[36px] text-white">
-    <p class="font-mono text-[20px] tracking-[0.12em] text-[var(--color-phosphor)]">VOO → DVOJČE ✓</p>
-    <p class="mt-[12px] font-mono text-[96px] leading-none font-bold">{voo.twin.ticker}</p>
-    <p class="mt-[12px] text-[24px] text-[#b9c7c0]">stejný index · TER {ter(voo.twin.ter)}</p>
-  </div>
+  <div class="relative"><TwinCards scale={0.52} /></div>
 </div>

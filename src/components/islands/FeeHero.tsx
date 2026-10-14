@@ -24,6 +24,7 @@ export default function FeeHero({ cheapFee, fundFee, gross, years }: Props) {
   return (
     <div class="relative">
       <div class="pointer-events-none absolute -inset-10 -z-10 rounded-full bg-[radial-gradient(closest-side,rgba(227,73,72,0.12),transparent)] blur-2xl" />
+      <p class="mb-2 text-center text-[13px] text-[var(--color-muted)]">Kolik měsíčně investujete (Kč)?</p>
       <div class="flex justify-center">
         <div class="seg" role="group" aria-label="Kolik měsíčně investujete">
           {AMOUNTS.map((a) => (
@@ -36,7 +37,7 @@ export default function FeeHero({ cheapFee, fundFee, gross, years }: Props) {
                 track('hero_chip_click', { amount: a });
               }}
             >
-              {a.toLocaleString('cs-CZ')} Kč
+              {a.toLocaleString('cs-CZ')}
             </button>
           ))}
         </div>

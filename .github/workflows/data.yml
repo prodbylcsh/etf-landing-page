@@ -1,6 +1,6 @@
 name: Aktualizace dat
 
-# Stáhne reálná data (Alpha Vantage + ČNB), přegeneruje PDF tahák a commitne změny.
+# Stáhne reálná data (Alpha Vantage + ČNB), přegeneruje PDF (checklist + překladač) a commitne změny.
 # Vercel po commitu automaticky nasadí novou verzi.
 on:
   schedule:

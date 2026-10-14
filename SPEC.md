@@ -344,3 +344,43 @@ Zdůvodnění a benchmarky budou v README.
 1. `ALPHAVANTAGE_API_KEY` do GitHub Secrets (nutné pro reálná data).
 2. Import repa do Vercelu (nutné pro veřejnou URL).
 3. Volitelně: PostHog projekt (`PUBLIC_POSTHOG_KEY`) pro reálné měření funnelu.
+
+---
+
+## 16. Revize 2: redesign (14. 10. 2026)
+
+Na základě zpětné vazby zadavatele. Tato kapitola má přednost před kap. 4, 6, 7 a 11, pokud se liší.
+
+**Design (nahrazuje kap. 11):**
+- Font Geist + Geist Mono (latin-ext). Fraunces, Instrument Sans a JetBrains Mono se už nepoužívají.
+- Minimalistická paleta: bílá, inkoust `#0A0A0A`, šedé, jediný akcent limetka `#C9F24B` / zelená `#0F9D63`, červená `#E34948` jen pro „nekoupíte“ a ztráty. Grafy: ověřené sloty modrá / oranžová / aqua.
+- Hero přes celou obrazovku (i na notebooku), každá sekce jedno sdělení, víc vzduchu, méně textu.
+- Obrázky místo textu: vlajky USA/EU, schéma PRIIPs o 4 krocích, poplatky jako „ukousnutá sušenka“ (koláč, úhel = přesný podíl), náhled balíčku.
+- Animace:
+  - nástup nadpisu po slovech,
+  - reveal sekcí při scrollu,
+  - vykreslování čar grafů, count-up čísel,
+  - tok peněz USA → EU,
+  - hover zvednutí karet a rozvinutí balíčku,
+  - plynulé FAQ.
+  Vše respektuje `prefers-reduced-motion`.
+
+**Lead magnet (nahrazuje kap. 4):** „Startovací balíček ETF“
+1. Překladač 12 ETF → dvojčata (PDF).
+2. Checklist před prvním nákupem: 10 kroků (PDF, 6 stran celkem včetně poplatků a daní).
+3. Excel šablona „Můj ETF plán“: vstupy, projekce na 40 let s grafem, list dvojčat, deník nákupů s hlídáním časového testu.
+
+Zdůvodnění: checklisty a šablony patří k nejlépe konvertujícím formátům lead magnetů.
+
+**Struktura (nahrazuje kap. 6):**
+1. Hero
+2. Proč VOO nekoupíte
+3. Souboj ETF (graf pravidelné investice v Kč, dříve „stroj času“, je teď součástí srovnání)
+4. Kalkulačka poplatků
+5. Startovací balíček
+6. Důvěra + FAQ
+7. Finální CTA
+
+Burzovní pruh se změnil na živý odznak v hero.
+
+**Nástroje (doplňuje kap. 7):** všechny vstupy jsou nastavitelné, včetně poplatku vlastního fondu uživatele a vlastní měsíční částky (slider i ruční zadání).

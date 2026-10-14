@@ -46,7 +46,7 @@ export default function TwinVisual({ etfs, tickers }: Props) {
 
       <div class="relative mx-auto mt-4 max-w-[440px] sm:mt-5">
         {/* USA */}
-        <div key={`us-${sel}`} class="animate-fade card flex items-center gap-3.5 p-3.5 sm:gap-4 sm:p-5">
+        <div key={`us-${sel}`} class="animate-fade card card-hover flex items-center gap-3.5 p-3.5 sm:gap-4 sm:p-5">
           <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[var(--color-soft)]">
             <FlagUS size={18} />
           </div>
@@ -77,7 +77,7 @@ export default function TwinVisual({ etfs, tickers }: Props) {
         </div>
 
         {/* EU dvojče */}
-        <div key={`eu-${sel}-${open}`} class="animate-fade card-dark relative overflow-hidden p-3.5 sm:p-5">
+        <div key={`eu-${sel}-${open}`} class="animate-fade card-dark relative overflow-hidden p-3.5 transition-transform duration-500 hover:-translate-y-1 sm:p-5">
           <div class="flex items-center gap-4">
             <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[var(--color-dark-2)]">
               <FlagEU size={18} />

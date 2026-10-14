@@ -19,19 +19,19 @@ const ads = [
   {
     id: 'A',
     name: 'Varianta A · „Nekoupíte“ (zvědavost)',
-    url: '/?v=dvojce&utm_source=meta&utm_medium=paid_social&utm_campaign=etf_tahak&utm_content=a_dvojce',
-    primary: `Slavné americké ETF VOO u českého brokera nekoupíte. 🇺🇸🚫\n\nExistuje ale jeho evropské dvojče: stejný index, podobný poplatek. Ukážeme vám dvojčata 12 nejznámějších ETF z newyorské burzy.`,
-    headline: 'Chcete VOO? Kupte jeho dvojče.',
-    desc: 'Tahák zdarma · PDF',
+    url: '/?v=dvojce&utm_source=meta&utm_medium=paid_social&utm_campaign=etf_balicek&utm_content=a_dvojce',
+    primary: `Slavné americké ETF VOO u českého brokera nekoupíte. 🇺🇸🚫\n\nExistuje ale jeho evropské dvojče se stejným indexem. Pošleme vám dvojčata 12 nejznámějších ETF z newyorské burzy + checklist před prvním nákupem. Zdarma.`,
+    headline: 'Chcete VOO? Kupte si jeho dvojče.',
+    desc: 'Checklist + Excel šablona zdarma',
     cta: 'Zjistit více',
   },
   {
     id: 'B',
     name: 'Varianta B · „Poplatky“ (averze ke ztrátě)',
-    url: '/?v=poplatky&utm_source=meta&utm_medium=paid_social&utm_campaign=etf_tahak&utm_content=b_poplatky',
+    url: '/?v=poplatky&utm_source=meta&utm_medium=paid_social&utm_campaign=etf_balicek&utm_content=b_poplatky',
     primary: `Typický český akciový fond si bere kolem 2 % ročně. ETF na stejný trh ${ter(cheapTwinTer)}.\n\nPři 3 000 Kč měsíčně je to za 25 let rozdíl ${czk(lostRounded)}. Spočítejte si to za 10 vteřin.`,
     headline: 'Kolik vám ukousnou poplatky?',
-    desc: 'Kalkulačka + tahák zdarma',
+    desc: 'Kalkulačka + šablona plánu zdarma',
     cta: 'Zjistit více',
   },
 ];
@@ -41,6 +41,9 @@ const ads = [
     .ad { position: relative; overflow: hidden; flex: none; font-family: var(--font-sans); }
     .ad-scale { transform-origin: top left; }
     .preview-frame { overflow: hidden; }
+    .ad .mono { font-family: var(--font-mono); }
+    .ad-grid { background-image: linear-gradient(#ececea 2px, transparent 2px), linear-gradient(90deg, #ececea 2px, transparent 2px); background-size: 90px 90px; mask-image: radial-gradient(ellipse 80% 70% at 50% 30%, #000 20%, transparent 80%); }
+    .hl { background: linear-gradient(transparent 66%, #c9f24b 66%, #c9f24b 92%, transparent 92%); }
   </style>
 
   <main class="mx-auto max-w-6xl px-4 py-8">

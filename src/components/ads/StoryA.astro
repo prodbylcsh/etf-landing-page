@@ -2,12 +2,13 @@
 import TwinCards from './TwinCards.astro';
 import Brand from './Brand.astro';
 ---
-<div data-ad="ad-a-story" class="ad paper-grain h-[1920px] w-[1080px] bg-[var(--color-paper)] px-[72px] pt-[250px] text-[var(--color-ink)]">
-  <Brand size={54} />
-  <h1 class="mt-[90px] font-[family-name:var(--font-display)] text-[128px] leading-[0.96] font-semibold tracking-[-0.02em]">Chcete VOO?<br />V Česku ho<br />nekoupíte.</h1>
-  <p class="mt-[40px] font-[family-name:var(--font-display)] text-[72px] leading-[1.05] italic"><span class="underline-ink">Tady je jeho dvojče.</span></p>
-  <div class="mt-[100px]"><TwinCards /></div>
-  <div class="absolute right-[72px] bottom-[340px] left-[72px] text-center">
-    <span class="inline-block rounded-[22px] bg-[var(--color-stamp)] px-[56px] py-[32px] text-[42px] font-bold text-white">12 dvojčat v taháku zdarma ↑</span>
+<div data-ad="ad-a-story" class="ad relative h-[1920px] w-[1080px] overflow-hidden bg-white px-[90px] pt-[250px] text-[#0a0a0a]">
+  <div class="ad-grid absolute inset-0"></div>
+  <div class="relative"><Brand size={54} /></div>
+  <h1 class="relative mt-[60px] text-[120px] leading-[0.96] font-semibold tracking-[-0.05em]">Chcete VOO?<br />V Česku ho nekoupíte.</h1>
+  <p class="relative mt-[30px] text-[64px] font-semibold tracking-[-0.03em]">Tady je jeho <span class="hl">dvojče.</span></p>
+  <div class="relative mt-[60px]"><TwinCards scale={1} /></div>
+  <div class="absolute right-[90px] bottom-[330px] left-[90px] text-center">
+    <span class="inline-block rounded-full bg-[#0a0a0a] px-[60px] py-[34px] text-[42px] font-semibold text-white">12 dvojčat v balíčku zdarma ↑</span>
   </div>
 </div>

@@ -1,11 +1,13 @@
 ---
-// Tisková šablona PDF „ETF tahák 2026“ (A4, 6 stran). Renderuje se do PDF skriptem scripts/render-pdf.mjs.
+// Tisková šablona PDF „Startovací balíček ETF 2026“ (A4, 6 stran): checklist, překladač, poplatky, daně, zdroje.
+// Renderuje se do PDF skriptem scripts/render-pdf.mjs.
 import '../styles/global.css';
 import Logo from '../components/Logo.astro';
+import { FlagEU, FlagUS } from '../components/icons';
 import { etfs, fx, czechFund, cheapTwinTer, pricesAsOf, twinsVerifiedAt, listing } from '../lib/market';
 import { futureValue } from '../lib/finance';
 import { czk, dateCz, pct, ter, fmtInt } from '../lib/format';
-import { GROSS_RETURN, BRAND } from '../lib/config';
+import { GROSS_RETURN, BRAND, XLSX_URL } from '../lib/config';
 
 const amounts = [1000, 3000, 5000];
 const horizons = [10, 20, 30];
@@ -16,177 +18,210 @@ const feeRows = amounts.flatMap((a) =>
     return { a, y, invested: a * 12 * y, cheap, exp, diff: cheap - exp };
   }),
 );
+const maxDiff = Math.max(...feeRows.map((r) => r.diff));
 const today = new Date().toISOString().slice(0, 10);
 const pages = 6;
+const site = (Astro.site ?? new URL('https://bestbrookies.vercel.app')).toString().replace(/\/$/, '');
+
+const checklist = [
+  ['Příprava', [
+    ['Rezerva stranou', 'Na běžném nebo spořicím účtu mám 3–6 měsíčních výdajů. Investice nejsou rezerva.'],
+    ['Žádné drahé dluhy', 'Kreditka nebo spotřebitelský úvěr s úrokem nad 8 % jde splatit dřív, než začnu investovat.'],
+    ['Horizont a částka', 'Investuji na 5 a více let a vím, kolik měsíčně (šablona „Můj ETF plán“ to spočítá).'],
+  ]],
+  ['Výběr', [
+    ['Dvojče s ISIN', 'Z překladače na straně 3 mám vybrané dvojče a opsaný jeho ISIN.'],
+    ['Celkové náklady', 'Znám TER fondu, poplatek brokera za nákup a cenu směny měny.'],
+    ['Akumulační vs. distribuční', 'Akumulační = dividendy se reinvestují, méně papírování v přiznání.'],
+  ]],
+  ['Nákup', [
+    ['Broker regulovaný v EU', 'Nabízí burzu, kde se dvojče obchoduje (Xetra, LSE, Euronext, Borsa Italiana).'],
+    ['Přečtený KID', 'Riziko na škále 1–7 a náklady fondu odpovídají tomu, co chci.'],
+    ['Limitní příkaz', 'Nakupuji s limitní cenou a ne hned po otevření burzy, kdy je spread největší.'],
+  ]],
+  ['Potom', [
+    ['Pravidelnost a datum', 'Pravidelná investice je nastavená a datum nákupu zapsané kvůli časovému testu (list Deník nákupů v šabloně).'],
+  ]],
+] as const;
+let n = 0;
 ---
 <!doctype html>
 <html lang="cs">
   <head>
     <meta charset="utf-8" />
     <meta name="robots" content="noindex" />
-    <title>ETF tahák 2026 – BestBrookies</title>
+    <title>Startovací balíček ETF 2026 – BestBrookies</title>
     <style is:global>
       @page { size: A4; margin: 0; }
       html, body { background: #888; }
       @media print { html, body { background: none; } }
       .page {
-        position: relative; width: 210mm; height: 297mm; margin: 0 auto 8mm; padding: 16mm 16mm 20mm;
-        background: var(--color-paper); overflow: hidden; page-break-after: always; break-after: page;
-        font-size: 10.5pt; line-height: 1.5; color: var(--color-ink);
+        position: relative; width: 210mm; height: 297mm; margin: 0 auto 8mm; padding: 18mm 17mm 22mm;
+        background: #fff; overflow: hidden; page-break-after: always; break-after: page;
+        font-size: 10pt; line-height: 1.5; color: var(--color-ink);
       }
       @media print { .page { margin: 0; } }
-      .page h2 { font-size: 24pt; line-height: 1.05; font-weight: 600; margin-top: 2mm; }
-      .page .lead { font-size: 11.5pt; color: var(--color-ink-2); margin-top: 3mm; }
-      .foot { position: absolute; left: 16mm; right: 16mm; bottom: 9mm; display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 7.5pt; color: var(--color-muted); border-top: 1px solid var(--color-rule); padding-top: 2.5mm; }
-      table.t { width: 100%; border-collapse: collapse; margin-top: 5mm; font-size: 8.6pt; }
-      table.t th { text-align: left; font-family: var(--font-mono); font-size: 7pt; letter-spacing: .06em; text-transform: uppercase; color: var(--color-muted); font-weight: 600; padding: 0 2mm 2mm 0; border-bottom: 1.5px solid var(--color-ink); }
-      table.t td { padding: 2.2mm 2mm 2.2mm 0; border-bottom: 1px solid var(--color-rule); vertical-align: top; }
+      .page h2 { font-size: 26pt; line-height: 1.05; letter-spacing: -0.035em; font-weight: 600; margin-top: 3mm; }
+      .page .sub { font-size: 11pt; color: var(--color-muted); margin-top: 3mm; max-width: 150mm; }
+      .tag { display: inline-flex; align-items: center; gap: 2mm; font-family: var(--font-mono); font-size: 7.5pt; color: var(--color-muted); }
+      .tag::before { content: ''; width: 1.6mm; height: 1.6mm; border-radius: 99px; background: var(--color-accent); }
+      .foot { position: absolute; left: 17mm; right: 17mm; bottom: 10mm; display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 7pt; color: var(--color-faint); }
+      table.t { width: 100%; border-collapse: collapse; margin-top: 6mm; font-size: 8.4pt; }
+      table.t th { text-align: left; font-size: 7pt; letter-spacing: 0.02em; color: var(--color-muted); font-weight: 500; padding: 0 2mm 2.5mm 0; border-bottom: 1px solid var(--color-ink); }
+      table.t td { padding: 2.3mm 2mm 2.3mm 0; border-bottom: 1px solid var(--color-line); vertical-align: top; }
       .mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
-      .box { border-radius: 3mm; padding: 5mm; }
-      .step { display: grid; grid-template-columns: 11mm 1fr; gap: 3mm; padding: 3.5mm 0; border-bottom: 1px solid var(--color-rule); }
+      .box { border-radius: 4mm; padding: 5mm; }
     </style>
   </head>
   <body>
     <!-- 1 · Obálka -->
-    <section class="page !bg-[var(--color-term)] !text-white">
-      <div class="flex items-center justify-between"><Logo dark /><span class="mono text-[8pt] text-[#7f948a]">VYDÁNÍ {dateCz(today)}</span></div>
-      <p class="mono mt-[38mm] text-[9pt] tracking-[.2em] text-[var(--color-phosphor)]">PRO ČESKÉ DROBNÉ INVESTORY</p>
-      <h1 class="mt-3 text-[64pt] leading-[.92] font-semibold">ETF<br />tahák <em class="text-[var(--color-amber)]">2026</em></h1>
-      <p class="mt-6 max-w-[130mm] text-[14pt] leading-snug text-[#c9d4ce]">12 slavných ETF z newyorské burzy a jejich evropská dvojčata, která si v Česku opravdu koupíte.</p>
-      <svg viewBox="0 0 200 40" class="mt-10 w-[120mm]" fill="none"><path d="M0 32c25 0 32-14 56-14s28 9 50 9c19 0 27-12 40-22L200 2" stroke="#f5b700" stroke-width="2.5" stroke-linecap="round" /></svg>
-      <ol class="mt-12 grid grid-cols-2 gap-x-8 gap-y-3 text-[10.5pt] text-[#c9d4ce]">
-        <li><span class="mono text-[var(--color-amber)]">01</span> Překladač NYSE → Česko</li>
-        <li><span class="mono text-[var(--color-amber)]">02</span> Kolik stojí poplatky</li>
-        <li><span class="mono text-[var(--color-amber)]">03</span> Daně v ČR na jedné stránce</li>
-        <li><span class="mono text-[var(--color-amber)]">04</span> Jak koupit za 5 minut</li>
-      </ol>
-      <p class="absolute right-[16mm] bottom-[14mm] left-[16mm] text-[7.5pt] leading-snug text-[#7f948a]">Informační materiál, ne investiční doporučení ani daňové poradenství. Investice nesou riziko ztráty. Minulá výkonnost nezaručuje budoucí výnosy.</p>
+    <section class="page" style="background:#0b0c0e;color:#fff">
+      <div style="position:absolute;top:-60mm;right:-50mm;width:160mm;height:160mm;border-radius:999px;background:#c9f24b;opacity:.22;filter:blur(30mm)"></div>
+      <div class="flex items-center justify-between"><Logo dark /><span class="mono text-[8pt] text-zinc-500">{dateCz(today)}</span></div>
+      <p class="mono mt-[46mm] text-[8.5pt] text-[var(--color-lime)]">STARTOVACÍ BALÍČEK ETF 2026</p>
+      <h1 class="mt-4 text-[54pt] leading-[0.95] font-semibold tracking-[-0.045em]">Chcete VOO?<br />Kupte si jeho <span style="color:#c9f24b">dvojče.</span></h1>
+      <p class="mt-7 max-w-[130mm] text-[13pt] leading-snug text-zinc-400">Checklist před prvním nákupem a 12 slavných ETF z newyorské burzy s evropskými dvojčaty, která si v Česku opravdu koupíte.</p>
+      <div class="mt-14 grid grid-cols-2 gap-3 text-[10pt]">
+        {[['01', 'Checklist před nákupem'], ['02', 'Překladač NYSE → Evropa'], ['03', 'Kolik stojí poplatky'], ['04', 'Daně v ČR na jedné stránce']].map(([k, t]) => (
+          <div class="rounded-[3mm] p-4" style="background:#16181b"><span class="mono text-[8pt] text-[var(--color-lime)]">{k}</span><p class="mt-1 text-white">{t}</p></div>
+        ))}
+      </div>
+      <p class="mt-6 text-[9pt] text-zinc-500">K balíčku patří Excel šablona „Můj ETF plán“: {site}{XLSX_URL}</p>
+      <p class="absolute right-[17mm] bottom-[14mm] left-[17mm] text-[7pt] leading-snug text-zinc-500">Informační materiál, ne investiční doporučení ani daňové poradenství. Investice nesou riziko ztráty. Minulá výkonnost nezaručuje budoucí výnosy.</p>
     </section>
 
-    <!-- 2 · Překladač -->
+    <!-- 2 · Checklist -->
     <section class="page">
-      <p class="kicker">01 · Překladač NYSE → Česko</p>
+      <p class="tag">01 · Checklist</p>
+      <h2>Než kliknete na „Koupit“</h2>
+      <p class="sub">10 kroků. Odškrtněte je tužkou, nebo si checklist vytiskněte a dejte vedle počítače.</p>
+      <div class="mt-7 space-y-6">
+        {checklist.map(([group, items]) => (
+          <div>
+            <p class="mono text-[7.5pt] text-[var(--color-muted)]">{group.toUpperCase()}</p>
+            <div class="mt-2 divide-y divide-[var(--color-line)] border-y border-[var(--color-line)]">
+              {items.map(([t, d]) => {
+                n += 1;
+                return (
+                  <div class="flex gap-4 py-[3.2mm]">
+                    <span class="mt-[0.5mm] h-[5.2mm] w-[5.2mm] shrink-0 rounded-[1.4mm] border-[1.5px] border-[var(--color-ink)]"></span>
+                    <div>
+                      <p class="text-[11pt] font-semibold tracking-[-0.01em]"><span class="mono mr-2 text-[8.5pt] font-normal text-[var(--color-faint)]">{String(n).padStart(2, '0')}</span>{t}</p>
+                      <p class="mt-0.5 text-[9pt] text-[var(--color-muted)]">{d}</p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        ))}
+      </div>
+      <div class="foot"><span>BestBrookies · Startovací balíček ETF 2026</span><span>2 / {pages}</span></div>
+    </section>
+
+    <!-- 3 · Překladač -->
+    <section class="page">
+      <p class="tag">02 · Překladač</p>
       <h2>Co koupit místo amerického ETF</h2>
-      <p class="lead">Americká ETF evropští brokeři drobným investorům neprodají: chybí jim dokument KID, který vyžaduje nařízení PRIIPs. Tahle evropská dvojčata (fondy se sídlem v Irsku) si koupíte. U brokera stačí vyhledat <strong>ISIN</strong>.</p>
+      <p class="sub">Americkým ETF chybí evropský dokument KID (nařízení PRIIPs), proto je broker drobným investorům neprodá. Tato dvojčata (fondy se sídlem v Irsku) si koupíte. U brokera stačí vyhledat <strong class="text-[var(--color-ink)]">ISIN</strong>.</p>
       <table class="t">
-        <thead><tr><th>NYSE</th><th>TER USA</th><th>Evropské dvojče</th><th>ISIN</th><th>TER</th><th>Typ</th></tr></thead>
+        <thead><tr><th><span class="inline-flex items-center gap-1.5"><FlagUS size={8} /> NYSE</span></th><th>TER</th><th><span class="inline-flex items-center gap-1.5"><FlagEU size={8} /> Evropské dvojče</span></th><th>ISIN</th><th>TER</th><th>Typ</th></tr></thead>
         <tbody>
           {etfs.map((e) => (
             <tr>
-              <td><span class="mono font-bold">{e.ticker}</span><br /><span class="text-[7.5pt] text-[var(--color-muted)]">{e.categoryCz}</span></td>
-              <td class="mono">{ter(e.ter)}</td>
-              <td><strong>{e.twin.name}</strong>{e.twin.ticker && <span class="mono text-[var(--color-muted)]"> · {e.twin.ticker}</span>}<br /><span class="text-[7.5pt] text-[var(--color-muted)]">{e.twin.match === 'exact' ? 'stejný index' : 'nejbližší alternativa'} · {e.twin.replication}</span></td>
-              <td class="mono text-[var(--color-stamp-dark)]">{e.twin.isin}</td>
-              <td class="mono font-bold">{ter(e.twin.ter)}</td>
-              <td>{e.twin.policy === 'acc' ? 'akum.' : 'distr.'}</td>
+              <td><span class="mono font-semibold">{e.ticker}</span><br /><span class="text-[7pt] text-[var(--color-muted)]">{e.categoryCz}</span></td>
+              <td class="mono text-[var(--color-muted)]">{ter(e.ter)}</td>
+              <td><strong class="font-semibold">{e.twin.name}</strong>{e.twin.ticker && <span class="mono text-[var(--color-muted)]"> · {e.twin.ticker}</span>}<br /><span class="text-[7pt] text-[var(--color-muted)]">{e.twin.match === 'exact' ? 'stejný index' : 'nejbližší alternativa'} · {e.twin.replication}</span></td>
+              <td class="mono font-semibold text-[var(--color-accent-strong)]">{e.twin.isin}</td>
+              <td class="mono font-semibold">{ter(e.twin.ter)}</td>
+              <td class="text-[8pt]">{e.twin.policy === 'acc' ? 'akum.' : 'distr.'}</td>
             </tr>
           ))}
         </tbody>
       </table>
-      <p class="mt-4 text-[8pt] leading-snug text-[var(--color-muted)]">TER = celková roční nákladovost fondu. <strong>Akum.</strong> = dividendy se reinvestují ve fondu, <strong>distr.</strong> = vyplácí se. Dvojčata ověřena {dateCz(twinsVerifiedAt)} z dokumentů emitentů a databází ETF; TER amerických ETF: Alpha Vantage. Všechna americká ETF ověřena jako kotovaná na NYSE (celkem {listing.nyseEtfCount ? fmtInt(listing.nyseEtfCount) : '3 000+'} ETF). Před nákupem si vždy přečtěte aktuální KID.</p>
-      <div class="foot"><span>BestBrookies · ETF tahák 2026</span><span>2 / {pages}</span></div>
+      <p class="mt-4 text-[7.5pt] leading-snug text-[var(--color-faint)]">TER = celková roční nákladovost. Akum. = dividendy se reinvestují, distr. = vyplácí se. Dvojčata ověřena {dateCz(twinsVerifiedAt)}, TER amerických ETF: Alpha Vantage. Všechna americká ETF ověřena jako kotovaná na NYSE (celkem {listing.nyseEtfCount ? fmtInt(listing.nyseEtfCount) : '3 000+'} ETF). Před nákupem si přečtěte aktuální KID.</p>
+      <div class="foot"><span>BestBrookies · Startovací balíček ETF 2026</span><span>3 / {pages}</span></div>
     </section>
 
-    <!-- 3 · Poplatky -->
+    <!-- 4 · Poplatky -->
     <section class="page">
-      <p class="kicker">02 · Kolik stojí poplatky</p>
-      <h2>Desetiny procenta, které stojí statisíce</h2>
-      <p class="lead">Pravidelná měsíční investice, výnos {pct(GROSS_RETURN, 0)} ročně před poplatky. Srovnání evropského ETF s poplatkem {ter(cheapTwinTer)} a typického českého akciového fondu ({pct(czechFund.value, 2)}, {czechFund.source}).</p>
+      <p class="tag">03 · Poplatky</p>
+      <h2>Desetiny procenta, které ukousnou statisíce</h2>
+      <p class="sub">Pravidelná měsíční investice, výnos {pct(GROSS_RETURN, 0)} ročně před poplatky. ETF s poplatkem {ter(cheapTwinTer)} vs. typický český akciový fond ({pct(czechFund.value, 2)}, {czechFund.source}).</p>
       <table class="t">
-        <thead><tr><th>Měsíčně</th><th>Let</th><th>Vloženo</th><th>ETF {ter(cheapTwinTer)}</th><th>Fond {pct(czechFund.value, 2)}</th><th>Poplatky vám vezmou</th></tr></thead>
+        <thead><tr><th>Měsíčně</th><th>Let</th><th>Vloženo</th><th>ETF</th><th>Fond</th><th style="width:48mm">Poplatky vám vezmou</th></tr></thead>
         <tbody>
           {feeRows.map((r) => (
             <tr>
               <td class="mono">{czk(r.a)}</td>
               <td class="mono">{r.y}</td>
-              <td class="mono">{czk(r.invested)}</td>
-              <td class="mono text-[var(--color-up)]">{czk(r.cheap)}</td>
-              <td class="mono">{czk(r.exp)}</td>
-              <td class="mono font-bold text-[var(--color-stamp)]">{czk(r.diff)}</td>
+              <td class="mono text-[var(--color-muted)]">{czk(r.invested)}</td>
+              <td class="mono">{czk(r.cheap)}</td>
+              <td class="mono text-[var(--color-muted)]">{czk(r.exp)}</td>
+              <td>
+                <div class="flex items-center gap-2">
+                  <span class="h-[2mm] rounded-full" style={`width:${(r.diff / maxDiff) * 22}mm;background:var(--color-neg)`}></span>
+                  <span class="mono font-semibold text-[var(--color-neg)]">{czk(r.diff)}</span>
+                </div>
+              </td>
             </tr>
           ))}
         </tbody>
       </table>
-      <div class="box mt-6 bg-[var(--color-paper-2)]">
+      <div class="box mt-7 bg-[var(--color-soft)]">
         <p class="font-semibold">Proč to tolik dělá?</p>
-        <p class="mt-1 text-[9.5pt] text-[var(--color-ink-2)]">Poplatek se strhává každý rok z celé naspořené částky, ne jen z vkladů. A co zaplatíte na poplatcích, to už vám dál nevydělává. Rozdíl proto s časem neroste lineárně, ale zrychluje se.</p>
+        <p class="mt-1 text-[9.5pt] text-[var(--color-ink-2)]">Poplatek se strhává každý rok z celé naspořené částky, ne jen z vkladů. Co zaplatíte na poplatcích, už vám dál nevydělává. Rozdíl proto s časem zrychluje. Spočítejte si vlastní čísla v šabloně „Můj ETF plán“.</p>
       </div>
-      <p class="mt-4 text-[8pt] text-[var(--color-muted)]">Ilustrativní výpočet: vklad na začátku měsíce, konstantní výnos. Nezahrnuje vstupní poplatky, poplatky brokera, měnové vlivy ani daně. Skutečné výnosy budou jiné a mohou být i záporné.</p>
-      <div class="foot"><span>BestBrookies · ETF tahák 2026</span><span>3 / {pages}</span></div>
+      <p class="mt-4 text-[7.5pt] text-[var(--color-faint)]">Ilustrativní výpočet: vklad na začátku měsíce, konstantní výnos. Bez vstupních poplatků, poplatků brokera, měnových vlivů a daní.</p>
+      <div class="foot"><span>BestBrookies · Startovací balíček ETF 2026</span><span>4 / {pages}</span></div>
     </section>
 
-    <!-- 4 · Daně -->
+    <!-- 5 · Daně -->
     <section class="page">
-      <p class="kicker">03 · Daně v ČR</p>
+      <p class="tag">04 · Daně v ČR</p>
       <h2>Daně na jedné stránce</h2>
-      <p class="lead">Pro fyzické osoby s daňovým domicilem v ČR, stav k {dateCz(today)}. Zákony se mění, u konkrétní situace se poraďte s daňovým poradcem.</p>
-      <div class="mt-5 grid grid-cols-2 gap-4">
-        <div class="box bg-[var(--color-card)] ring-1 ring-[var(--color-rule)]">
-          <p class="mono text-[8pt] text-[var(--color-stamp)]">PRAVIDLO 1</p>
-          <p class="mt-1 text-[13pt] font-semibold">Časový test 3 roky</p>
-          <p class="mt-1 text-[9.5pt] text-[var(--color-ink-2)]">Zisk z prodeje ETF je osvobozený od daně, pokud jste podíly drželi déle než 3 roky. Test se počítá pro každý nákup zvlášť.</p>
-        </div>
-        <div class="box bg-[var(--color-card)] ring-1 ring-[var(--color-rule)]">
-          <p class="mono text-[8pt] text-[var(--color-stamp)]">PRAVIDLO 2</p>
-          <p class="mt-1 text-[13pt] font-semibold">Limit 100 000 Kč za rok</p>
-          <p class="mt-1 text-[9.5pt] text-[var(--color-ink-2)]">Pokud celkové <em>příjmy</em> (ne zisky) z prodeje cenných papírů za rok nepřesáhnou 100 000 Kč, nedaníte je ani při kratší době držení.</p>
-        </div>
-        <div class="box bg-[var(--color-card)] ring-1 ring-[var(--color-rule)]">
-          <p class="mono text-[8pt] text-[var(--color-stamp)]">PRAVIDLO 3</p>
-          <p class="mt-1 text-[13pt] font-semibold">Akumulační = méně papírování</p>
-          <p class="mt-1 text-[9.5pt] text-[var(--color-ink-2)]">Akumulační fondy dividendy reinvestují uvnitř, takže je v přiznání neřešíte. Dividendy z distribučních fondů se v ČR daní (zpravidla 15 %).</p>
-        </div>
-        <div class="box bg-[var(--color-term)] text-white">
-          <p class="mono text-[8pt] text-[var(--color-phosphor)]">BONUS · DIP</p>
-          <p class="mt-1 text-[13pt] font-semibold">Až 7 200 Kč ročně od státu</p>
-          <p class="mt-1 text-[9.5pt] text-[#c9d4ce]">Na dlouhodobém investičním produktu (DIP) si odečtete až 48 000 Kč vkladů ročně ze základu daně (společný limit s penzijním spořením a životním pojištěním). Podmínka: výběr nejdříve po 10 letech a v roce 60. narozenin.</p>
-        </div>
-      </div>
-      <p class="mt-5 text-[8pt] leading-snug text-[var(--color-muted)]">Zdroje: zákon č. 586/1992 Sb., o daních z příjmů (§ 4 odst. 1); <a class="underline" href="https://www.e15.cz/zdaneni-investic-akcie-kryptomeny">E15: Zdanění investic 2026</a>; <a class="underline" href="https://money.cz/novinky-a-tipy/dane/danove-podporovane-produkty-sporeni-na-stari-v-roce-2024/">Money.cz: daňově podporované produkty</a>.</p>
-      <div class="foot"><span>BestBrookies · ETF tahák 2026</span><span>4 / {pages}</span></div>
-    </section>
-
-    <!-- 5 · Jak koupit -->
-    <section class="page">
-      <p class="kicker">04 · Jak koupit za 5 minut</p>
-      <h2>Od ISIN k první pravidelné investici</h2>
-      <div class="mt-5">
+      <p class="sub">Pro fyzické osoby s daňovým domicilem v ČR, stav k {dateCz(today)}. U konkrétní situace se poraďte s daňovým poradcem.</p>
+      <div class="mt-7 grid grid-cols-2 gap-4">
         {[
-          ['Vyberte si brokera s evropskými burzami', 'Hledejte přístup na Xetru, London Stock Exchange, Euronext nebo Borsu Italiana, nízké poplatky za nákup a ideálně pravidelné investování. Zkontrolujte, že broker je regulovaný v EU.'],
-          ['Najděte dvojče podle ISIN', 'Do vyhledávání zadejte ISIN z tabulky na straně 2. Jeden fond bývá na více burzách a v různých měnách (EUR, USD, GBP). Vyberte tu s největším objemem obchodů.'],
-          ['Přečtěte si KID', 'Dokument klíčových informací má každý evropský fond. Najdete v něm riziko (1–7), náklady a scénáře výnosů.'],
-          ['Zadejte limitní příkaz', 'U limitního příkazu určíte maximální cenu. Nekupujte těsně po otevření burzy, kdy bývá rozdíl mezi nákupní a prodejní cenou největší.'],
-          ['Nastavte pravidelnou investici', 'Pevná částka každý měsíc vyrovná výkyvy trhu (průměrování nákladů) a ušetří vás rozhodování, kdy je „ta pravá chvíle“.'],
-          ['Zapište si datum nákupu', 'Kvůli časovému testu (3 roky). Většina brokerů vám na začátku roku pošle i výpis pro daňové přiznání.'],
-        ].map(([t, d], i) => (
-          <div class="step">
-            <span class="mono text-[20pt] leading-none font-bold text-[var(--color-stamp)]">{i + 1}</span>
-            <div><p class="text-[12pt] font-semibold">{t}</p><p class="mt-0.5 text-[9.5pt] text-[var(--color-ink-2)]">{d}</p></div>
+          ['3 roky', 'Časový test', 'Zisk z prodeje ETF je osvobozený, pokud jste podíly drželi déle než 3 roky. Počítá se pro každý nákup zvlášť.'],
+          ['100 000 Kč', 'Roční limit příjmů', 'Když celkové příjmy (ne zisky) z prodeje cenných papírů za rok nepřesáhnou 100 000 Kč, nedaníte je ani při kratším držení.'],
+          ['0 řádků', 'Akumulační fondy', 'Dividendy se reinvestují uvnitř fondu, v přiznání je neřešíte. Dividendy distribučních fondů se v ČR daní (zpravidla 15 %).'],
+        ].map(([big, t, d]) => (
+          <div class="box ring-1 ring-[var(--color-line)]">
+            <p class="text-[22pt] leading-none font-semibold tracking-[-0.04em]">{big}</p>
+            <p class="mt-2 text-[11pt] font-semibold">{t}</p>
+            <p class="mt-1 text-[9pt] text-[var(--color-muted)]">{d}</p>
           </div>
         ))}
+        <div class="box" style="background:#0b0c0e;color:#fff">
+          <p class="text-[22pt] leading-none font-semibold tracking-[-0.04em]" style="color:#c9f24b">7 200 Kč</p>
+          <p class="mt-2 text-[11pt] font-semibold">Ročně od státu: DIP</p>
+          <p class="mt-1 text-[9pt] text-zinc-400">Na dlouhodobém investičním produktu si odečtete až 48 000 Kč vkladů ročně ze základu daně (společný limit s penzijním spořením a životním pojištěním). Výběr nejdříve po 10 letech a v roce 60. narozenin.</p>
+        </div>
       </div>
-      <div class="foot"><span>BestBrookies · ETF tahák 2026</span><span>5 / {pages}</span></div>
+      <p class="mt-6 text-[7.5pt] leading-snug text-[var(--color-faint)]">Zdroje: zákon č. 586/1992 Sb., o daních z příjmů (§ 4 odst. 1); E15: Zdanění investic 2026; Money.cz: daňově podporované produkty spoření na stáří.</p>
+      <div class="foot"><span>BestBrookies · Startovací balíček ETF 2026</span><span>5 / {pages}</span></div>
     </section>
 
     <!-- 6 · Zdroje -->
     <section class="page">
-      <p class="kicker">Metodika a zdroje</p>
+      <p class="tag">Metodika a zdroje</p>
       <h2>Odkud čísla bereme</h2>
-      <ul class="mt-5 space-y-3 text-[9.5pt] text-[var(--color-ink-2)]">
-        <li><strong>Poplatky, majetek, dividendy amerických ETF:</strong> Alpha Vantage (ETF_PROFILE). <strong>Ceny a výnosy:</strong> Alpha Vantage (měsíční ceny vč. reinvestovaných dividend), k {dateCz(pricesAsOf)}.</li>
+      <ul class="mt-7 space-y-3 text-[9.5pt] text-[var(--color-ink-2)]">
+        <li><strong>Poplatky, majetek, dividendy amerických ETF:</strong> Alpha Vantage (ETF_PROFILE). <strong>Ceny a výnosy:</strong> Alpha Vantage, měsíční ceny vč. reinvestovaných dividend, k {dateCz(pricesAsOf)}.</li>
         <li><strong>Burza kotace:</strong> Alpha Vantage LISTING_STATUS, k {dateCz(listing.asOf)}.</li>
         <li><strong>Kurz USD/CZK:</strong> Česká národní banka, {String(fx.usdczk).replace('.', ',')} Kč k {dateCz(fx.date)}.</li>
-        <li><strong>Evropská dvojčata:</strong> dokumenty a stránky emitentů (Vanguard, iShares, SPDR, Invesco, WisdomTree) a databáze ETF, ověřeno {dateCz(twinsVerifiedAt)}.</li>
+        <li><strong>Evropská dvojčata:</strong> dokumenty emitentů (Vanguard, iShares, SPDR, Invesco, WisdomTree) a databáze ETF, ověřeno {dateCz(twinsVerifiedAt)}.</li>
         <li><strong>Poplatky českých fondů:</strong> {czechFund.label}, {czechFund.source}.</li>
-        <li><strong>PRIIPs a nedostupnost amerických ETF:</strong> justETF; Evropský parlament, dotaz E-004745/2021.</li>
+        <li><strong>PRIIPs:</strong> justETF; Evropský parlament, dotaz E-004745/2021.</li>
       </ul>
-      <div class="box mt-8 bg-[var(--color-paper-2)] text-[9pt] leading-snug text-[var(--color-ink-2)]">
+      <div class="box mt-9 bg-[var(--color-soft)] text-[9pt] leading-snug text-[var(--color-ink-2)]">
         <p class="font-semibold text-[var(--color-ink)]">Důležité upozornění</p>
         <p class="mt-1">Tento materiál má informační a vzdělávací charakter. Není investičním doporučením, nabídkou ani daňovým či právním poradenstvím. {BRAND.name} není obchodník s cennými papíry ani investiční zprostředkovatel. Investice do ETF nesou riziko ztráty včetně měnového rizika. Minulá výkonnost nezaručuje budoucí výnosy. Před investicí si přečtěte KID a prospekt fondu.</p>
       </div>
-      <div class="mt-10 flex items-center gap-3"><Logo /><span class="text-[9pt] text-[var(--color-muted)]">ETF bez mlhy · {BRAND.email}</span></div>
-      <p class="mt-2 text-[7.5pt] text-[var(--color-muted)]">{BRAND.legal}, IČO {BRAND.ico}</p>
-      <div class="foot"><span>BestBrookies · ETF tahák 2026</span><span>6 / {pages}</span></div>
+      <div class="mt-10 flex items-center gap-3"><Logo /><span class="text-[9pt] text-[var(--color-muted)]">{BRAND.email}</span></div>
+      <p class="mt-2 text-[7.5pt] text-[var(--color-faint)]">{BRAND.legal}, IČO {BRAND.ico}</p>
+      <div class="foot"><span>BestBrookies · Startovací balíček ETF 2026</span><span>6 / {pages}</span></div>
     </section>
   </body>
 </html>
