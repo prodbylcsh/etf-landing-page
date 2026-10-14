@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-10-14T09:26:06.987Z",
+ "generatedAt": "2026-10-14T12:33:40.387Z",
  "sources": {
   "alphaVantage": {
    "name": "Alpha Vantage",
@@ -11,8 +11,8 @@
   }
  },
  "fx": {
-  "usdczk": 21.788,
-  "date": "2026-10-13",
+  "usdczk": 21.754,
+  "date": "2026-10-14",
   "monthly": {
    "2005-01": 23.118,
    "2005-02": 22.449,
@@ -275,7 +275,7 @@
    "2026-07": 21.076,
    "2026-08": 20.8,
    "2026-09": 21.522,
-   "2026-10": 21.788
+   "2026-10": 21.754
   },
   "source": "ČNB – kurzy devizového trhu",
   "sourceUrl": "https://www.cnb.cz/cs/financni-trhy/devizovy-trh/kurzy-devizoveho-trhu/kurzy-devizoveho-trhu/denni_kurz.txt"
