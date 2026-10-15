@@ -1,14 +1,15 @@
 ---
-import TwinCards from './TwinCards.astro';
 import Brand from './Brand.astro';
+import GrowthArt from './GrowthArt.astro';
+import { millions, monthlyLabel, disclaimer } from './headline';
 ---
 <div data-ad="ad-a-story" class="ad relative h-[1920px] w-[1080px] overflow-hidden bg-white px-[90px] pt-[250px] text-[#0a0a0a]">
   <div class="ad-grid absolute inset-0"></div>
   <div class="relative"><Brand size={54} /></div>
-  <h1 class="relative mt-[60px] text-[120px] leading-[0.96] font-semibold tracking-[-0.05em]">Chcete VOO?<br />V Česku ho nekoupíte.</h1>
-  <p class="relative mt-[30px] text-[64px] font-semibold tracking-[-0.03em]">Tady je jeho <span class="hl">dvojče.</span></p>
-  <div class="relative mt-[60px]"><TwinCards scale={1} /></div>
-  <div class="absolute right-[90px] bottom-[330px] left-[90px] text-center">
-    <span class="inline-block rounded-full bg-[#0a0a0a] px-[60px] py-[34px] text-[42px] font-semibold text-white">12 dvojčat v balíčku zdarma ↑</span>
+  <h1 class="relative mt-[70px] text-[124px] leading-[0.96] font-semibold tracking-[-0.05em]">Z {monthlyLabel} měsíčně může být <span class="hl">{millions}.</span></h1>
+  <div class="relative mt-[80px]"><GrowthArt width={900} height={340} /></div>
+  <p class="relative mt-[40px] text-[26px] leading-snug text-[#71717a]">{disclaimer}</p>
+  <div class="absolute right-[90px] bottom-[280px] left-[90px] text-center">
+    <span class="inline-block rounded-full bg-[#0a0a0a] px-[60px] py-[34px] text-[42px] font-semibold text-white">Spočítejte si to sami ↑</span>
   </div>
 </div>

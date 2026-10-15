@@ -6,8 +6,8 @@ Landing page (lead magnet) pro českého drobného investora, který přichází
 
 | Co | Kde |
 |---|---|
-| Stránka, varianta A (výchozí) | `/` nebo `/?v=dvojce` |
-| Stránka, varianta B | `/?v=poplatky` |
+| Stránka, varianta A „Růst“ (výchozí) | `/` nebo `/?v=rust` (starší `?v=dvojce` funguje jako alias) |
+| Stránka, varianta B „Poplatky“ | `/?v=poplatky` |
 | Živý debug měření (funnel) | `/?debug=1` |
 | Reklamní kreativy (2 varianty, feed + story) | `/reklama`, PNG v [`public/ads/`](public/ads) |
 | Checklist + překladač (PDF, 6 stran) | [`/bestbrookies-etf-checklist-2026.pdf`](public/bestbrookies-etf-checklist-2026.pdf) (šablona `/tahak`) |
@@ -18,9 +18,11 @@ Landing page (lead magnet) pro českého drobného investora, který přichází
 
 ## 1. Koncept v kostce
 
-**Insight:** Většinu slavných ETF z NYSE (VOO, SPY, IVV, VTI, SCHD…) si drobný investor v EU nekoupí. Kvůli nařízení PRIIPs jim chybí dokument KID ([justETF](https://www.justetf.com/en/news/etf/us-domiciled-etfs.html), [Evropský parlament](https://www.europarl.europa.eu/doceo/document/E-9-2021-004745_EN.html)). Návštěvník zná tickery z YouTube, ale u brokera je nenajde. Stránka tenhle problém řeší a ke každému ETF ukáže **evropské dvojče** (stejný nebo nejbližší index, ISIN, poplatek).
+**Hlavní sdělení:** *„Z 3 000 Kč měsíčně může být 1,5 milionu. Bez akciových tipů a drahého poradce: jeden levný fond, který za vás koupí 500 největších firem.“* Stránka prodává výsledek (růst peněz, jistotu na stáří), ne technický detail. Technické věci (ticker, TER, PRIIPs, evropská „dvojčata“) přicházejí až ve srovnání a v balíčku, kde už je návštěvník zvědavý.
 
-**Cílová skupina:** „Odhodlaný začátečník“, 25–40 let, úspory na spořicím účtu nebo v drahém bankovním fondu. O S&P 500 už slyšel, ale bojí se, že vybere špatně, přeplatí na poplatcích nebo se zamotá do daní. Sekundárně „optimalizátor“, který už investuje a chce vědět, jestli nepřeplácí. Podrobně viz [SPEC.md, kap. 3](SPEC.md#3-cílová-skupina).
+**Cílová skupina:** „Odhodlaný začátečník“, 25–40 let, úspory na spořicím účtu nebo v drahém bankovním fondu. Ví, že by měl něco dělat, ale neví co. Sekundárně „optimalizátor“, který už investuje a chce vědět, jestli nepřeplácí. Podrobně viz [SPEC.md, kap. 3](SPEC.md#3-cílová-skupina).
+
+**Insight, na kterém je praktický háček:** Většinu slavných ETF z NYSE (VOO, SPY, SCHD…) si drobný investor v EU nekoupí, protože jim chybí evropský dokument KID ([justETF](https://www.justetf.com/en/news/etf/us-domiciled-etfs.html)). Balíček proto ke každému ukáže evropskou verzi, kterou v Česku koupíte. Je to argument pro „proč si stáhnout návod“, ne hlavní sdělení.
 
 **Co dostane za e-mail (Startovací balíček):**
 - **Překladač NYSE → Evropa:** všech 12 dvojčat s ISIN, poplatkem a typem.
@@ -43,60 +45,79 @@ Landing page (lead magnet) pro českého drobného investora, který přichází
 
 ---
 
-## 2. Design
+## 2. Sdělení a psychologie (z čeho texty vycházejí)
+
+Texty jsou postavené na ověřených principech konverzního copywritingu a na datech o tom, jak Češi o investování přemýšlejí:
+
+| Princip / zjištění | Zdroj | Jak se to propsalo do stránky |
+|---|---|---|
+| Nadpis přečte asi 8 z 10 lidí, zbytek stránky asi 2 z 10. Nadpis má slibovat výsledek (benefit), ne funkci, a mít kolem 10 slov. | [GetResponse: landing page copywriting](https://www.getresponse.com/blog/writing-copy-landing-page), [Earlybird](https://earlybird.im/blog/landing-page-copywriting-guidelines) | Hero: „Z 3 000 Kč měsíčně může být 1,5 milionu.“ (8 slov, konkrétní číslo, výsledek). Hned pod ním kalkulačka, která slib dokáže na vlastních číslech. |
+| Rámec **PAS** (problém → zesílení → řešení) a přínosy místo funkcí. | [Copyblogger: Problem-Agitate-Solve](https://copyblogger.com/problem-agitate-solve/) | Pořadí sekcí: peníze na účtu chudnou (inflace ČSÚ) → poplatky ukusují statisíce → řešení: jeden levný indexový fond. |
+| 73 % neinvestujících Čechů brzdí **strach ze ztráty**, 71 % pocit, že tomu nerozumí. Hlavní motivací je **jistota na stáří**, ne touha po zisku. Polovina lidí už potkala podvodnou nabídku. | [E15: Strach ze ztráty jako hlavní brzda](https://www.e15.cz/finexpert/banky-a-ucty/strach-ze-ztraty-jako-hlavni-brzda-proc-cesi-stale-vahaji-s-investovanim-1434418) | Texty slibují jednoduchost a klid („bez tipů, 10 minut měsíčně“), ne rychlé zbohatnutí. FAQ začíná otázkou „Můžu přijít o peníze?“ a poctivě na ni odpovídá. Důvěra: „Nic neprodáváme, nikdy vám nebudeme volat.“ |
+| Autorita a sociální důkaz zvyšují důvěru. | [BirdSend: opt-in rates](https://academy.birdsend.co/post-high-opt-in-rates-part-2/) | Citát Warrena Buffetta (90 % do levného indexového fondu na S&P 500, [dopis akcionářům 2013](https://www.berkshirehathaway.com/letters/2013ltr.pdf)) jako odpověď na „proč zrovna tato ETF“. |
+| Pravidla ESMA pro investiční marketing: rizika musí být vidět stejně výrazně jako přínosy, ne v patičce. | [ESMA guidelines on marketing communications](https://www.esma.europa.eu/sites/default/files/library/esma34-45-1272_guidelines_on_marketing_communications.pdf) | Každé číslo o výnosu má hned pod sebou předpoklad a větu „výnos není zaručený, hodnota může i klesat“. Nikde neslibujeme „bez rizika“. |
+| Hodnota lead magnetu musí být zřejmá z názvu a konkrétní. Checklisty a šablony patří k nejlépe konvertujícím formátům. | [Leadpages: lead magnet examples](https://leadpages.com/lead-generation-guide/lead-magnet-landing-page-examples) | „Checklist pro začátečníky“, „Excel plán: Kolik budu mít“, „Které ETF koupit a kde“. |
+
+**Slovník:** jargon nahrazujeme: TER → „poplatek“, index → „500 největších firem“, UCITS / dvojče → „evropská verze, kterou koupíte v Česku“, NYSE → „newyorská burza“. Tickery (VOO…) se objevují až ve srovnání, vždy s popisem, co v nich je.
+
+---
+
+## 3. Design
 
 - **Typografie:** Geist a Geist Mono (čísla, tickery, ISIN), self-hosted s latin-ext pro češtinu.
 - **Paleta:** bílá, inkoustová černá, škála šedé a jediný akcent: limetka pro zvýraznění a CTA na tmavém pozadí, zelená pro „dobré“ hodnoty. Červená jen pro „v ČR nekoupíte“ a ukousnuté poplatky.
 - **Barvy grafů:** sloty 1–3 ověřené palety (modrá, oranžová, aqua), ověřené validátorem na rozlišitelnost pro barvoslepé. Barva patří ETF, ne pořadí.
 - **Rytmus:** hero přes celou obrazovku, každá další sekce má jedno sdělení, jeden nadpis a jednu akci. Velkorysé mezery, karty místo tabulek.
 - **Obrázky místo textu:**
-  - vlajky USA/EU u dvojčat,
-  - „proč VOO nekoupíte“ jako schéma o 4 krocích s ikonami,
+  - inflace jako „smršťující se“ pruh a sloupcový graf (ČSÚ),
+  - složení S&P 500 ETF jako pruh (NVIDIA, Apple, Microsoft… + stovky dalších),
+  - vlajky USA/EU u evropských verzí fondů,
   - poplatky jako „ukousnutá sušenka“ (koláčový graf, úhel výseče = přesný podíl ztráty, navazuje na značku Brookies),
   - náhled balíčku jako trojice dokumentů.
 - **Pohyb** (vše vypnuto při `prefers-reduced-motion`):
   - nadpis hero naskakuje po slovech, ostatní prvky postupně s rozostřením;
   - sekce se odhalují při scrollu;
   - čáry grafů se vykreslují, čísla „dopočítávají“;
-  - v hero teče animovaný tok peněz z USA do EU;
+  - graf v hero se při změně částky překreslí;
   - karty se při najetí myší zvednou, balíček se rozvine;
   - FAQ se plynule rozbaluje.
 - **Data-viz:** graf „Kdybyste před N lety investovali X Kč měsíčně“ s až 3 ETF (reálné ceny a kurzy ČNB), crosshair s tooltipem, koncové popisky a souhrnné dlaždice; metriky jako pruhy; mezera ETF vs. fond jako šrafovaná plocha. Grafy se přizpůsobují skutečné šířce, takže písmo je čitelné i na mobilu.
 
 ---
 
-## 3. Pořadí sekcí a proč
+## 4. Pořadí sekcí a proč
 
 | # | Sekce | Zdůvodnění |
 |---|---|---|
-| 1 | **Hero přes celou obrazovku**, podle reklamy | Návštěvník má 3–8 vteřin. Titulek doslova opakuje příslib reklamy (message match). Hned vedle je **interaktivní vizuál** (výběr tickeru → „v ČR ne“ → dvojče, nebo výběr částky → sušenka s ukousnutou částkou) a e-mailové pole. Živý odznak NYSE („za 0:42, co jste tu, se zobchodovalo 1,9 mld. Kč“) dodá pohyb a pocit živé burzy. Nic dalšího v prvním záběru není, oko ví, kam se dívat. |
-| 2 | **Proč VOO nekoupíte** (schéma o 4 krocích) | Než ukážeme čísla, vysvětlíme problém. Obrázky místo odstavce: americký fond → chybí KID → broker nesmí → řešení: dvojče. Za 5 vteřin je jasné, proč stránka existuje. |
-| 3 | **Souboj ETF** | Největší „aha“: VOO, SPY a IVV dávají skoro stejný výsledek, ale liší se poplatkem a koupit nejde ani jedno. Nastavitelný graf v korunách, metriky jako pruhy, pod tím dvojčata. První je zdarma, ostatní jsou zamčená, a to je **primární brána ke kontaktu**. |
-| 4 | **Kalkulačka poplatků** | Druhá emoce: ztráta v korunách. Návštěvník zadá vlastní částku a **poplatek svého fondu**, takže výsledek je osobní a motivace si ho uložit („Poslat výpočet + šablonu“) vysoká. |
-| 5 | **Startovací balíček** + formulář | Pro ty, kdo potřebují celek: tři konkrétní soubory s náhledem. Checklist a šablona jsou hmatatelné a jejich hodnota je zřejmá před vyplněním e-mailu. |
-| 6 | **Proč nám věřit + FAQ** | Strach z podvodu a finfluencerů řešíme až u váhajících, ne v hero sekci, kde by brzdil. FAQ odstraní poslední námitky: zdarma, spam, PRIIPs, daně, kde koupit, proč chybí QQQ. |
-| 7 | **Finální CTA** | Poslední příležitost s jednoznačným příslibem („Za minutu víte, co si koupit místo VOO“). |
+| 1 | **Hero přes celou obrazovku** podle reklamy | Návštěvník má 3–8 vteřin. Nadpis slibuje konkrétní výsledek („Z 3 000 Kč měsíčně může být 1,5 milionu“) a hned vedle je **kalkulačka**, kde si ho ověří na vlastních číslech, s předpokladem a rizikem pod výsledkem. Tlačítko „Chci začít, pošlete mi návod“ a e-mailové pole. Živý odznak newyorské burzy dodá pohyb. |
+| 2 | **Problém: peníze na účtu chudnou** | PAS, krok „problém“. Reálná inflace ČSÚ: 100 000 Kč z roku 2016 má dnes hodnotu asi 64 400 Kč. Animovaný pruh a sloupcový graf to ukážou bez dlouhého textu. Končí mostem: „Investovat neznamená sázet na jednu akcii. Stačí jeden fond.“ |
+| 3 | **Řešení: jeden nákup, 500 firem** | Odpověď na „proč právě tato ETF“: skutečné složení S&P 500 ETF (NVIDIA, Apple, Microsoft…) jako pruh, 4 přínosy (rozložené riziko, mini poplatek, historie, 10 minut měsíčně) a citát Warrena Buffetta jako autorita. |
+| 4 | **Srovnání: které ETF vybrat** | Pro ty, kdo už chtějí vybírat. Nastavitelný graf „kdybyste před N lety investovali X Kč měsíčně“ na reálných datech, metriky jako pruhy a praktický háček: americké verze v Česku nekoupíte, evropské ano. První je zdarma, ostatní v balíčku = **brána ke kontaktu**. |
+| 5 | **Kalkulačka poplatků** | PAS, krok „zesílení“: ztráta v korunách. Návštěvník zadá částku a **poplatek svého fondu**, výsledek je osobní a „Poslat výpočet“ přirozený další krok. |
+| 6 | **Startovací balíček** + formulář | Tři konkrétní věci s náhledem: které ETF a kde koupit, checklist, Excel plán. Hodnota je zřejmá před vyplněním e-mailu. |
+| 7 | **Důvěra + FAQ** | Odpovídá na největší obavy Čechů z průzkumu: ztráta peněz, „nerozumím tomu“, „nemám dost peněz“, „kde je háček“. |
+| 8 | **Finální CTA** | „Začněte tento měsíc. Za 20 let si poděkujete.“ Emoce budoucího já, jedno pole. |
 
 Cookie lišta se ukáže až po prvním scrollu nebo po 8 s, aby nezakrývala hero. Před souhlasem se nic neukládá (PostHog běží v paměti, Meta Pixel se nenačte).
 
 ---
 
-## 4. Reklamy
+## 5. Reklamy
 
 Dvě varianty, každá pro feed 1080×1350 i story 1080×1920. Náhledy a texty jsou na `/reklama`, PNG v `public/ads/`.
 
-| | A · „Nekoupíte“ (zvědavost) | B · „Poplatky“ (averze ke ztrátě) |
+| | A · „Růst“ (touha po výsledku) | B · „Poplatky“ (averze ke ztrátě) |
 |---|---|---|
-| Vizuál | Karta VOO s vlajkou USA a „✕ v ČR ne“ → karta VUAA s vlajkou EU a „✓ koupíte“ | Ukousnutá sušenka (−24 %) a „−569 tis.“ |
-| Titulek | Chcete VOO? Kupte si jeho dvojče. | Kolik vám ukousnou poplatky? |
-| Cíl | `/?v=dvojce&utm_content=a_dvojce` | `/?v=poplatky&utm_content=b_poplatky` |
-| Hero | „Chcete VOO? Kupte si jeho dvojče.“ + výběr tickeru a dvojče | „Kolik vám ukousnou poplatky?“ + výběr částky a sušenka |
+| Vizuál | „1 519 021 Kč“ a graf vklady vs. výnos za 20 let, předpoklad a riziko přímo v kreativě | Ukousnutá sušenka (−24 %) a „−569 tis.“ |
+| Titulek | Z 3 000 Kč měsíčně může být 1,5 milionu. | Kolik vám ukousnou poplatky? |
+| Cíl | `/?v=rust&utm_content=a_rust` | `/?v=poplatky&utm_content=b_poplatky` |
+| Hero | Stejný nadpis + kalkulačka růstu | „Kolik vám ukousnou poplatky?“ + výběr částky a sušenka |
 
 Varianta se nastaví inline skriptem ještě před vykreslením (bez probliknutí) a zapisuje se ke každé události i k leadu.
 
 ---
 
-## 5. Měření celé cesty
+## 6. Měření celé cesty
 
 **Nástroje:**
 - **PostHog** (EU, free tier) pro funnely, session replay a feature flagy. Bez klíče se události posílají do `window.dataLayer` a do debug panelu `?debug=1`.
@@ -108,7 +129,7 @@ Každá událost nese `variant`, `utm_*`, `device` a `t_since_load`.
 | Fáze | Události |
 |---|---|
 | Příchod | `page_view`, `ticker_seen`, `hero_view` |
-| Pozornost | `section_view` (hero, why, compare, calculators, tahak, faq, final), `scroll_depth` 25/50/75/100, `faq_open` |
+| Pozornost | `section_view` (hero, why, solution, compare, calculators, tahak, faq, final), `scroll_depth` 25/50/75/100, `faq_open` |
 | Interakce | `first_interaction` (čas od načtení), `ticker_info`, `hero_chip_click`, `compare_change`, `timemachine_change` (graf srovnání), `calc_change`, `calc_result_view`, `lock_click` (kde) |
 | Formulář | `form_view` (umístění), `sheet_open/close`, `form_focus`, `form_submit`, `form_error` (důvod), **`lead_created`** |
 | Po konverzi | `pdf_download`, `xlsx_download`, `share_click`, `consent_update` |
@@ -117,7 +138,7 @@ Každá událost nese `variant`, `utm_*`, `device` a `t_since_load`.
 
 ---
 
-## 6. Očekávaná konverze
+## 7. Očekávaná konverze
 
 **Odhad: 5–8 % návštěvníků → lead** (studený mobilní provoz z Mety). Pro plánování počítáme se středem **6,5 %**.
 
@@ -144,17 +165,17 @@ Modelový funnel na 100 příchodů:
 
 ---
 
-## 7. Hypotézy pro A/B test (podle očekávaného dopadu)
+## 8. Hypotézy pro A/B test (podle očekávaného dopadu)
 
 Při konverzi 6,5 % a cíli zachytit relativní změnu 20 % (α = 0,05, síla 80 %) je potřeba **zhruba 6 000 návštěv na variantu**. Testujeme vždy jednu hypotézu najednou, rozdělení přes PostHog feature flag nebo URL parametr u reklamních sad.
 
 1. **Načasování žádosti o e-mail (největší dopad, odhad ±25–35 % relativně).**
    - *Hypotéza:* Když e-mail požadujeme až po interakci (zámek u dvojčete nebo výsledku), konvertuje víc lidí, než když je formulář hlavním prvkem hero sekce. Návštěvník nejdřív dostane důkaz hodnoty a zámek pak zneužije efekt nedokončené úlohy.
-   - *Varianty:* A = interakce v hero a zámek (současný stav); B = hero jen s formulářem a náhledem PDF.
+   - *Varianty:* A = kalkulačka v hero, e-mail až po výsledku nebo u zámku (současný stav); B = hero jen s formulářem a náhledem balíčku.
    - *Metrika:* `lead_created / page_view`. Kontrolní: podíl `pdf_download`.
-2. **Hlavní sdělení: zvědavost vs. ztráta (odhad ±15–25 %).**
-   - *Hypotéza:* „Chcete VOO? V Česku ho nekoupíte“ přitáhne a konvertuje lépe než „Kolik vám ukousnou poplatky?“, protože řeší konkrétní frustraci a je unikátní. Poplatky zná z reklam každý.
-   - *Varianty:* `?v=dvojce` vs. `?v=poplatky`, každá se svou kreativou.
+2. **Hlavní sdělení: zisk vs. ztráta (odhad ±15–25 %).**
+   - *Hypotéza:* „Z 3 000 Kč měsíčně může být 1,5 milionu“ (konkrétní výsledek, touha) přitáhne a konvertuje lépe než „Kolik vám ukousnou poplatky?“ (averze ke ztrátě). Začátečník ještě žádné poplatky neplatí, takže ho víc osloví, co může získat. U „optimalizátorů“ s bankovním fondem může vyhrát varianta B, proto vyhodnotit i podle segmentu (věk, zdroj).
+   - *Varianty:* `?v=rust` vs. `?v=poplatky`, každá se svou kreativou.
    - *Metrika:* cena za lead (CTR reklamy × konverze stránky), ne jen konverze stránky.
 3. **Míra zamčení (odhad ±10–15 %).**
    - *Hypotéza:* Jedno dvojče zdarma (VOO) + zbytek zamčený konvertuje lépe než (a) vše zamčené (menší důvěra, pocit „nic nedostanu“) i (b) vše odemčené s balíčkem jen jako „uložit si“ (menší motivace).
@@ -162,7 +183,7 @@ Při konverzi 6,5 % a cíli zachytit relativní změnu 20 % (α = 0,05, síla 80
 
 ---
 
-## 8. Data a zdroje
+## 9. Data a zdroje
 
 | Data | Zdroj | Aktualizace |
 |---|---|---|
@@ -171,6 +192,9 @@ Při konverzi 6,5 % a cíli zachytit relativní změnu 20 % (α = 0,05, síla 80
 | Burza kotace a počet ETF na NYSE (3 023) | Alpha Vantage `LISTING_STATUS` | týdně |
 | Kurz USD/CZK (aktuální i měsíční historie od 2005) | [ČNB](https://www.cnb.cz/cs/financni-trhy/devizovy-trh/kurzy-devizoveho-trhu/kurzy-devizoveho-trhu/denni_kurz.txt) | denně |
 | Evropská dvojčata (ISIN, TER) | dokumenty emitentů a databáze ETF, u každého řádku odkaz (`src/data/universe.json`) | ručně, ověřeno 14. 10. 2026 |
+| Inflace ČR 2016–2025 (průměrné roční míry) | [ČSÚ](https://csu.gov.cz/pak/prumerna-rocni-mira-inflace-v-cr-v-roce-2025-byla-25) | ručně, ročně |
+| Složení S&P 500 ETF (největší firmy a jejich váhy) | Alpha Vantage `ETF_PROFILE` (VOO) | týdně |
+| Citát Warrena Buffetta | [Berkshire Hathaway, dopis akcionářům 2013](https://www.berkshirehathaway.com/letters/2013ltr.pdf) | ručně |
 | Poplatek typického českého akciového fondu (1,98 %) | Consequ 2022 dle [E15](https://www.e15.cz/byznys/finance-a-bankovnictvi/tri-pismena-ktera-rozhodnou-o-duchodu-cesi-se-rozinvestovali-riskuji-zbytecne-utracene-miliony-1434277) | ručně |
 
 **Datová pipeline:**
@@ -185,7 +209,7 @@ Výběr 12 ETF je ověřený jako kotovaný na NYSE / NYSE Arca. QQQ a BND jsou 
 
 ---
 
-## 9. Architektura
+## 10. Architektura
 
 - **Astro 5** (statické HTML, API route jen pro formulář) a **Preact islands** (hydratace až při zobrazení, `client:visible`).
 - **Tailwind CSS v4** s design tokeny, self-hosted fonty Geist a Geist Mono (latin-ext).
@@ -195,7 +219,7 @@ Výběr 12 ETF je ověřený jako kotovaný na NYSE / NYSE Arca. QQQ a BND jsou 
 
 ```
 src/pages/          index.astro · tahak.astro (PDF) · reklama.astro · ochrana-udaju.astro · api/lead.ts · data/series.json.ts
-src/components/     islands/*.tsx (TickerPill, TwinVisual, FeeHero, CookieChart, EtfCompare, FeeCalculator, LeadForm, LeadSheet, StickyCta, ConsentBar, DebugPanel) · Words, PriipsFlow, StarterPack · icons.tsx · ads/*.astro
+src/components/     islands/*.tsx (TickerPill, GrowthHero, FeeHero, CookieChart, EtfCompare, FeeCalculator, LeadForm, LeadSheet, StickyCta, ConsentBar, DebugPanel) · Words, InflationSection, WhyIndex, StarterPack · icons.tsx · ads/*.astro
 src/lib/            market.ts (data) · finance.ts (výpočty) · format.ts (cs-CZ) · track.ts (měření) · store.ts (stav) · server/* (Supabase, Brevo, Meta CAPI, e-mail)
 src/data/           universe.json (kurátorovaný výběr a dvojčata) · market.json (generováno)
 scripts/            fetch-data.mjs · render-pdf.mjs · render-ads.mjs · build-template.py (Excel)
@@ -212,7 +236,7 @@ supabase/           migrations/0001_init.sql (tabulka leads + RLS + přehled lea
 
 ---
 
-## 10. Spuštění a nasazení
+## 11. Spuštění a nasazení
 
 ```bash
 npm install
@@ -241,7 +265,7 @@ Pozn.: Vercel Hobby je podle podmínek pro nekomerční použití. Pro ostrý pr
 
 ---
 
-## 11. Právní mantinely
+## 12. Právní mantinely
 - Stránka je informační a vzdělávací, **není investičním doporučením** a vyhýbá se formulacím „kupte“.
 - Upozornění na riziko a na minulou výkonnost je na stránce, v PDF i v e-mailu.
 - GDPR:

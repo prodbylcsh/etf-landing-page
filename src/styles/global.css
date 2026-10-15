@@ -187,7 +187,7 @@
 }
 
 /* Varianta hero podle ?v= (nastaví inline skript před vykreslením, bez probliknutí). */
-html[data-v='poplatky'] [data-variant='dvojce'],
+html[data-v='poplatky'] [data-variant='rust'],
 html:not([data-v='poplatky']) [data-variant='poplatky'] { display: none !important; }
 
 @media (prefers-reduced-motion: reduce) {

@@ -79,14 +79,14 @@ let n = 0;
       <div style="position:absolute;top:-60mm;right:-50mm;width:160mm;height:160mm;border-radius:999px;background:#c9f24b;opacity:.22;filter:blur(30mm)"></div>
       <div class="flex items-center justify-between"><Logo dark /><span class="mono text-[8pt] text-zinc-500">{dateCz(today)}</span></div>
       <p class="mono mt-[46mm] text-[8.5pt] text-[var(--color-lime)]">STARTOVACÍ BALÍČEK ETF 2026</p>
-      <h1 class="mt-4 text-[54pt] leading-[0.95] font-semibold tracking-[-0.045em]">Chcete VOO?<br />Kupte si jeho <span style="color:#c9f24b">dvojče.</span></h1>
-      <p class="mt-7 max-w-[130mm] text-[13pt] leading-snug text-zinc-400">Checklist před prvním nákupem a 12 slavných ETF z newyorské burzy s evropskými dvojčaty, která si v Česku opravdu koupíte.</p>
+      <h1 class="mt-4 text-[54pt] leading-[0.95] font-semibold tracking-[-0.045em]">Nechte peníze<br /><span style="color:#c9f24b">růst.</span> Krok za krokem.</h1>
+      <p class="mt-7 max-w-[130mm] text-[13pt] leading-snug text-zinc-400">Checklist pro začátečníky, 12 nejznámějších ETF a jejich verze, které koupíte v Česku, a co čekat od poplatků a daní.</p>
       <div class="mt-14 grid grid-cols-2 gap-3 text-[10pt]">
-        {[['01', 'Checklist před nákupem'], ['02', 'Překladač NYSE → Evropa'], ['03', 'Kolik stojí poplatky'], ['04', 'Daně v ČR na jedné stránce']].map(([k, t]) => (
+        {[['01', 'Checklist pro začátečníky'], ['02', 'Které ETF a kde koupit'], ['03', 'Kolik stojí poplatky'], ['04', 'Daně v ČR na jedné stránce']].map(([k, t]) => (
           <div class="rounded-[3mm] p-4" style="background:#16181b"><span class="mono text-[8pt] text-[var(--color-lime)]">{k}</span><p class="mt-1 text-white">{t}</p></div>
         ))}
       </div>
-      <p class="mt-6 text-[9pt] text-zinc-500">K balíčku patří Excel šablona „Můj ETF plán“: {site}{XLSX_URL}</p>
+      <p class="mt-6 text-[9pt] text-zinc-500">K balíčku patří Excel plán „Kolik budu mít“: {site}{XLSX_URL}</p>
       <p class="absolute right-[17mm] bottom-[14mm] left-[17mm] text-[7pt] leading-snug text-zinc-500">Informační materiál, ne investiční doporučení ani daňové poradenství. Investice nesou riziko ztráty. Minulá výkonnost nezaručuje budoucí výnosy.</p>
     </section>
 

@@ -28,17 +28,19 @@ const ogImage = new URL('/og.png', Astro.site);
     <meta property="og:description" content={description} />
     <meta property="og:image" content={ogImage} />
     <meta name="twitter:card" content="summary_large_image" />
-    <!-- Varianta hero podle reklamy (?v=poplatky | ?v=dvojce). Běží před vykreslením → žádné probliknutí. -->
+    <!-- Varianta hero podle reklamy (?v=rust | ?v=poplatky). Běží před vykreslením → žádné probliknutí. -->
     <script is:inline>
       (function () {
         document.documentElement.classList.add('js');
         try {
           var v = new URLSearchParams(location.search).get('v');
-          if (v !== 'poplatky' && v !== 'dvojce') v = sessionStorage.getItem('bb_v') || 'dvojce';
+          if (v === 'dvojce') v = 'rust'; // starší odkazy
+          if (v !== 'poplatky' && v !== 'rust') v = sessionStorage.getItem('bb_v') || 'rust';
+          if (v !== 'poplatky') v = 'rust';
           sessionStorage.setItem('bb_v', v);
           document.documentElement.dataset.v = v;
         } catch (e) {
-          document.documentElement.dataset.v = 'dvojce';
+          document.documentElement.dataset.v = 'rust';
         }
       })();
     </script>

@@ -38,7 +38,7 @@ export const POST: APIRoute = async ({ request, clientAddress, site }) => {
   const ctx = body.context && typeof body.context === 'object' ? body.context : {};
   const tickers = Array.isArray(ctx.tickers) ? ctx.tickers.filter((t: unknown) => typeof t === 'string' && etfByTicker[t]).slice(0, 3) : [];
   const result = ctx.result && typeof ctx.result === 'object' ? ctx.result : null;
-  const variant = body.variant === 'poplatky' ? 'poplatky' : 'dvojce';
+  const variant = body.variant === 'poplatky' ? 'poplatky' : 'rust';
   const marketing = body.marketing === true;
   const eventId = str(body.eventId, 64) || crypto.randomUUID();
   const utm = Object.fromEntries(Object.entries(body.utm ?? {}).filter(([k, v]) => /^(utm_\w+|fbclid)$/.test(k) && typeof v === 'string').map(([k, v]) => [k, str(v)]));

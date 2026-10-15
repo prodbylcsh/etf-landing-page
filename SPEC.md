@@ -384,3 +384,31 @@ Zdůvodnění: checklisty a šablony patří k nejlépe konvertujícím formát�
 Burzovní pruh se změnil na živý odznak v hero.
 
 **Nástroje (doplňuje kap. 7):** všechny vstupy jsou nastavitelné, včetně poplatku vlastního fondu uživatele a vlastní měsíční částky (slider i ruční zadání).
+
+---
+
+## 17. Revize 3: sdělení a texty (15. 10. 2026)
+
+Na základě zpětné vazby („texty jsou technické, předpokládají znalosti a nevzbuzují emoci“) a průzkumu copywritingových zdrojů (viz README, kap. 2).
+
+**Hlavní sdělení:** z „VOO v Česku nekoupíte, tady je dvojče“ na **„Z 3 000 Kč měsíčně může být 1,5 milionu. Bez akciových tipů a drahého poradce.“** Prodáváme výsledek a jednoduchost, ne technický detail.
+- „Dvojčata“ zůstávají jako praktický háček ve srovnání a v balíčku („kde to koupit v Česku“), ne jako hlavní sdělení.
+- Číslo v nadpisu se počítá ze stejných předpokladů jako kalkulačka (7 % ročně, 20 let, zaokrouhleno dolů).
+
+**Struktura podle PAS:**
+1. Hero s kalkulačkou růstu
+2. Problém: peníze na účtu chudnou (inflace ČSÚ)
+3. Řešení: jeden nákup, 500 firem (složení S&P 500, 4 přínosy, Buffett)
+4. Srovnání: které ETF vybrat
+5. Kalkulačka poplatků
+6. Balíček
+7. Důvěra + FAQ (odpovědi na obavy z průzkumu)
+8. Finální CTA
+
+**Varianty:** `?v=rust` (výchozí, místo `dvojce`, alias zachován) a `?v=poplatky`. Reklama A přepracována na „Růst“.
+
+**Mantinely:**
+- Nikdy „bez rizika“ ani „rychle zbohatnout“.
+- Každé číslo o výnosu má hned u sebe předpoklad a větu, že výnos není zaručený (ESMA: rizika stejně výrazně jako přínosy).
+
+**Opravená chyba:** vysvětlující okénko u živého odznaku NYSE se zobrazovalo pod nadpisem hero (stacking context animace). Obal odznaku má teď vlastní `z-index`.

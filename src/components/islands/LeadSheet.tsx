@@ -7,9 +7,9 @@ import LeadForm from './LeadForm';
 import { IconChecklist, IconSheet, IconSwap } from '../icons';
 
 const ITEMS = [
-  [IconSwap, 'Překladač 12 ETF → dvojčata', 'ticker, ISIN, poplatek'],
-  [IconChecklist, 'Checklist před prvním nákupem', '10 kroků, nic nevynecháte'],
-  [IconSheet, 'Šablona investičního plánu', 'Excel, stačí vyplnit částku'],
+  [IconSwap, 'Které ETF koupit a kde', '12 fondů, které v Česku opravdu koupíte'],
+  [IconChecklist, 'Checklist pro začátečníky', '10 kroků bez drahých chyb'],
+  [IconSheet, 'Excel plán „Kolik budu mít“', 'stačí zadat měsíční částku'],
 ] as const;
 
 export default function LeadSheet() {
@@ -42,9 +42,9 @@ export default function LeadSheet() {
         <button class="absolute top-3 right-3 flex h-10 w-10 items-center justify-center rounded-full text-xl text-[var(--color-muted)] transition-colors hover:bg-[var(--color-soft)]" onClick={() => close('x')} aria-label="Zavřít">
           ×
         </button>
-        <p class="eyebrow">Startovací balíček ETF · zdarma</p>
+        <p class="eyebrow">Startovací balíček · zdarma</p>
         <h2 id="sheet-title" class="mt-2 pr-8 text-[1.6rem] leading-[1.1]">
-          {ctx.headline ?? 'Všechna dvojčata, checklist a šablonu vám pošleme do e-mailu'}
+          {ctx.headline ?? 'Návod, checklist a Excel plán vám pošleme do e-mailu'}
         </h2>
         <ul class="mt-5 space-y-3">
           {ITEMS.map(([Icon, t, d], i) => (

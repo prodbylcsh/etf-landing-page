@@ -113,7 +113,7 @@ export default function EtfCompare({ etfs, initial, usdczk }: Props) {
           <Metric title="Výnos za 10 let" note="ročně, v USD" picked={picked} get={(e) => e.returns.y10} fmt={(v) => pct(v, 1, true)} best="max" />
           <Metric title="Velikost fondu" note="USD" picked={picked} get={(e) => e.netAssets} fmt={(v) => usdShort(v)} />
           <div>
-            <p class="text-[13.5px] font-medium">Koupíte u evropského brokera?</p>
+            <p class="text-[13.5px] font-medium">Koupíte přímo v Česku?</p>
             <div class="mt-2 flex flex-wrap gap-2">
               {picked.map((p) => (
                 <span class="inline-flex items-center gap-1.5 rounded-full bg-[var(--color-neg-soft)] px-2.5 py-1 text-[12.5px] font-medium text-[var(--color-neg)]">
@@ -129,10 +129,11 @@ export default function EtfCompare({ etfs, initial, usdczk }: Props) {
       <div class="card-dark p-5 sm:p-7">
         <div class="flex flex-wrap items-center justify-between gap-3">
           <p class="flex items-center gap-2 text-[15px] font-medium text-white">
-            <FlagEU size={14} /> Co si koupit místo nich
+            <FlagEU size={14} /> Jak je koupit v Česku
           </p>
           {!unlocked && <p class="text-[13px] text-zinc-400">1 zdarma · ostatní v balíčku</p>}
         </div>
+        <p class="mt-2 max-w-2xl text-[14px] leading-snug text-zinc-400">Americké verze vám evropský broker neprodá (chybí jim evropský dokument KID). Koupíte ale jejich evropská „dvojčata“ se stejnými firmami uvnitř.</p>
         <div class="mt-4 grid gap-3 md:grid-cols-3">
           {picked.map((p) => {
             const open = unlocked || p.etf.twin.free;
@@ -186,7 +187,7 @@ export default function EtfCompare({ etfs, initial, usdczk }: Props) {
               openLead({ source: 'compare_lock', tickers, headline: 'Všech 12 dvojčat s ISIN + checklist a šablonu pošleme do e-mailu' });
             }}
           >
-            <IconLock size={16} /> Odemknout všech 12 dvojčat <span class="arr">→</span>
+            <IconLock size={16} /> Ukázat všech 12 dvojčat <span class="arr">→</span>
           </button>
         ) : (
           <p class="mt-5 inline-flex items-center gap-2 text-[13.5px] text-[var(--color-lime)]">
@@ -206,10 +207,10 @@ function Insight({ list }: { list: EtfLite[] }) {
   let text = '';
   if (new Set(list.map((e) => e.category)).size === 1 && withTer.length >= 2 && withTer.at(-1)!.ter! > withTer[0].ter!) {
     const ratio = withTer.at(-1)!.ter! / withTer[0].ter!;
-    text = `Stejný trh (${list[0].categoryCz}), skoro stejný výsledek. ${withTer.at(-1)!.ticker} je ale ${(Math.round(ratio * 10) / 10).toLocaleString('cs-CZ')}× dražší než ${withTer[0].ticker}. A v Česku nekoupíte ani jedno.`;
+    text = `${list.length === 2 ? 'Oba fondy obsahují' : 'Všechny tři obsahují'} stejných ${list[0].categoryCz}, a tak vydělaly skoro stejně. Liší se hlavně poplatkem: ${withTer.at(-1)!.ticker} je ${(Math.round(ratio * 10) / 10).toLocaleString('cs-CZ')}× dražší než ${withTer[0].ticker}.`;
   } else {
     const best = [...list].filter((e) => e.returns.y10 != null).sort((a, b) => b.returns.y10! - a.returns.y10!)[0];
-    text = `Nejlevnější je ${withTer[0]?.ticker ?? '—'}${best ? `, nejvíc za 10 let vydělalo ${best.ticker}` : ''}. Ani jedno si u evropského brokera nekoupíte, dvojčata ano.`;
+    text = `Nejlevnější je ${withTer[0]?.ticker ?? '—'}${best ? `, nejvíc za posledních 10 let vydělalo ${best.ticker} (${best.categoryCz})` : ''}. Minulost ale budoucnost nezaručuje.`;
   }
   return (
     <p key={text} class="animate-fade max-w-3xl text-[clamp(1.05rem,1.6vw,1.3rem)] leading-snug font-medium tracking-[-0.015em] text-[var(--color-ink)]">
@@ -403,9 +404,10 @@ function Total({ l }: { l: Line }) {
   return (
     <div class="rounded-2xl bg-[var(--color-soft)] p-3">
       <p class="flex items-center gap-1.5 text-[12px] text-[var(--color-muted)]">
-        <span class="h-2 w-2 rounded-full" style={{ background: l.color }} />
+        <span class="h-2 w-2 shrink-0 rounded-full" style={{ background: l.color }} />
         <span class="mono">{l.etf.ticker}</span>
       </p>
+      <p class="truncate text-[11px] text-[var(--color-faint)]" title={l.etf.categoryCz}>{l.etf.categoryCz}</p>
       <p class="num mt-1 text-[clamp(0.95rem,2.4vw,1.25rem)] leading-tight font-semibold tracking-[-0.03em]">{last ? czk(v) : '—'}</p>
       {gain != null && <p class={`num text-[12px] ${gain >= 0 ? 'text-[var(--color-accent-strong)]' : 'text-[var(--color-neg)]'}`}>{pct(gain, 0, true)}</p>}
     </div>

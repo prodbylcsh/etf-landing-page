@@ -109,3 +109,19 @@ export const pricesAsOf: string | null = etfs.map((e) => e.returns.asOf).filter(
 /** Kompaktní data pro klientské komponenty (bez měsíčních řad). */
 export const etfsLite = etfs.map(({ topHoldings, issuerUrl, ...rest }) => ({ ...rest, topHolding: topHoldings[0]?.name ?? null }));
 export type EtfLite = (typeof etfsLite)[number];
+
+/** Inflace ČR (ČSÚ): kumulativně za uvedené roky a kolik zbude ze 100 000 Kč. */
+export const inflation = (() => {
+  const inf = (universe.benchmarks as any).inflation;
+  const years = Object.entries(inf.years as Record<string, number>).sort(([a], [b]) => a.localeCompare(b));
+  const cumulative = years.reduce((p, [, r]) => p * (1 + r), 1) - 1;
+  return { years, cumulative, from: years[0][0], to: years[years.length - 1][0], realValueOf100k: 100000 / (1 + cumulative), source: inf.source as string, sourceUrl: inf.sourceUrl as string };
+})();
+export const buffett = (universe.benchmarks as any).buffett as { quote: string; context: string; sourceUrl: string };
+export const czechSurvey = (universe.benchmarks as any).czechSurvey as { fearOfLoss: number; noKnowHow: number; label: string; source: string; sourceUrl: string };
+
+/** Největší firmy v S&P 500 ETF (VOO) pro vizualizaci „co vlastníte jedním nákupem“. */
+export const sp500Holdings = (() => {
+  const raw: any = (marketRaw as any).etfs?.VOO?.profile;
+  return { top: (raw?.holdings ?? []) as { symbol: string; name: string; weight: number }[], count: (raw?.holdingsCount as number) ?? 500, asOf: (raw?.asOf as string) ?? null };
+})();

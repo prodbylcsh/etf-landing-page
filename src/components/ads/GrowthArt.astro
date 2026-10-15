@@ -1,0 +1,28 @@
+---
+// Statický graf „vklady vs. výnos“ pro kreativy (stejný výpočet jako kalkulačka na webu).
+import { futureValue } from '../../lib/finance';
+import { czk, czkShort } from '../../lib/format';
+import { cheapTwinTer } from '../../lib/market';
+import { GROSS_RETURN, GROWTH_MONTHLY, GROWTH_YEARS } from '../../lib/config';
+interface Props { width?: number; height?: number; dark?: boolean }
+const { width = 900, height = 360, dark = false } = Astro.props;
+const n = GROWTH_YEARS;
+const pts = Array.from({ length: n + 1 }, (_, y) => ({ y, v: futureValue(GROWTH_MONTHLY, y, GROSS_RETURN, cheapTwinTer), inv: GROWTH_MONTHLY * 12 * y }));
+const max = pts[n].v * 1.04;
+const X = (i: number) => (i / n) * width;
+const Y = (v: number) => height - (v / max) * (height - 10);
+const line = (k: 'v' | 'inv') => pts.map((p, i) => `${i ? 'L' : 'M'}${X(i).toFixed(1)},${Y(p[k]).toFixed(1)}`).join('');
+const area = (k: 'v' | 'inv') => `${line(k)}L${width},${height}L0,${height}Z`;
+const last = pts[n];
+---
+<div>
+  <p class="num font-semibold tracking-[-0.045em]" style={`font-size:${width * 0.13}px;line-height:1;color:${dark ? '#fff' : '#0a0a0a'}`}>{czk(Math.round(last.v))}</p>
+  <p style={`font-size:${width * 0.034}px;color:${dark ? '#a1a1aa' : '#71717a'};margin-top:${width * 0.02}px`}>vložíte {czkShort(last.inv)} · <span style="color:#1baf7a;font-weight:600">+{czkShort(last.v - last.inv)} vydělá trh</span></p>
+  <svg viewBox={`0 0 ${width} ${height}`} width={width} height={height} style={`margin-top:${width * 0.04}px`}>
+    <defs><linearGradient id="ga" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#1baf7a" stop-opacity=".4" /><stop offset="1" stop-color="#1baf7a" stop-opacity=".03" /></linearGradient></defs>
+    <path d={area('v')} fill="url(#ga)" />
+    <path d={area('inv')} fill={dark ? '#26292e' : '#efefed'} />
+    <path d={line('v')} fill="none" stroke="#1baf7a" stroke-width={width * 0.007} stroke-linejoin="round" />
+  </svg>
+  <div class="flex justify-between" style={`font-size:${width * 0.028}px;color:${dark ? '#a1a1aa' : '#71717a'};margin-top:${width * 0.012}px`}><span>dnes</span><span>za {n} let</span></div>
+</div>

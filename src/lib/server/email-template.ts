@@ -19,13 +19,16 @@ export function renderTahakEmail({ tickers, result, siteUrl, marketing }: Input)
   const pdf = new URL(PDF_URL, siteUrl).toString();
   const xlsx = new URL(XLSX_URL, siteUrl).toString();
   const first = picked[0]?.ticker ?? 'VOO';
-  const subject = `Váš Startovací balíček ETF + dvojče k ${first}`;
+  const subject = result?.kalkulacka === 'rust' ? 'Váš návod k prvnímu ETF (+ váš výpočet)' : `Váš návod k prvnímu ETF + verze ${first} pro Česko`;
 
   let resultHtml = '';
   let resultText = '';
   if (result?.kalkulacka === 'poplatky' && typeof result.ukousnuto === 'number') {
     resultHtml = `<p style="margin:0 0 16px">Váš výpočet: při ${czk(Number(result.mesicne))} měsíčně by vám fond s poplatkem kolem 2 % za ${result.let} let vzal oproti levnému ETF <strong>${czk(result.ukousnuto)}</strong>.</p>`;
     resultText = `Váš výpočet: fond s ~2% poplatkem by vám za ${result.let} let vzal ${czk(result.ukousnuto)}.`;
+  } else if (result?.kalkulacka === 'rust' && typeof result.hodnota === 'number') {
+    resultHtml = `<p style="margin:0 0 16px">Váš výpočet: ${czk(Number(result.mesicne))} měsíčně po ${result.let} let může být <strong>${czk(result.hodnota)}</strong> (při výnosu 7 % ročně; výnos není zaručený).</p>`;
+    resultText = `Váš výpočet: ${czk(Number(result.mesicne))} měsíčně po ${result.let} let může být ${czk(result.hodnota)} (při 7 % ročně, bez záruky).`;
   } else if (result?.kalkulacka === 'stroj_casu' && typeof result.hodnota === 'number') {
     resultHtml = `<p style="margin:0 0 16px">Váš stroj času: ${czk(Number(result.mesicne))} měsíčně do ${esc(String(result.etf))} po dobu ${result.let} let = vloženo ${czk(Number(result.vlozeno))}, dnes <strong>${czk(result.hodnota)}</strong>. (Minulé výnosy nezaručují budoucí.)</p>`;
     resultText = `Stroj času: vloženo ${czk(Number(result.vlozeno))}, dnes ${czk(result.hodnota)}.`;
@@ -47,10 +50,10 @@ export function renderTahakEmail({ tickers, result, siteUrl, marketing }: Input)
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f6f6f5"><tr><td align="center" style="padding:24px 12px">
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:560px;background:#ffffff;border:1px solid #e8e8e6;border-radius:20px">
 <tr><td style="padding:28px 28px 8px;font:14px Arial,sans-serif;color:#71717a"><strong style="color:#0a0a0a">BestBrookies</strong> · Startovací balíček ETF 2026</td></tr>
-<tr><td style="padding:8px 28px 0;font:600 26px/1.15 Arial,sans-serif;letter-spacing:-0.5px;color:#0a0a0a">Tady je váš balíček. A rovnou i dvojčata, která jste řešili.</td></tr>
+<tr><td style="padding:8px 28px 0;font:600 26px/1.15 Arial,sans-serif;letter-spacing:-0.5px;color:#0a0a0a">Tady je váš návod. A rovnou i fondy, které jste řešili.</td></tr>
 <tr><td style="padding:16px 28px 0;font:15px/1.55 Arial,sans-serif;color:#3f3f46">
 ${resultHtml}
-<p style="margin:0 0 8px">Americká ETF si u evropského brokera jako drobný investor nekoupíte. Tohle jsou jejich evropská dvojčata:</p>
+<p style="margin:0 0 8px">Americké verze těchto fondů vám evropský broker neprodá. Tohle jsou jejich evropská dvojčata se stejnými firmami uvnitř:</p>
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0">${rows}</table>
 <p style="margin:16px 0 0">U brokera stačí do vyhledávání zadat <strong>ISIN</strong>. Zbylých ${etfs.length - picked.length} dvojčat, checklist před prvním nákupem a daně v ČR najdete v PDF. K tomu Excel šablona, kde si nastavíte vlastní plán:</p>
 </td></tr>

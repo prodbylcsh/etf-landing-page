@@ -250,6 +250,35 @@
       "label": "průměrný poplatek za správu 57 akciových podílových fondů v ČR",
       "source": "Consequ (2022) dle E15",
       "sourceUrl": "https://www.e15.cz/byznys/finance-a-bankovnictvi/tri-pismena-ktera-rozhodnou-o-duchodu-cesi-se-rozinvestovali-riskuji-zbytecne-utracene-miliony-1434277"
+    },
+    "inflation": {
+      "years": {
+        "2016": 0.007,
+        "2017": 0.025,
+        "2018": 0.021,
+        "2019": 0.028,
+        "2020": 0.032,
+        "2021": 0.038,
+        "2022": 0.151,
+        "2023": 0.107,
+        "2024": 0.024,
+        "2025": 0.025
+      },
+      "label": "průměrná roční míra inflace v ČR",
+      "source": "ČSÚ",
+      "sourceUrl": "https://csu.gov.cz/pak/prumerna-rocni-mira-inflace-v-cr-v-roce-2025-byla-25"
+    },
+    "buffett": {
+      "quote": "Dejte 10 % do krátkodobých státních dluhopisů a 90 % do velmi levného indexového fondu na S&P 500. (Navrhuji ten od Vanguardu.)",
+      "context": "Warren Buffett, pokyny pro správce dědictví své manželky, dopis akcionářům Berkshire Hathaway 2013",
+      "sourceUrl": "https://www.berkshirehathaway.com/letters/2013ltr.pdf"
+    },
+    "czechSurvey": {
+      "fearOfLoss": 0.73,
+      "noKnowHow": 0.71,
+      "label": "neinvestujících Čechů uvádí jako hlavní překážku strach ze ztráty",
+      "source": "Raiffeisenbank dle E15",
+      "sourceUrl": "https://www.e15.cz/finexpert/banky-a-ucty/strach-ze-ztraty-jako-hlavni-brzda-proc-cesi-stale-vahaji-s-investovanim-1434418"
     }
   }
 }

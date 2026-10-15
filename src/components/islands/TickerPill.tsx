@@ -19,7 +19,7 @@ function live(n: number) {
   return `${dec(n / 1e3, 0)} tis. Kč`;
 }
 
-export default function TickerPill({ avgDailyUsd, etfCount, usdczk, method }: Props) {
+export default function TickerPill({ avgDailyUsd, etfCount, usdczk }: Props) {
   const perSec = (avgDailyUsd / 23400) * usdczk;
   const start = useRef(0);
   const [elapsed, setElapsed] = useState(0);
@@ -67,18 +67,18 @@ export default function TickerPill({ avgDailyUsd, etfCount, usdczk, method }: Pr
         </span>
         {state.open ? (
           <span class="truncate">
-            Za <span class="num">{clock(elapsed)}</span>, co jste tu: <span class="num font-semibold text-[var(--color-ink)]">{live(perSec * elapsed)}</span>
+            Za <span class="num">{clock(elapsed)}</span>, co jste tu, se zobchodovalo <span class="num font-semibold text-[var(--color-ink)]">{live(perSec * elapsed)}</span>
           </span>
         ) : (
           <span class="truncate">
             Otevře za <span class="num font-medium text-[var(--color-ink)]">{clock(state.opensIn)}</span>
-            <span class="hidden sm:inline"> · pak {czkShort(perSec)} za sekundu</span>
+            <span class="hidden sm:inline"> · pak se zobchoduje {czkShort(perSec)} každou sekundu</span>
           </span>
         )}
       </button>
       {info && (
         <div class="animate-fade absolute top-11 left-0 z-20 w-[min(88vw,380px)] rounded-2xl bg-white p-4 text-[13px] leading-relaxed text-[var(--color-ink-2)] shadow-[0_20px_50px_-20px_rgba(0,0,0,0.35),0_0_0_1px_var(--color-line)]">
-          Ve {etfCount} sledovaných ETF z NYSE se obchoduje průměrně <strong class="text-[var(--color-ink)]">{czkShort(perSec)} za sekundu</strong> seance (15:30–22:00 našeho času). {method} Kurz USD/CZK {String(usdczk).replace('.', ',')} (ČNB). Zdroj: Alpha Vantage.
+          Newyorská burza (NYSE) je největší na světě. Ve {etfCount} fondech, které tu srovnáváme, se během obchodování (15:30–22:00 našeho času) protočí průměrně <strong class="text-[var(--color-ink)]">{czkShort(perSec)} každou sekundu</strong>. Počítáno z průměrného objemu obchodů za poslední 3 měsíce (Alpha Vantage) a kurzu ČNB.
         </div>
       )}
     </div>

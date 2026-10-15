@@ -1,14 +1,15 @@
 ---
-import TwinCards from './TwinCards.astro';
 import Brand from './Brand.astro';
+import GrowthArt from './GrowthArt.astro';
+import { millions, monthlyLabel, disclaimer } from './headline';
 ---
 <div data-ad="ad-a-feed" class="ad relative h-[1350px] w-[1080px] overflow-hidden bg-white px-[90px] pt-[80px] text-[#0a0a0a]">
   <div class="ad-grid absolute inset-0"></div>
   <div class="relative"><Brand /></div>
-  <h1 class="relative mt-[70px] text-[118px] leading-[0.98] font-semibold tracking-[-0.05em]">Chcete VOO?<br />Kupte si jeho <span class="hl">dvojče.</span></h1>
-  <div class="relative mt-[70px]"><TwinCards scale={0.95} /></div>
-  <div class="absolute right-[90px] bottom-[80px] left-[90px] flex items-center justify-between">
-    <p class="text-[30px] leading-snug text-[#71717a]">Překladač 12 ETF<br />+ checklist + Excel šablona</p>
-    <span class="rounded-full bg-[#0a0a0a] px-[48px] py-[30px] text-[36px] font-semibold text-white">Balíček zdarma →</span>
+  <h1 class="relative mt-[60px] text-[112px] leading-[0.98] font-semibold tracking-[-0.05em]">Z {monthlyLabel} měsíčně může být <span class="hl">{millions}.</span></h1>
+  <div class="relative mt-[60px]"><GrowthArt width={900} height={280} /></div>
+  <div class="absolute right-[90px] bottom-[80px] left-[90px] flex items-end justify-between gap-[30px]">
+    <p class="max-w-[440px] text-[22px] leading-snug text-[#71717a]">{disclaimer}</p>
+    <span class="shrink-0 rounded-full bg-[#0a0a0a] px-[48px] py-[30px] text-[36px] font-semibold text-white">Spočítat zdarma →</span>
   </div>
 </div>

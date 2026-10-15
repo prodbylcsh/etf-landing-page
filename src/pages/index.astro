@@ -2,10 +2,11 @@
 import Layout from '../layouts/Layout.astro';
 import Logo from '../components/Logo.astro';
 import Words from '../components/Words.astro';
-import PriipsFlow from '../components/PriipsFlow.astro';
+import InflationSection from '../components/InflationSection.astro';
+import WhyIndex from '../components/WhyIndex.astro';
 import StarterPack from '../components/StarterPack.astro';
 import TickerPill from '../components/islands/TickerPill';
-import TwinVisual from '../components/islands/TwinVisual';
+import GrowthHero from '../components/islands/GrowthHero';
 import FeeHero from '../components/islands/FeeHero';
 import EtfCompare from '../components/islands/EtfCompare';
 import FeeCalculator from '../components/islands/FeeCalculator';
@@ -15,36 +16,39 @@ import StickyCta from '../components/islands/StickyCta';
 import ConsentBar from '../components/islands/ConsentBar';
 import DebugPanel from '../components/islands/DebugPanel';
 import { IconChecklist, IconSheet, IconSwap, IconShield, IconSpark, IconDoc } from '../components/icons';
-import { etfs, etfsLite, etfByTicker, fx, listing, tickerFeed, czechFund, cheapTwinTer, pricesAsOf, twinsVerifiedAt, generatedAt } from '../lib/market';
-import { COMPARE_INITIAL, GROSS_RETURN, HERO_TICKERS, HERO_YEARS, BRAND } from '../lib/config';
-import { dateCz, fmtInt, pct, ter } from '../lib/format';
+import { etfsLite, etfByTicker, fx, listing, tickerFeed, czechFund, cheapTwinTer, pricesAsOf, twinsVerifiedAt, generatedAt } from '../lib/market';
+import { COMPARE_INITIAL, GROSS_RETURN, HERO_YEARS, GROWTH_MONTHLY, GROWTH_YEARS, BRAND } from '../lib/config';
+import { futureValue } from '../lib/finance';
+import { dateCz, dec, fmtInt, pct, ter } from '../lib/format';
 
-const heroEtfs = etfsLite.filter((e) => HERO_TICKERS.includes(e.ticker));
-const minTwinTer = Math.min(...etfs.map((e) => e.twin.ter));
 const spyY20 = etfByTicker.SPY?.returns.y20 ?? null;
+// Nadpis hero se počítá ze stejných předpokladů jako kalkulačka (zaokrouhleno dolů, ať neslibujeme víc).
+const heroValue = futureValue(GROWTH_MONTHLY, GROWTH_YEARS, GROSS_RETURN, cheapTwinTer);
+const heroMillions = `${dec(Math.floor(heroValue / 1e5) / 10, 1)}\u00a0milionu`;
 
 const faq = [
-  ['Je balíček opravdu zdarma?', 'Ano. Zaplatíte jen e-mailovou adresou. Pošleme na ni checklist, šablonu a překladač. Další e-maily jen tehdy, když si je sami zaškrtnete, a odhlásíte se jedním klikem.'],
-  ['Proč si VOO nebo SPY v Česku nekoupím?', 'Evropské nařízení PRIIPs vyžaduje, aby fond pro drobné investory měl dokument KID. Americké fondy ho nevydávají, takže je evropští brokeři drobným investorům neprodají. Výjimkou je status profesionálního klienta, který ale znamená menší ochranu.'],
-  ['Je dvojče opravdu totéž?', 'U „stejného indexu“ ano: stejný index, jiné sídlo fondu (Irsko) a jiný poplatek. U „nejbližší alternativy“ přesná kopie v Evropě neexistuje. Ukážeme nejpodobnější fond a rozdíl vždy popíšeme.'],
-  ['Jak je to s daněmi?', 'Zisk z prodeje ETF je v ČR osvobozený, pokud ho držíte déle než 3 roky, nebo pokud vaše příjmy z prodeje cenných papírů za rok nepřesáhnou 100 000 Kč. Akumulační fondy dividendy reinvestují, v přiznání je tedy neřešíte. Nejde o daňové poradenství.'],
-  ['Kde dvojčata koupím?', 'U brokera s přístupem na evropské burzy (Xetra, London Stock Exchange, Euronext, Borsa Italiana). Stačí zadat ISIN. Checklist vás provede krok za krokem.'],
-  ['Proč ve srovnání chybí QQQ nebo BND?', 'Nejsou kotované na NYSE, ale na Nasdaqu. Burzu každého ETF ověřujeme automaticky z dat Alpha Vantage.'],
-  ['Kdo za tím stojí?', `${BRAND.name} je nezávislý projekt o investování. Nejsme broker ani poradce, ukazujeme srovnání, ne doporučení. (Koncept: firma v patičce je fiktivní.)`],
+  ['Můžu přijít o peníze?', 'Krátkodobě ano. V roce 2008 spadly akcie USA o víc než třetinu, v roce 2020 během několika týdnů. Kdo ale vydržel a nakupoval dál, dostal se zpátky a rostl. Proto investujte jen peníze, které 5 a více let nepotřebujete, a nakupujte pravidelně. Minulost ale budoucnost nezaručuje.'],
+  ['Kolik peněz potřebuju na začátek?', 'Žádný velký balík. Stačí pravidelná částka v řádu stokorun nebo tisícovek měsíčně. Řada brokerů umožňuje koupit i část podílu.'],
+  ['Nerozumím investování. Zvládnu to?', 'Ano. Nemusíte vybírat akcie ani sledovat grafy. Checklist vás provede od výběru fondu až po první nákup a Excel plán ukáže, kam míříte.'],
+  ['Je to opravdu zdarma? Kde je háček?', 'Žádný háček. Nic neprodáváme a o vaše peníze nežádáme. Pošleme vám balíček na e-mail. Další e-maily jen pokud si je sami zaškrtnete, a nikdy vám nebudeme volat.'],
+  ['Proč si nekoupím přímo VOO nebo SPY?', 'Americké fondy nemají evropský dokument KID, takže vám je broker v EU neprodá. Koupíte jejich evropské verze se stejnými firmami uvnitř. Které to jsou, najdete v balíčku.'],
+  ['Jak je to s daněmi?', 'Když ETF držíte déle než 3 roky, zisk z prodeje se v Česku nedaní. Stejně tak když za rok prodáte cenné papíry za méně než 100 000 Kč. Podrobnosti jsou v checklistu. Nejde o daňové poradenství.'],
+  ['Kdo za tím stojí?', `${BRAND.name} je nezávislý projekt o investování pro lidi, ne pro makléře. Nejsme broker ani poradce, ukazujeme srovnání, ne doporučení. (Koncept: firma v patičce je fiktivní.)`],
 ];
 ---
 <Layout
-  title="Chcete VOO? Kupte si jeho dvojče | BestBrookies"
-  description="Slavná ETF z NYSE v Česku nekoupíte. Porovnejte 12 nejznámějších a zjistěte, jaké evropské dvojče si koupíte místo nich. Checklist a šablona zdarma."
+  title="Nechte peníze růst: ETF pro začátečníky | BestBrookies"
+  description="Kolik může být z vaší měsíční částky za 20 let? Spočítejte si to a stáhněte zdarma návod, checklist a Excel plán pro první investici do ETF."
 >
   <!-- ============================================================ NAVIGACE -->
   <header id="nav" class="fixed inset-x-0 top-0 z-30 transition-[background-color,box-shadow,backdrop-filter] duration-300">
     <div class="mx-auto flex h-16 max-w-6xl items-center justify-between px-5">
       <a href="/" aria-label="BestBrookies, úvod" data-anim style="--d:0"><Logo /></a>
       <nav class="flex items-center gap-1 text-[14px]" data-anim style="--d:80">
+        <a href="#reseni" class="hidden rounded-full px-3 py-2 text-[var(--color-muted)] transition-colors hover:text-[var(--color-ink)] md:inline">Jak to funguje</a>
         <a href="#srovnani" class="hidden rounded-full px-3 py-2 text-[var(--color-muted)] transition-colors hover:text-[var(--color-ink)] md:inline">Srovnání</a>
         <a href="#poplatky" class="hidden rounded-full px-3 py-2 text-[var(--color-muted)] transition-colors hover:text-[var(--color-ink)] md:inline">Poplatky</a>
-        <a href="#balicek" class="btn btn-ghost !min-h-[38px] !px-4 text-[14px]" data-track="header_cta">Balíček zdarma</a>
+        <a href="#balicek" class="btn btn-ghost !min-h-[38px] !px-4 text-[14px]" data-track="header_cta">Návod zdarma</a>
       </nav>
     </div>
   </header>
@@ -55,64 +59,80 @@ const faq = [
       <div class="hero-grid pointer-events-none absolute inset-0 -z-10" aria-hidden="true"></div>
       <div class="mx-auto grid w-full max-w-6xl flex-1 grid-cols-1 items-center gap-7 px-5 py-6 md:py-12 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:gap-16">
         <div class="text-center lg:text-left">
-          <div data-anim style="--d:100"><TickerPill client:load avgDailyUsd={tickerFeed.avgDailyUsd} etfCount={tickerFeed.etfCount} usdczk={fx.usdczk} method={tickerFeed.method} /></div>
+          <div class="relative z-30" data-anim style="--d:100"><TickerPill client:load avgDailyUsd={tickerFeed.avgDailyUsd} etfCount={tickerFeed.etfCount} usdczk={fx.usdczk} method={tickerFeed.method} /></div>
 
-          <div data-variant="dvojce">
-            <Words text="Chcete VOO? Kupte si jeho dvojče." accent="dvojče." delay={180} class="mt-5 text-[clamp(2.5rem,7vw,5.6rem)] lg:mt-6" />
+          <div data-variant="rust">
+            <Words text={`Z ${fmtInt(GROWTH_MONTHLY)} Kč měsíčně může být ${heroMillions}.`} accent={`${heroMillions}.`} delay={180} class="mt-5 text-[clamp(2.4rem,5.2vw,4.5rem)] lg:mt-6" />
             <p class="lead mx-auto mt-4 max-w-xl lg:mx-0 lg:mt-5" data-anim style="--d:650">
-              Americká ETF vám evropský broker neprodá. Ukážeme vám, co si koupit místo nich<span class="hidden sm:inline">: stejný index, podobný poplatek</span>.
+              Bez akciových tipů a drahého poradce. Jeden levný fond, který za vás koupí 500 největších firem<span class="hidden sm:inline">. Ukážeme vám, jak začít</span>.
             </p>
           </div>
           <div data-variant="poplatky">
             <Words text="Kolik vám ukousnou poplatky?" accent="poplatky?" delay={180} class="mt-5 text-[clamp(2.5rem,7vw,5.6rem)] lg:mt-6" />
             <p class="lead mx-auto mt-5 max-w-xl lg:mx-0" data-anim style="--d:650">
-              Typický český fond si bere kolem {pct(czechFund.value, 0)} ročně, evropské ETF od {ter(minTwinTer)}. Podívejte se, kolik to dělá v korunách.
+              Typický český fond si bere kolem {pct(czechFund.value, 0)} ročně, levné indexové ETF jen {ter(cheapTwinTer)}. Podívejte se, kolik je to v korunách.
             </p>
           </div>
 
           <div class="mx-auto mt-8 hidden max-w-xl lg:mx-0 lg:block" data-anim style="--d:800">
-            <LeadForm client:visible placement="hero_desktop" showConsent={false} />
+            <LeadForm client:visible placement="hero_desktop" showConsent={false} cta="Poslat návod zdarma" />
           </div>
           <ul class="mt-5 hidden flex-wrap gap-x-5 gap-y-2 text-[13.5px] text-[var(--color-muted)] lg:flex" data-anim style="--d:900">
-            <li class="flex items-center gap-1.5"><IconSwap size={16} /> Překladač 12 ETF</li>
-            <li class="flex items-center gap-1.5"><IconChecklist size={16} /> Checklist</li>
-            <li class="flex items-center gap-1.5"><IconSheet size={16} /> Excel šablona</li>
+            <li class="flex items-center gap-1.5"><IconSwap size={16} /> Které ETF a kde koupit</li>
+            <li class="flex items-center gap-1.5"><IconChecklist size={16} /> Checklist pro začátečníky</li>
+            <li class="flex items-center gap-1.5"><IconSheet size={16} /> Excel plán</li>
           </ul>
         </div>
 
         <div data-anim style="--d:450">
-          <div data-variant="dvojce"><TwinVisual client:visible etfs={heroEtfs} tickers={HERO_TICKERS} /></div>
+          <div data-variant="rust"><GrowthHero client:visible gross={GROSS_RETURN} fee={cheapTwinTer} defaultMonthly={GROWTH_MONTHLY} defaultYears={GROWTH_YEARS} spyY20={spyY20} /></div>
           <div data-variant="poplatky"><FeeHero client:visible cheapFee={cheapTwinTer} fundFee={czechFund.value} gross={GROSS_RETURN} years={HERO_YEARS} /></div>
           <div class="mx-auto mt-6 max-w-md lg:hidden">
-            <LeadForm client:visible placement="hero" showConsent={false} />
-            <p class="mt-3 text-center text-[13px] text-[var(--color-muted)]">Překladač 12 ETF · checklist · Excel šablona</p>
+            <LeadForm client:visible placement="hero" showConsent={false} cta="Poslat návod zdarma" />
+            <p class="mt-3 text-center text-[13px] text-[var(--color-muted)]">Které ETF a kde koupit · checklist · Excel plán</p>
           </div>
         </div>
       </div>
       <a href="#proc" class="mx-auto mb-6 hidden flex-col items-center gap-1 text-[12.5px] text-[var(--color-faint)] transition-colors hover:text-[var(--color-ink)] md:flex" data-anim style="--d:1200">
-        Proč VOO nekoupíte
+        Proč nenechávat peníze na účtu
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="animate-bounce"><path d="M12 5v14M6 13l6 6 6-6" /></svg>
       </a>
     </section>
 
-    <!-- ============================================================ 2. PROČ (problém → řešení, ikonově) -->
+    <!-- ============================================================ 2. PROBLÉM: peníze na účtu chudnou -->
     <section id="proc" data-section="why" class="border-t border-[var(--color-line)] bg-[var(--color-soft)]">
       <div class="mx-auto max-w-6xl px-5 py-20 md:py-28">
-        <div class="mx-auto max-w-2xl text-center" data-reveal>
-          <p class="eyebrow">Proč to řešit</p>
-          <h2 class="h-section mt-3">Na NYSE je {listing.nyseEtfCount ? fmtInt(listing.nyseEtfCount) : '3 000+'} ETF. Ty slavné si u nás nekoupíte.</h2>
+        <div class="max-w-2xl" data-reveal>
+          <p class="eyebrow">Proč investovat</p>
+          <h2 class="h-section mt-3">Peníze na účtu potichu chudnou.</h2>
+          <p class="lead mt-4">Za posledních 10 let zdražilo skoro všechno o polovinu. Úspory, které jen leží, s tím nedrží krok.</p>
         </div>
-        <div class="mt-14"><PriipsFlow /></div>
+        <div class="mt-10"><InflationSection /></div>
+        <p class="mx-auto mt-16 max-w-3xl text-center text-[clamp(1.4rem,3vw,2.1rem)] leading-tight font-semibold tracking-[-0.03em]" data-reveal>
+          Investovat přitom neznamená sázet na jednu akcii. <span class="text-[var(--color-muted)]">Stačí jeden fond.</span>
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================================================ 3. ŘEŠENÍ: indexové ETF -->
+    <section id="reseni" data-section="solution">
+      <div class="mx-auto max-w-6xl px-5 py-20 md:py-28">
+        <div class="max-w-2xl" data-reveal>
+          <p class="eyebrow">01 · Řešení</p>
+          <h2 class="h-section mt-3">Jeden nákup. Přes 500 největších firem.</h2>
+          <p class="lead mt-4">Indexové ETF je koš akcií. Koupíte jeden podíl a vlastníte kousek Applu, Microsoftu, Nvidie i stovek dalších firem.</p>
+        </div>
+        <div class="mt-10"><WhyIndex /></div>
       </div>
     </section>
 
     <!-- ============================================================ 3. SOUBOJ ETF -->
-    <section id="srovnani" data-section="compare">
+    <section id="srovnani" data-section="compare" class="bg-[var(--color-soft)]">
       <div class="mx-auto max-w-6xl px-5 py-20 md:py-28">
         <div class="max-w-2xl" data-reveal>
-          <p class="eyebrow">01 · Souboj ETF</p>
-          <h2 class="h-section mt-3">Stejný index. Jiný poplatek.</h2>
-          <p class="lead mt-4">Vyberte až tři ETF a nastavte si, kolik a jak dlouho byste investovali. Reálná data v korunách.</p>
+          <p class="eyebrow">02 · Srovnání</p>
+          <h2 class="h-section mt-3">Které ETF vybrat?</h2>
+          <p class="lead mt-4">Porovnejte nejznámější fondy na skutečných číslech z minulosti. A hlavně: uvidíte, kde je v Česku koupit.</p>
         </div>
         <div class="mt-10" data-reveal>
           <EtfCompare client:visible etfs={etfsLite} initial={COMPARE_INITIAL} usdczk={fx.usdczk} />
@@ -124,12 +144,12 @@ const faq = [
     </section>
 
     <!-- ============================================================ 4. POPLATKY -->
-    <section id="poplatky" data-section="calculators" class="bg-[var(--color-soft)]">
+    <section id="poplatky" data-section="calculators">
       <div class="mx-auto max-w-6xl px-5 py-20 md:py-28">
         <div class="max-w-2xl" data-reveal>
-          <p class="eyebrow">02 · Kalkulačka poplatků</p>
+          <p class="eyebrow">03 · Kalkulačka poplatků</p>
           <h2 class="h-section mt-3">Desetiny procenta, které ukousnou statisíce.</h2>
-          <p class="lead mt-4">Zadejte svou částku a poplatek fondu, který teď máte. Uvidíte, kolik vám sní.</p>
+          <p class="lead mt-4">Máte peníze v bankovním fondu? Zadejte jeho poplatek a uvidíte, kolik vám za roky sní.</p>
         </div>
         <div class="mt-10" data-reveal>
           <FeeCalculator
@@ -145,19 +165,19 @@ const faq = [
     </section>
 
     <!-- ============================================================ 5. BALÍČEK (lead magnet) -->
-    <section id="balicek" data-section="tahak">
+    <section id="balicek" data-section="tahak" class="bg-[var(--color-soft)]">
       <div class="mx-auto grid max-w-6xl grid-cols-1 items-center gap-14 px-5 py-20 md:py-28 lg:grid-cols-2">
         <StarterPack />
         <div>
           <div data-reveal>
-            <p class="eyebrow">03 · Startovací balíček ETF</p>
+            <p class="eyebrow">04 · Startovací balíček</p>
             <h2 class="h-section mt-3">Všechno k prvnímu nákupu. Zdarma.</h2>
           </div>
           <ul class="mt-8 space-y-5">
             {[
-              [IconSwap, 'Překladač NYSE → Evropa', 'Všech 12 dvojčat s ISIN, poplatkem a typem.'],
-              [IconChecklist, 'Checklist před prvním nákupem', '10 kroků od rezervy po pravidelný nákup.'],
-              [IconSheet, 'Šablona „Můj ETF plán“', 'Excel: zadáte částku, uvidíte plán na roky dopředu.'],
+              [IconSwap, 'Které ETF koupit a kde', '12 nejznámějších fondů a jejich verze, které koupíte v Česku.'],
+              [IconChecklist, 'Checklist pro začátečníky', '10 kroků, abyste při prvním nákupu neudělali drahou chybu.'],
+              [IconSheet, 'Excel plán „Kolik budu mít“', 'Zadáte částku a uvidíte svůj plán na 10, 20 i 30 let.'],
             ].map(([Icon, t, d], i) => (
               <li class="flex gap-4" data-reveal style={`--i:${i + 1}`}>
                 <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[var(--color-soft)]"><Icon size={22} /></span>
@@ -166,7 +186,7 @@ const faq = [
             ))}
           </ul>
           <div class="mt-9" data-sticky-hide data-reveal style="--i:4">
-            <LeadForm client:visible placement="tahak" cta="Poslat balíček" />
+            <LeadForm client:visible placement="tahak" cta="Poslat balíček zdarma" />
           </div>
         </div>
       </div>
@@ -177,12 +197,12 @@ const faq = [
       <div class="mx-auto grid max-w-6xl grid-cols-1 gap-14 px-5 py-20 md:py-28 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)]">
         <div data-reveal>
           <p class="eyebrow">Proč nám věřit</p>
-          <h2 class="h-section mt-3">Data, zdroje a&nbsp;žádné tipy.</h2>
+          <h2 class="h-section mt-3">Žádné tipy. Žádné volání. Jen fakta.</h2>
           <ul class="mt-8 space-y-5">
             {[
-              [IconSpark, 'Reálná data, denně', 'Alpha Vantage, kurzy ČNB, dokumenty emitentů.'],
-              [IconShield, 'Srovnáváme, neradíme', 'Nejsme broker ani poradce. Rozhodnutí je na vás.'],
-              [IconDoc, 'Píšeme i to nepříjemné', 'Když přesné dvojče neexistuje (SCHD), řekneme to.'],
+              [IconShield, 'Nic neprodáváme', 'Nejsme broker ani poradce a nikdy vám nebudeme volat. Chceme jen e-mail.'],
+              [IconSpark, 'Skutečná data se zdrojem', 'Ceny z burzy, kurzy ČNB, inflace z ČSÚ. Aktualizujeme každý den.'],
+              [IconDoc, 'Říkáme i rizika', 'Investice může krátkodobě klesnout i o třetinu. Proto jen peníze, které roky nepotřebujete.'],
             ].map(([Icon, t, d]) => (
               <li class="flex gap-4">
                 <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[var(--color-soft)]"><Icon size={22} /></span>
@@ -209,9 +229,9 @@ const faq = [
     <section data-section="final" class="px-5 pb-20">
       <div class="final-cta card-dark relative mx-auto max-w-5xl overflow-hidden px-6 py-16 text-center sm:px-12 md:py-24" data-sticky-hide data-reveal="scale">
         <div class="pointer-events-none absolute -top-40 left-1/2 h-80 w-[36rem] -translate-x-1/2 rounded-full bg-[var(--color-lime)] opacity-25 blur-[100px]" aria-hidden="true"></div>
-        <h2 class="relative mx-auto max-w-3xl text-[clamp(2.1rem,5vw,3.8rem)] text-white">Za minutu víte, co si koupit místo VOO.</h2>
-        <p class="relative mx-auto mt-4 max-w-xl text-[17px] text-zinc-400">Překladač 12 ETF, checklist a šablona plánu. Zdarma do e-mailu.</p>
-        <div class="relative mx-auto mt-9 max-w-lg text-left"><LeadForm client:visible placement="final" dark /></div>
+        <h2 class="relative mx-auto max-w-3xl text-[clamp(2.1rem,5vw,3.8rem)] text-white">Začněte tento měsíc. Za 20 let si poděkujete.</h2>
+        <p class="relative mx-auto mt-4 max-w-xl text-[17px] text-zinc-400">Které ETF a kde koupit, checklist a Excel plán. Zdarma do e-mailu.</p>
+        <div class="relative mx-auto mt-9 max-w-lg text-left"><LeadForm client:visible placement="final" dark cta="Poslat zdarma" /></div>
       </div>
     </section>
   </main>

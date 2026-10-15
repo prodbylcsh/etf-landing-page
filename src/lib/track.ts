@@ -50,8 +50,8 @@ function getParam(name: string): string | null {
   }
 }
 
-export function getVariant(): 'dvojce' | 'poplatky' {
-  return document.documentElement.dataset.v === 'poplatky' ? 'poplatky' : 'dvojce';
+export function getVariant(): 'rust' | 'poplatky' {
+  return document.documentElement.dataset.v === 'poplatky' ? 'poplatky' : 'rust';
 }
 
 function getUtm(): Record<string, string> {

@@ -5,7 +5,7 @@ create table if not exists public.leads (
   id               uuid primary key default gen_random_uuid(),
   email            text not null unique check (email ~* '^[^@\s]+@[^@\s]+\.[^@\s]+$'),
   marketing_consent boolean not null default false,
-  variant          text not null check (variant in ('dvojce', 'poplatky')),
+  variant          text not null check (variant in ('rust', 'poplatky', 'dvojce')),  -- 'dvojce' = první verze stránky
   placement        text,          -- hero | sheet_compare_lock | tahak | final | …
   source           text,          -- poslední interakce před odesláním (compare_lock, calc_fees…)
   tickers          text[],

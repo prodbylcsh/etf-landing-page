@@ -1,0 +1,63 @@
+---
+// Řešení (PAS): co je indexové ETF a proč právě tato. Reálné složení S&P 500 ETF (VOO), 4 přínosy, Buffett.
+import { sp500Holdings, etfByTicker, czechFund, cheapTwinTer, buffett } from '../lib/market';
+import { czk, dec, pct, ter } from '../lib/format';
+import { IconShield, IconSpark, IconChecklist, IconSwap } from './icons';
+
+const NAMES: Record<string, string> = { NVDA: 'NVIDIA', AAPL: 'Apple', MSFT: 'Microsoft', AMZN: 'Amazon', GOOGL: 'Google', GOOG: 'Google', META: 'Meta', AVGO: 'Broadcom', TSLA: 'Tesla', 'BRK.B': 'Berkshire' };
+const top = sp500Holdings.top.slice(0, 5).map((h) => ({ name: NAMES[h.symbol] ?? h.name, w: h.weight }));
+const rest = Math.max(0, 1 - top.reduce((s, h) => s + h.w, 0));
+const shades = ['#0a0a0a', '#2b2b2f', '#4a4a50', '#6b6b72', '#8d8d94'];
+const maxW = Math.max(...top.map((h) => h.w));
+const spy = etfByTicker.SPY;
+const benefits = [
+  { icon: IconShield, title: 'Rozložené riziko', text: `Největší firma tvoří jen ${dec(maxW * 100, 0)} % fondu. Když se jedné nedaří, celek to unese.` },
+  { icon: IconSwap, title: 'Skoro žádný poplatek', text: `${ter(cheapTwinTer)} ročně. Ze 100 000 Kč je to ${czk(cheapTwinTer * 100000)}, ne ${czk(czechFund.value * 100000)} jako u typického fondu.` },
+  { icon: IconSpark, title: 'Historie na vaší straně', text: spy?.returns.y20 != null ? `Za posledních 20 let ${pct(spy.returns.y20, 1)} ročně (v USD), i přes krize 2008 a 2020. Budoucnost ale zaručená není.` : 'Dlouhodobě patří akcie k nejvýnosnějším investicím. Budoucnost ale zaručená není.' },
+  { icon: IconChecklist, title: '10 minut měsíčně', text: 'Nastavíte pravidelný nákup a dál nic nehlídáte. Žádné grafy, žádné tipy, žádný poradce.' },
+];
+---
+<div class="card overflow-hidden p-6 sm:p-8" data-reveal>
+  <p class="text-[14px] text-[var(--color-muted)]">Co vlastníte jedním nákupem ETF na S&P 500</p>
+  <div class="hold mt-4 flex h-14 w-full overflow-hidden rounded-2xl sm:h-16" role="img" aria-label="Složení S&P 500 ETF">
+    {top.map((h, i) => (
+      <div class="seg-h flex items-center justify-center overflow-hidden text-white" style={`--w:${(h.w * 100).toFixed(2)}%;background:${shades[i]};--i:${i}`} title={`${h.name} ${dec(h.w * 100, 1)} %`}>
+        <span class="hidden truncate px-1 text-[11px] font-medium sm:block">{h.name}</span>
+      </div>
+    ))}
+    <div class="seg-h flex items-center justify-center bg-[var(--color-lime)] text-[var(--color-ink)]" style={`--w:${(rest * 100).toFixed(2)}%;--i:6`}>
+      <span class="truncate px-2 text-[13px] font-semibold sm:text-[14px]">+ stovky dalších firem</span>
+    </div>
+  </div>
+  <div class="mt-3 flex flex-wrap gap-x-4 gap-y-1.5 text-[12.5px] text-[var(--color-ink-2)]">
+    {top.map((h, i) => (
+      <span class="inline-flex items-center gap-1.5"><span class="h-2.5 w-2.5 rounded-sm" style={`background:${shades[i]}`}></span>{h.name} <span class="num text-[var(--color-muted)]">{dec(h.w * 100, 1)} %</span></span>
+    ))}
+    <span class="inline-flex items-center gap-1.5"><span class="h-2.5 w-2.5 rounded-sm bg-[var(--color-lime)]"></span>Ostatní <span class="num text-[var(--color-muted)]">{dec(rest * 100, 0)} %</span></span>
+  </div>
+  <p class="mt-3 text-[12px] text-[var(--color-faint)]">Váhy největších firem ve Vanguard S&P 500 ETF (VOO), Alpha Vantage.</p>
+</div>
+
+<div class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+  {benefits.map((b, i) => (
+    <div class="card card-hover p-6" data-reveal style={`--i:${i}`}>
+      <span class="flex h-11 w-11 items-center justify-center rounded-2xl bg-[var(--color-soft)]"><b.icon size={22} /></span>
+      <p class="mt-4 text-[17px] font-semibold tracking-[-0.02em]">{b.title}</p>
+      <p class="mt-1.5 text-[14.5px] leading-snug text-[var(--color-muted)]">{b.text}</p>
+    </div>
+  ))}
+</div>
+
+<figure class="card-dark relative mt-5 overflow-hidden p-7 sm:p-10" data-reveal>
+  <div class="pointer-events-none absolute -top-24 -right-24 h-72 w-72 rounded-full bg-[var(--color-lime)] opacity-20 blur-[80px]" aria-hidden="true"></div>
+  <blockquote class="relative max-w-3xl text-[clamp(1.25rem,2.4vw,1.75rem)] leading-snug font-medium tracking-[-0.02em] text-white">„{buffett.quote}“</blockquote>
+  <figcaption class="relative mt-5 text-[14px] text-zinc-400">
+    <span class="font-medium text-white">Warren Buffett</span>, jeden z nejúspěšnějších investorů historie, v pokynech pro správu dědictví své manželky (<a class="underline" href={buffett.sourceUrl} target="_blank" rel="noopener">dopis akcionářům 2013</a>). Vanguard S&P 500 ETF (VOO) je přesně takový fond.
+  </figcaption>
+</figure>
+
+<style>
+  .seg-h { flex: 0 0 0%; transition: flex-basis 1.2s var(--ease-out-expo); transition-delay: calc(var(--i) * 90ms + 150ms); }
+  :global([data-reveal].in) .seg-h, :global(html:not(.js)) .seg-h { flex-basis: var(--w); }
+  .hold > .seg-h + .seg-h { border-left: 2px solid #fff; }
+</style>
