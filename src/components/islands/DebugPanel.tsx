@@ -1,7 +1,7 @@
 // Živý přehled měřených událostí a funnelu. Zobrazí se jen s ?debug=1 (pro demo a QA).
 import { useEffect, useState } from 'preact/hooks';
 import { useStore } from '@nanostores/preact';
-import { $events } from '../../lib/track';
+import { $events, $posthogStatus } from '../../lib/track';
 
 const FUNNEL = ['page_view', 'hero_view', 'first_interaction', 'section_view', 'form_view', 'form_focus', 'form_submit', 'lead_created'];
 
@@ -9,6 +9,7 @@ export default function DebugPanel() {
   const [on, setOn] = useState(false);
   const [open, setOpen] = useState(true);
   const events = useStore($events);
+  const ph = useStore($posthogStatus);
   useEffect(() => setOn(new URLSearchParams(location.search).has('debug')), []);
   if (!on) return null;
   const seen = new Set(events.map((e) => e.name));
@@ -22,6 +23,13 @@ export default function DebugPanel() {
         </button>
         {open && (
           <>
+            <p class={`mt-2 ${ph.state === 'ready' ? 'text-[var(--color-lime)]' : 'text-[#ff8a8a]'}`}>
+              PostHog:{' '}
+              {ph.state === 'missing-key' && 'chybí klíč (PUBLIC_POSTHOG_KEY v buildu)'}
+              {ph.state === 'loading' && `načítá se… ${ph.keyHint} → ${ph.host}`}
+              {ph.state === 'ready' && `připojeno ${ph.keyHint} → ${ph.host}`}
+              {ph.state === 'error' && 'chyba načtení (blokátor reklam?)'}
+            </p>
             <ol class="mt-2 grid grid-cols-2 gap-1">
               {FUNNEL.map((f, i) => (
                 <li class={seen.has(f) ? 'text-[var(--color-lime)]' : 'text-[#5d6d66]'}>

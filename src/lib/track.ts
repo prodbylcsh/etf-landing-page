@@ -19,6 +19,13 @@ export interface TrackedEvent {
 }
 
 export const $events = atom<TrackedEvent[]>([]);
+
+/** Stav PostHogu pro debug panel (?debug=1): ověření na ostré stránce bez devtools. */
+export const $posthogStatus = atom<{ state: 'missing-key' | 'loading' | 'ready' | 'error'; host: string; keyHint: string | null }>({
+  state: POSTHOG_KEY ? 'loading' : 'missing-key',
+  host: POSTHOG_HOST,
+  keyHint: POSTHOG_KEY ? `${POSTHOG_KEY.slice(0, 8)}…` : null,
+});
 export const $consent = atom<Consent>(readConsent());
 
 declare global {
@@ -141,20 +148,27 @@ function loadMetaPixel(id: string) {
 
 async function loadPosthog() {
   if (!POSTHOG_KEY) return;
-  const mod = await import('posthog-js');
-  const ph = mod.default;
-  const granted = $consent.get() === 'granted';
-  ph.init(POSTHOG_KEY, {
-    api_host: POSTHOG_HOST,
-    persistence: granted ? 'localStorage+cookie' : 'memory',
-    autocapture: false,
-    capture_pageview: false,
-    capture_pageleave: true,
-    disable_session_recording: !granted,
-    person_profiles: 'identified_only',
-  });
-  posthog = ph;
-  for (const [name, props] of queue.splice(0)) ph.capture(name, props);
+  try {
+    const mod = await import('posthog-js');
+    const ph = mod.default;
+    const granted = $consent.get() === 'granted';
+    ph.init(POSTHOG_KEY, {
+      api_host: POSTHOG_HOST,
+      persistence: granted ? 'localStorage+cookie' : 'memory',
+      autocapture: false,
+      // $pageview + $pageleave: z nich počítá přehled Web analytics (visitors, page views, bounce).
+      capture_pageview: true,
+      capture_pageleave: true,
+      disable_session_recording: !granted,
+      person_profiles: 'identified_only',
+    });
+    posthog = ph;
+    for (const [name, props] of queue.splice(0)) ph.capture(name, props);
+    $posthogStatus.set({ ...$posthogStatus.get(), state: 'ready' });
+  } catch (err) {
+    console.warn('[track] PostHog se nepodařilo načíst', err);
+    $posthogStatus.set({ ...$posthogStatus.get(), state: 'error' });
+  }
 }
 
 export function identifyLead(email: string) {
