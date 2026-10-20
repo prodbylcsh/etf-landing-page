@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-10-17T01:28:17.722Z",
+ "generatedAt": "2026-10-20T02:01:14.399Z",
  "sources": {
   "alphaVantage": {
    "name": "Alpha Vantage",
@@ -11,8 +11,8 @@
   }
  },
  "fx": {
-  "usdczk": 21.622,
-  "date": "2026-10-16",
+  "usdczk": 21.69,
+  "date": "2026-10-19",
   "monthly": {
    "2005-01": 23.118,
    "2005-02": 22.449,
@@ -275,22 +275,22 @@
    "2026-07": 21.076,
    "2026-08": 20.8,
    "2026-09": 21.522,
-   "2026-10": 21.622
+   "2026-10": 21.69
   },
   "source": "ČNB – kurzy devizového trhu",
   "sourceUrl": "https://www.cnb.cz/cs/financni-trhy/devizovy-trh/kurzy-devizoveho-trhu/kurzy-devizoveho-trhu/denni_kurz.txt"
  },
  "listing": {
   "counts": {
-   "NYSE": 2753,
-   "BATS": 1491,
-   "NASDAQ": 1337,
-   "NYSE ARCA": 263,
+   "NYSE": 2748,
+   "BATS": 1508,
+   "NASDAQ": 1343,
+   "NYSE ARCA": 267,
    "AMEX": 34,
    "NYSE MKT": 7
   },
-  "nyseEtfCount": 3023,
-  "asOf": "2026-10-14",
+  "nyseEtfCount": 3022,
+  "asOf": "2026-10-20",
   "exchanges": {
    "VOO": "NYSE",
    "SPY": "NYSE",
@@ -1094,16 +1094,16 @@
     ],
     [
      "2026-10",
-     701.61
+     704.6
     ]
    ],
    "lastPrice": {
-    "close": 701.61,
-    "date": "2026-10-16"
+    "close": 704.6,
+    "date": "2026-10-19"
    },
-   "lastRefreshed": "2026-10-16",
+   "lastRefreshed": "2026-10-19",
    "fetched": {
-    "prices": "2026-10-17T01:28:19.640Z",
+    "prices": "2026-10-20T02:01:42.097Z",
     "profile": "2026-10-14T09:21:48.627Z"
    },
    "profile": {
@@ -2231,16 +2231,16 @@
     ],
     [
      "2026-10",
-     763.25
+     766.48
     ]
    ],
    "lastPrice": {
-    "close": 763.25,
-    "date": "2026-10-16"
+    "close": 766.48,
+    "date": "2026-10-19"
    },
-   "lastRefreshed": "2026-10-16",
+   "lastRefreshed": "2026-10-19",
    "fetched": {
-    "prices": "2026-10-17T01:28:32.503Z",
+    "prices": "2026-10-20T02:01:55.117Z",
     "profile": "2026-10-14T09:22:01.633Z"
    },
    "profile": {
@@ -3368,16 +3368,16 @@
     ],
     [
      "2026-10",
-     766.67
+     770.01
     ]
    ],
    "lastPrice": {
-    "close": 766.67,
-    "date": "2026-10-16"
+    "close": 770.01,
+    "date": "2026-10-19"
    },
-   "lastRefreshed": "2026-10-16",
+   "lastRefreshed": "2026-10-19",
    "fetched": {
-    "prices": "2026-10-17T01:28:45.529Z",
+    "prices": "2026-10-20T02:02:08.131Z",
     "profile": "2026-10-14T09:22:14.635Z"
    },
    "profile": {
@@ -4505,16 +4505,16 @@
     ],
     [
      "2026-10",
-     374.07
+     375.54
     ]
    ],
    "lastPrice": {
-    "close": 374.07,
-    "date": "2026-10-16"
+    "close": 375.54,
+    "date": "2026-10-19"
    },
-   "lastRefreshed": "2026-10-16",
+   "lastRefreshed": "2026-10-19",
    "fetched": {
-    "prices": "2026-10-17T01:28:58.531Z",
+    "prices": "2026-10-20T02:02:21.134Z",
     "profile": "2026-10-14T09:22:27.695Z"
    },
    "profile": {
@@ -5474,16 +5474,16 @@
     ],
     [
      "2026-10",
-     156.82
+     157.11
     ]
    ],
    "lastPrice": {
-    "close": 156.82,
-    "date": "2026-10-16"
+    "close": 157.11,
+    "date": "2026-10-19"
    },
-   "lastRefreshed": "2026-10-16",
+   "lastRefreshed": "2026-10-19",
    "fetched": {
-    "prices": "2026-10-17T01:29:11.510Z",
+    "prices": "2026-10-20T02:02:34.166Z",
     "profile": "2026-10-14T09:22:40.649Z"
    },
    "profile": {
@@ -6487,16 +6487,16 @@
     ],
     [
      "2026-10",
-     69.49
+     69.36
     ]
    ],
    "lastPrice": {
-    "close": 69.49,
-    "date": "2026-10-16"
+    "close": 69.36,
+    "date": "2026-10-19"
    },
-   "lastRefreshed": "2026-10-16",
+   "lastRefreshed": "2026-10-19",
    "fetched": {
-    "prices": "2026-10-17T01:29:24.518Z",
+    "prices": "2026-10-20T02:02:47.171Z",
     "profile": "2026-10-14T09:22:53.693Z"
    },
    "profile": {
@@ -7613,11 +7613,11 @@
    ],
    "lastPrice": {
     "close": 58.03,
-    "date": "2026-10-16"
+    "date": "2026-10-19"
    },
-   "lastRefreshed": "2026-10-16",
+   "lastRefreshed": "2026-10-19",
    "fetched": {
-    "prices": "2026-10-17T01:29:37.736Z",
+    "prices": "2026-10-20T02:03:00.164Z",
     "profile": "2026-10-14T09:23:06.634Z"
    },
    "profile": {
@@ -8392,16 +8392,16 @@
     ],
     [
      "2026-10",
-     34.35
+     34.24
     ]
    ],
    "lastPrice": {
-    "close": 34.35,
-    "date": "2026-10-16"
+    "close": 34.24,
+    "date": "2026-10-19"
    },
-   "lastRefreshed": "2026-10-16",
+   "lastRefreshed": "2026-10-19",
    "fetched": {
-    "prices": "2026-10-17T01:29:50.543Z",
+    "prices": "2026-10-20T02:03:13.156Z",
     "profile": "2026-10-14T09:23:19.659Z"
    },
    "profile": {
@@ -9465,16 +9465,16 @@
     ],
     [
      "2026-10",
-     241.77
+     241.03
     ]
    ],
    "lastPrice": {
-    "close": 241.77,
-    "date": "2026-10-16"
+    "close": 241.03,
+    "date": "2026-10-19"
    },
-   "lastRefreshed": "2026-10-16",
+   "lastRefreshed": "2026-10-19",
    "fetched": {
-    "prices": "2026-10-17T01:30:03.517Z",
+    "prices": "2026-10-20T02:03:26.177Z",
     "profile": "2026-10-14T09:23:32.676Z"
    },
    "profile": {
@@ -10602,16 +10602,16 @@
     ],
     [
      "2026-10",
-     91.76
+     90.71
     ]
    ],
    "lastPrice": {
-    "close": 91.76,
-    "date": "2026-10-16"
+    "close": 90.71,
+    "date": "2026-10-19"
    },
-   "lastRefreshed": "2026-10-16",
+   "lastRefreshed": "2026-10-19",
    "fetched": {
-    "prices": "2026-10-17T01:30:16.551Z",
+    "prices": "2026-10-20T02:03:39.177Z",
     "profile": "2026-10-14T09:23:45.671Z"
    },
    "profile": {
@@ -11719,16 +11719,16 @@
     ],
     [
      "2026-10",
-     382.01
+     379.69
     ]
    ],
    "lastPrice": {
-    "close": 382.01,
-    "date": "2026-10-16"
+    "close": 379.69,
+    "date": "2026-10-19"
    },
-   "lastRefreshed": "2026-10-16",
+   "lastRefreshed": "2026-10-19",
    "fetched": {
-    "prices": "2026-10-17T01:30:29.561Z",
+    "prices": "2026-10-20T02:03:52.190Z",
     "profile": "2026-10-14T09:23:58.660Z"
    },
    "profile": {
@@ -12805,16 +12805,16 @@
     ],
     [
      "2026-10",
-     94.82
+     95.11
     ]
    ],
    "lastPrice": {
-    "close": 94.82,
-    "date": "2026-10-14"
+    "close": 95.11,
+    "date": "2026-10-19"
    },
-   "lastRefreshed": "2026-10-14",
+   "lastRefreshed": "2026-10-19",
    "fetched": {
-    "prices": "2026-10-15T09:30:22.131Z",
+    "prices": "2026-10-20T02:01:29.137Z",
     "profile": "2026-10-14T09:24:11.672Z"
    },
    "profile": {
