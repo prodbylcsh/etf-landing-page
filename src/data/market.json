@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-07T03:05:39.381Z",
+ "generatedAt": "2026-11-10T04:44:48.677Z",
  "sources": {
   "alphaVantage": {
    "name": "Alpha Vantage",
@@ -11,8 +11,8 @@
   }
  },
  "fx": {
-  "usdczk": 21.804,
-  "date": "2026-11-06",
+  "usdczk": 21.762,
+  "date": "2026-11-09",
   "monthly": {
    "2005-01": 23.118,
    "2005-02": 22.449,
@@ -276,22 +276,22 @@
    "2026-08": 20.8,
    "2026-09": 21.522,
    "2026-10": 21.814,
-   "2026-11": 21.804
+   "2026-11": 21.762
   },
   "source": "ČNB – kurzy devizového trhu",
   "sourceUrl": "https://www.cnb.cz/cs/financni-trhy/devizovy-trh/kurzy-devizoveho-trhu/kurzy-devizoveho-trhu/denni_kurz.txt"
  },
  "listing": {
   "counts": {
-   "NYSE": 2720,
+   "NYSE": 2719,
    "BATS": 1507,
-   "NASDAQ": 1343,
-   "NYSE ARCA": 293,
+   "NASDAQ": 1341,
+   "NYSE ARCA": 301,
    "AMEX": 34,
    "NYSE MKT": 7
   },
-  "nyseEtfCount": 3020,
-  "asOf": "2026-11-03",
+  "nyseEtfCount": 3027,
+  "asOf": "2026-11-10",
   "exchanges": {
    "VOO": "NYSE",
    "SPY": "NYSE",
@@ -1099,17 +1099,17 @@
     ],
     [
      "2026-11",
-     675.99
+     691.87
     ]
    ],
    "lastPrice": {
-    "close": 675.99,
-    "date": "2026-11-06"
+    "close": 691.87,
+    "date": "2026-11-09"
    },
-   "lastRefreshed": "2026-11-06",
+   "lastRefreshed": "2026-11-09",
    "fetched": {
-    "prices": "2026-11-07T03:05:54.555Z",
-    "profile": "2026-11-03T04:02:16.535Z"
+    "prices": "2026-11-10T04:45:16.718Z",
+    "profile": "2026-11-10T04:47:39.778Z"
    },
    "profile": {
     "ter": 0.0003,
@@ -1169,8 +1169,8 @@
       "weight": 0.0307
      }
     ],
-    "holdingsCount": 514,
-    "asOf": "2026-10-30"
+    "holdingsCount": 517,
+    "asOf": "2026-11-06"
    }
   },
   "SPY": {
@@ -2240,78 +2240,78 @@
     ],
     [
      "2026-11",
-     735.29
+     752.69
     ]
    ],
    "lastPrice": {
-    "close": 735.29,
-    "date": "2026-11-06"
+    "close": 752.69,
+    "date": "2026-11-09"
    },
-   "lastRefreshed": "2026-11-06",
+   "lastRefreshed": "2026-11-09",
    "fetched": {
-    "prices": "2026-11-07T03:06:07.610Z",
-    "profile": "2026-11-03T04:02:29.546Z"
+    "prices": "2026-11-10T04:45:29.703Z",
+    "profile": "2026-11-10T04:47:52.789Z"
    },
    "profile": {
     "ter": 0.000945,
-    "netAssets": 809200000000,
-    "dividendYield": 0.0096,
+    "netAssets": 796900000000,
+    "dividendYield": 0.0095,
     "inception": "1993-01-22",
     "sectors": [
      {
       "name": "INFORMATION TECHNOLOGY",
-      "weight": 0.384
+      "weight": 0.368
      },
      {
       "name": "FINANCIALS",
-      "weight": 0.102
+      "weight": 0.106
      },
      {
       "name": "HEALTHCARE",
-      "weight": 0.097
+      "weight": 0.103
      },
      {
       "name": "CONSUMER DISCRETIONARY",
-      "weight": 0.091
+      "weight": 0.094
      },
      {
       "name": "COMMUNICATION SERVICES",
-      "weight": 0.089
+      "weight": 0.085
      },
      {
       "name": "INDUSTRIALS",
-      "weight": 0.08
+      "weight": 0.083
      }
     ],
     "holdings": [
      {
       "symbol": "NVDA",
       "name": "NVIDIA CORP",
-      "weight": 0.0779
+      "weight": 0.0767
      },
      {
       "symbol": "AAPL",
       "name": "APPLE INC",
-      "weight": 0.075
+      "weight": 0.0743
      },
      {
       "symbol": "MSFT",
       "name": "MICROSOFT CORP",
-      "weight": 0.059
+      "weight": 0.0593
      },
      {
       "symbol": "AMZN",
       "name": "AMAZON.COM INC",
-      "weight": 0.0374
+      "weight": 0.0377
      },
      {
       "symbol": "GOOGL",
       "name": "ALPHABET INC CLASS A",
-      "weight": 0.0285
+      "weight": 0.0252
      }
     ],
-    "holdingsCount": 505,
-    "asOf": "2026-10-30"
+    "holdingsCount": 504,
+    "asOf": "2026-11-06"
    }
   },
   "IVV": {
@@ -3381,21 +3381,21 @@
     ],
     [
      "2026-11",
-     738.68
+     756.05
     ]
    ],
    "lastPrice": {
-    "close": 738.68,
-    "date": "2026-11-06"
+    "close": 756.05,
+    "date": "2026-11-09"
    },
-   "lastRefreshed": "2026-11-06",
+   "lastRefreshed": "2026-11-09",
    "fetched": {
-    "prices": "2026-11-07T03:06:20.639Z",
-    "profile": "2026-11-03T04:02:42.547Z"
+    "prices": "2026-11-10T04:45:42.749Z",
+    "profile": "2026-11-10T04:48:05.789Z"
    },
    "profile": {
     "ter": 0.0003,
-    "netAssets": 881300000000,
+    "netAssets": 870000000000,
     "dividendYield": 0.0094,
     "inception": "2000-05-15",
     "sectors": [
@@ -3413,7 +3413,7 @@
      },
      {
       "name": "COMMUNICATION SERVICES",
-      "weight": 0.091
+      "weight": 0.092
      },
      {
       "name": "CONSUMER DISCRETIONARY",
@@ -3452,7 +3452,7 @@
      }
     ],
     "holdingsCount": 467,
-    "asOf": "2026-10-30"
+    "asOf": "2026-11-06"
    }
   },
   "VTI": {
@@ -4522,17 +4522,17 @@
     ],
     [
      "2026-11",
-     361.93
+     370.9
     ]
    ],
    "lastPrice": {
-    "close": 361.93,
-    "date": "2026-11-06"
+    "close": 370.9,
+    "date": "2026-11-09"
    },
-   "lastRefreshed": "2026-11-06",
+   "lastRefreshed": "2026-11-09",
    "fetched": {
-    "prices": "2026-11-07T03:06:33.611Z",
-    "profile": "2026-11-03T04:02:55.571Z"
+    "prices": "2026-11-10T04:45:55.748Z",
+    "profile": "2026-11-10T04:48:18.878Z"
    },
    "profile": {
     "ter": 0.0003,
@@ -4593,7 +4593,7 @@
      }
     ],
     "holdingsCount": 2531,
-    "asOf": "2026-10-30"
+    "asOf": "2026-11-06"
    }
   },
   "VT": {
@@ -5495,22 +5495,22 @@
     ],
     [
      "2026-11",
-     151.73
+     155.68
     ]
    ],
    "lastPrice": {
-    "close": 151.73,
-    "date": "2026-11-06"
+    "close": 155.68,
+    "date": "2026-11-09"
    },
-   "lastRefreshed": "2026-11-06",
+   "lastRefreshed": "2026-11-09",
    "fetched": {
-    "prices": "2026-11-07T03:06:46.571Z",
-    "profile": "2026-11-03T04:03:08.557Z"
+    "prices": "2026-11-10T04:46:13.759Z",
+    "profile": "2026-11-10T04:48:31.799Z"
    },
    "profile": {
     "ter": 0.0006,
-    "netAssets": 101200000000,
-    "dividendYield": 0.0153,
+    "netAssets": 101700000000,
+    "dividendYield": 0.0156,
     "inception": "2008-06-24",
     "sectors": [
      {
@@ -5566,7 +5566,7 @@
      }
     ],
     "holdingsCount": 314,
-    "asOf": "2026-10-30"
+    "asOf": "2026-11-06"
    }
   },
   "VEA": {
@@ -6512,22 +6512,22 @@
     ],
     [
      "2026-11",
-     67.9
+     69.89
     ]
    ],
    "lastPrice": {
-    "close": 67.9,
-    "date": "2026-11-06"
+    "close": 69.89,
+    "date": "2026-11-09"
    },
-   "lastRefreshed": "2026-11-06",
+   "lastRefreshed": "2026-11-09",
    "fetched": {
-    "prices": "2026-11-07T03:06:59.587Z",
-    "profile": "2026-11-03T04:03:21.598Z"
+    "prices": "2026-11-10T04:46:21.740Z",
+    "profile": "2026-11-10T04:48:44.899Z"
    },
    "profile": {
     "ter": 0.0003,
-    "netAssets": 313500000000,
-    "dividendYield": 0.0241,
+    "netAssets": 309100000000,
+    "dividendYield": 0.0246,
     "inception": "2007-07-20",
     "sectors": [
      {
@@ -6579,7 +6579,7 @@
      }
     ],
     "holdingsCount": 2839,
-    "asOf": "2026-10-30"
+    "asOf": "2026-11-06"
    }
   },
   "VWO": {
@@ -7637,22 +7637,22 @@
     ],
     [
      "2026-11",
-     55.29
+     56.61
     ]
    ],
    "lastPrice": {
-    "close": 55.29,
-    "date": "2026-11-06"
+    "close": 56.61,
+    "date": "2026-11-09"
    },
-   "lastRefreshed": "2026-11-06",
+   "lastRefreshed": "2026-11-09",
    "fetched": {
-    "prices": "2026-11-07T03:07:12.605Z",
-    "profile": "2026-11-03T04:03:34.564Z"
+    "prices": "2026-11-10T04:46:34.762Z",
+    "profile": "2026-11-10T04:48:57.744Z"
    },
    "profile": {
     "ter": 0.0006,
-    "netAssets": 164700000000,
-    "dividendYield": 0.0205,
+    "netAssets": 153800000000,
+    "dividendYield": 0.0219,
     "inception": "2005-03-04",
     "sectors": [],
     "holdings": [
@@ -7683,7 +7683,7 @@
      }
     ],
     "holdingsCount": 12,
-    "asOf": "2026-10-30"
+    "asOf": "2026-11-06"
    }
   },
   "SCHD": {
@@ -8425,78 +8425,78 @@
     ],
     [
      "2026-11",
-     35.17
+     35.65
     ]
    ],
    "lastPrice": {
-    "close": 35.17,
-    "date": "2026-11-06"
+    "close": 35.65,
+    "date": "2026-11-09"
    },
-   "lastRefreshed": "2026-11-06",
+   "lastRefreshed": "2026-11-09",
    "fetched": {
-    "prices": "2026-11-07T03:07:25.620Z",
-    "profile": "2026-11-03T04:03:47.577Z"
+    "prices": "2026-11-10T04:46:47.763Z",
+    "profile": "2026-11-10T04:49:10.795Z"
    },
    "profile": {
     "ter": 0.0006,
-    "netAssets": 107900000000,
-    "dividendYield": 0.0336,
+    "netAssets": 121100000000,
+    "dividendYield": 0.0321,
     "inception": "2011-10-20",
     "sectors": [
      {
       "name": "CONSUMER STAPLES",
-      "weight": 0.196
+      "weight": 0.204
      },
      {
       "name": "HEALTHCARE",
-      "weight": 0.185
+      "weight": 0.189
      },
      {
       "name": "ENERGY",
-      "weight": 0.162
-     },
-     {
-      "name": "INFORMATION TECHNOLOGY",
-      "weight": 0.126
+      "weight": 0.147
      },
      {
       "name": "INDUSTRIALS",
-      "weight": 0.117
+      "weight": 0.119
+     },
+     {
+      "name": "INFORMATION TECHNOLOGY",
+      "weight": 0.118
      },
      {
       "name": "FINANCIALS",
-      "weight": 0.089
+      "weight": 0.091
      }
     ],
     "holdings": [
      {
       "symbol": "TXN",
       "name": "TEXAS INSTRUMENTS INC",
-      "weight": 0.0479
-     },
-     {
-      "symbol": "QCOM",
-      "name": "QUALCOMM INC",
-      "weight": 0.0428
-     },
-     {
-      "symbol": "CVX",
-      "name": "CHEVRON CORP",
-      "weight": 0.0426
+      "weight": 0.048
      },
      {
       "symbol": "PG",
       "name": "PROCTER & GAMBLE CO",
-      "weight": 0.0426
+      "weight": 0.0429
+     },
+     {
+      "symbol": "KO",
+      "name": "COCA-COLA CO",
+      "weight": 0.042
+     },
+     {
+      "symbol": "CVX",
+      "name": "CHEVRON CORP",
+      "weight": 0.0416
      },
      {
       "symbol": "COP",
       "name": "CONOCOPHILLIPS",
-      "weight": 0.0426
+      "weight": 0.0411
      }
     ],
     "holdingsCount": 102,
-    "asOf": "2026-10-30"
+    "asOf": "2026-11-06"
    }
   },
   "VIG": {
@@ -9502,21 +9502,21 @@
     ],
     [
      "2026-11",
-     243.34
+     249.25
     ]
    ],
    "lastPrice": {
-    "close": 243.34,
-    "date": "2026-11-06"
+    "close": 249.25,
+    "date": "2026-11-09"
    },
-   "lastRefreshed": "2026-11-06",
+   "lastRefreshed": "2026-11-09",
    "fetched": {
-    "prices": "2026-11-07T03:07:38.611Z",
-    "profile": "2026-11-03T04:04:00.591Z"
+    "prices": "2026-11-10T04:47:00.762Z",
+    "profile": "2026-11-10T04:49:23.798Z"
    },
    "profile": {
     "ter": 0.0004,
-    "netAssets": 127600000000,
+    "netAssets": 135699999999,
     "dividendYield": 0.0151,
     "inception": "2006-04-21",
     "sectors": [
@@ -9572,8 +9572,8 @@
       "weight": 0.039
      }
     ],
-    "holdingsCount": 343,
-    "asOf": "2026-10-30"
+    "holdingsCount": 303,
+    "asOf": "2026-11-06"
    }
   },
   "VNQ": {
@@ -10643,27 +10643,27 @@
     ],
     [
      "2026-11",
-     95.73
+     97.3
     ]
    ],
    "lastPrice": {
-    "close": 95.73,
-    "date": "2026-11-06"
+    "close": 97.3,
+    "date": "2026-11-09"
    },
-   "lastRefreshed": "2026-11-06",
+   "lastRefreshed": "2026-11-09",
    "fetched": {
-    "prices": "2026-11-07T03:07:51.639Z",
-    "profile": "2026-11-03T04:04:13.605Z"
+    "prices": "2026-11-10T04:47:13.809Z",
+    "profile": "2026-11-10T04:49:36.808Z"
    },
    "profile": {
     "ter": 0.0013,
-    "netAssets": 66400000000,
-    "dividendYield": 0.038,
+    "netAssets": 69500000000,
+    "dividendYield": 0.0363,
     "inception": "2004-09-23",
     "sectors": [
      {
       "name": "REAL ESTATE",
-      "weight": 0.846
+      "weight": 0.844
      }
     ],
     "holdings": [
@@ -10694,7 +10694,7 @@
      }
     ],
     "holdingsCount": 155,
-    "asOf": "2026-10-30"
+    "asOf": "2026-11-06"
    }
   },
   "GLD": {
@@ -11764,27 +11764,27 @@
     ],
     [
      "2026-11",
-     372.52
+     379.53
     ]
    ],
    "lastPrice": {
-    "close": 372.52,
-    "date": "2026-11-06"
+    "close": 379.53,
+    "date": "2026-11-09"
    },
-   "lastRefreshed": "2026-11-06",
+   "lastRefreshed": "2026-11-09",
    "fetched": {
-    "prices": "2026-11-07T03:08:04.637Z",
-    "profile": "2026-11-03T04:04:26.600Z"
+    "prices": "2026-11-10T04:47:26.787Z",
+    "profile": "2026-11-10T04:49:49.785Z"
    },
    "profile": {
     "ter": 0.004,
-    "netAssets": 141700000000,
+    "netAssets": 131000000000,
     "dividendYield": 0,
     "inception": "2004-11-18",
     "sectors": [],
     "holdings": [],
     "holdingsCount": 0,
-    "asOf": "2026-10-30"
+    "asOf": "2026-11-06"
    }
   },
   "AGG": {
@@ -12854,27 +12854,27 @@
     ],
     [
      "2026-11",
-     96.55
+     96.58
     ]
    ],
    "lastPrice": {
-    "close": 96.55,
-    "date": "2026-11-06"
+    "close": 96.58,
+    "date": "2026-11-09"
    },
-   "lastRefreshed": "2026-11-06",
+   "lastRefreshed": "2026-11-09",
    "fetched": {
-    "prices": "2026-11-07T03:05:41.620Z",
-    "profile": "2026-11-03T04:04:39.622Z"
+    "prices": "2026-11-10T04:45:03.735Z",
+    "profile": "2026-11-10T04:50:03.283Z"
    },
    "profile": {
     "ter": 0.0003,
-    "netAssets": 135699999999,
+    "netAssets": 139900000000,
     "dividendYield": 0.0495,
     "inception": "2003-09-22",
     "sectors": [],
     "holdings": [],
     "holdingsCount": 0,
-    "asOf": "2026-10-30"
+    "asOf": "2026-11-06"
    }
   }
  },
