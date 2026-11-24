@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-21T04:13:42.816Z",
+ "generatedAt": "2026-11-24T07:03:17.913Z",
  "sources": {
   "alphaVantage": {
    "name": "Alpha Vantage",
@@ -11,8 +11,8 @@
   }
  },
  "fx": {
-  "usdczk": 22.262,
-  "date": "2026-11-20",
+  "usdczk": 22.358,
+  "date": "2026-11-23",
   "monthly": {
    "2005-01": 23.118,
    "2005-02": 22.449,
@@ -276,22 +276,22 @@
    "2026-08": 20.8,
    "2026-09": 21.522,
    "2026-10": 21.814,
-   "2026-11": 22.262
+   "2026-11": 22.358
   },
   "source": "ČNB – kurzy devizového trhu",
   "sourceUrl": "https://www.cnb.cz/cs/financni-trhy/devizovy-trh/kurzy-devizoveho-trhu/kurzy-devizoveho-trhu/denni_kurz.txt"
  },
  "listing": {
   "counts": {
-   "NYSE": 2717,
-   "BATS": 1510,
-   "NASDAQ": 1342,
-   "NYSE ARCA": 310,
+   "NYSE": 2703,
+   "BATS": 1521,
+   "NASDAQ": 1356,
+   "NYSE ARCA": 334,
    "AMEX": 34,
    "NYSE MKT": 7
   },
-  "nyseEtfCount": 3034,
-  "asOf": "2026-11-17",
+  "nyseEtfCount": 3044,
+  "asOf": "2026-11-24",
   "exchanges": {
    "VOO": "NYSE",
    "SPY": "NYSE",
@@ -1099,17 +1099,17 @@
     ],
     [
      "2026-11",
-     635.54
+     663.91
     ]
    ],
    "lastPrice": {
-    "close": 635.54,
-    "date": "2026-11-20"
+    "close": 663.91,
+    "date": "2026-11-23"
    },
-   "lastRefreshed": "2026-11-20",
+   "lastRefreshed": "2026-11-23",
    "fetched": {
-    "prices": "2026-11-21T04:13:57.904Z",
-    "profile": "2026-11-17T05:15:20.417Z"
+    "prices": "2026-11-24T07:03:47.066Z",
+    "profile": "2026-11-24T07:06:10.150Z"
    },
    "profile": {
     "ter": 0.0003,
@@ -1119,23 +1119,23 @@
     "sectors": [
      {
       "name": "INFORMATION TECHNOLOGY",
-      "weight": 0.396
-     },
-     {
-      "name": "COMMUNICATION SERVICES",
-      "weight": 0.099
+      "weight": 0.372
      },
      {
       "name": "FINANCIALS",
-      "weight": 0.099
+      "weight": 0.105
      },
      {
       "name": "HEALTHCARE",
-      "weight": 0.093
+      "weight": 0.103
      },
      {
       "name": "CONSUMER DISCRETIONARY",
-      "weight": 0.087
+      "weight": 0.092
+     },
+     {
+      "name": "COMMUNICATION SERVICES",
+      "weight": 0.084
      },
      {
       "name": "INDUSTRIALS",
@@ -1144,33 +1144,33 @@
     ],
     "holdings": [
      {
-      "symbol": "NVDA",
-      "name": "NVIDIA CORP",
-      "weight": 0.0839
-     },
-     {
       "symbol": "AAPL",
       "name": "APPLE INC",
-      "weight": 0.0738
+      "weight": 0.077
+     },
+     {
+      "symbol": "NVDA",
+      "name": "NVIDIA CORP",
+      "weight": 0.0758
      },
      {
       "symbol": "MSFT",
       "name": "MICROSOFT CORP",
-      "weight": 0.0578
+      "weight": 0.0593
      },
      {
       "symbol": "AMZN",
       "name": "AMAZON.COM INC",
-      "weight": 0.0371
+      "weight": 0.0361
      },
      {
       "symbol": "GOOGL",
       "name": "ALPHABET INC CLASS A",
-      "weight": 0.0307
+      "weight": 0.0252
      }
     ],
-    "holdingsCount": 517,
-    "asOf": "2026-11-13"
+    "holdingsCount": 515,
+    "asOf": "2026-11-20"
    }
   },
   "SPY": {
@@ -2240,17 +2240,17 @@
     ],
     [
      "2026-11",
-     689.81
+     722.29
     ]
    ],
    "lastPrice": {
-    "close": 689.81,
-    "date": "2026-11-20"
+    "close": 722.29,
+    "date": "2026-11-23"
    },
-   "lastRefreshed": "2026-11-20",
+   "lastRefreshed": "2026-11-23",
    "fetched": {
-    "prices": "2026-11-21T04:14:10.976Z",
-    "profile": "2026-11-17T05:15:33.497Z"
+    "prices": "2026-11-24T07:04:00.084Z",
+    "profile": "2026-11-24T07:06:23.158Z"
    },
    "profile": {
     "ter": 0.000945,
@@ -2260,58 +2260,58 @@
     "sectors": [
      {
       "name": "INFORMATION TECHNOLOGY",
-      "weight": 0.36
+      "weight": 0.351
      },
      {
       "name": "FINANCIALS",
-      "weight": 0.108
+      "weight": 0.11
      },
      {
       "name": "HEALTHCARE",
-      "weight": 0.104
+      "weight": 0.106
      },
      {
       "name": "CONSUMER DISCRETIONARY",
-      "weight": 0.097
+      "weight": 0.096
      },
      {
       "name": "COMMUNICATION SERVICES",
-      "weight": 0.088
+      "weight": 0.089
      },
      {
       "name": "INDUSTRIALS",
-      "weight": 0.083
+      "weight": 0.082
      }
     ],
     "holdings": [
      {
       "symbol": "AAPL",
       "name": "APPLE INC",
-      "weight": 0.079
-     },
-     {
-      "symbol": "NVDA",
-      "name": "NVIDIA CORP",
-      "weight": 0.064
+      "weight": 0.0804
      },
      {
       "symbol": "MSFT",
       "name": "MICROSOFT CORP",
-      "weight": 0.0589
+      "weight": 0.0601
+     },
+     {
+      "symbol": "NVDA",
+      "name": "NVIDIA CORP",
+      "weight": 0.059
      },
      {
       "symbol": "AMZN",
       "name": "AMAZON.COM INC",
-      "weight": 0.0397
+      "weight": 0.0395
      },
      {
       "symbol": "GOOGL",
       "name": "ALPHABET INC CLASS A",
-      "weight": 0.0262
+      "weight": 0.026
      }
     ],
-    "holdingsCount": 505,
-    "asOf": "2026-11-13"
+    "holdingsCount": 503,
+    "asOf": "2026-11-20"
    }
   },
   "IVV": {
@@ -3381,39 +3381,39 @@
     ],
     [
      "2026-11",
-     693.71
+     725.49
     ]
    ],
    "lastPrice": {
-    "close": 693.71,
-    "date": "2026-11-20"
+    "close": 725.49,
+    "date": "2026-11-23"
    },
-   "lastRefreshed": "2026-11-20",
+   "lastRefreshed": "2026-11-23",
    "fetched": {
-    "prices": "2026-11-21T04:14:23.926Z",
-    "profile": "2026-11-17T05:15:46.380Z"
+    "prices": "2026-11-24T07:04:13.123Z",
+    "profile": "2026-11-24T07:06:36.258Z"
    },
    "profile": {
     "ter": 0.0003,
     "netAssets": 870000000000,
-    "dividendYield": 0.0095,
+    "dividendYield": 0.0096,
     "inception": "2000-05-15",
     "sectors": [
      {
       "name": "INFORMATION TECHNOLOGY",
-      "weight": 0.355
+      "weight": 0.351
      },
      {
       "name": "FINANCIALS",
-      "weight": 0.108
+      "weight": 0.11
      },
      {
       "name": "HEALTHCARE",
-      "weight": 0.105
+      "weight": 0.107
      },
      {
       "name": "CONSUMER DISCRETIONARY",
-      "weight": 0.098
+      "weight": 0.096
      },
      {
       "name": "COMMUNICATION SERVICES",
@@ -3428,22 +3428,22 @@
      {
       "symbol": "AAPL",
       "name": "APPLE INC",
-      "weight": 0.0784
-     },
-     {
-      "symbol": "NVDA",
-      "name": "NVIDIA CORP",
-      "weight": 0.063
+      "weight": 0.0805
      },
      {
       "symbol": "MSFT",
       "name": "MICROSOFT CORP",
-      "weight": 0.061
+      "weight": 0.0601
+     },
+     {
+      "symbol": "NVDA",
+      "name": "NVIDIA CORP",
+      "weight": 0.0591
      },
      {
       "symbol": "AMZN",
       "name": "AMAZON.COM INC",
-      "weight": 0.041
+      "weight": 0.0395
      },
      {
       "symbol": "GOOGL",
@@ -3451,8 +3451,8 @@
       "weight": 0.026
      }
     ],
-    "holdingsCount": 469,
-    "asOf": "2026-11-13"
+    "holdingsCount": 467,
+    "asOf": "2026-11-20"
    }
   },
   "VTI": {
@@ -4522,17 +4522,17 @@
     ],
     [
      "2026-11",
-     340.02
+     355.27
     ]
    ],
    "lastPrice": {
-    "close": 340.02,
-    "date": "2026-11-20"
+    "close": 355.27,
+    "date": "2026-11-23"
    },
-   "lastRefreshed": "2026-11-20",
+   "lastRefreshed": "2026-11-23",
    "fetched": {
-    "prices": "2026-11-21T04:14:36.936Z",
-    "profile": "2026-11-17T05:15:59.564Z"
+    "prices": "2026-11-24T07:04:26.151Z",
+    "profile": "2026-11-24T07:06:49.325Z"
    },
    "profile": {
     "ter": 0.0003,
@@ -4593,7 +4593,7 @@
      }
     ],
     "holdingsCount": 2531,
-    "asOf": "2026-11-13"
+    "asOf": "2026-11-20"
    }
   },
   "VT": {
@@ -5495,17 +5495,17 @@
     ],
     [
      "2026-11",
-     142.08
+     148.21
     ]
    ],
    "lastPrice": {
-    "close": 142.08,
-    "date": "2026-11-20"
+    "close": 148.21,
+    "date": "2026-11-23"
    },
-   "lastRefreshed": "2026-11-20",
+   "lastRefreshed": "2026-11-23",
    "fetched": {
-    "prices": "2026-11-21T04:14:49.926Z",
-    "profile": "2026-11-17T05:16:12.481Z"
+    "prices": "2026-11-24T07:04:39.028Z",
+    "profile": "2026-11-24T07:07:02.184Z"
    },
    "profile": {
     "ter": 0.0006,
@@ -5566,7 +5566,7 @@
      }
     ],
     "holdingsCount": 314,
-    "asOf": "2026-11-13"
+    "asOf": "2026-11-20"
    }
   },
   "VEA": {
@@ -6512,17 +6512,17 @@
     ],
     [
      "2026-11",
-     63.62
+     65.58
     ]
    ],
    "lastPrice": {
-    "close": 63.62,
-    "date": "2026-11-20"
+    "close": 65.58,
+    "date": "2026-11-23"
    },
-   "lastRefreshed": "2026-11-20",
+   "lastRefreshed": "2026-11-23",
    "fetched": {
-    "prices": "2026-11-21T04:15:02.976Z",
-    "profile": "2026-11-17T05:16:25.588Z"
+    "prices": "2026-11-24T07:04:52.060Z",
+    "profile": "2026-11-24T07:07:15.337Z"
    },
    "profile": {
     "ter": 0.0003,
@@ -6579,7 +6579,7 @@
      }
     ],
     "holdingsCount": 2839,
-    "asOf": "2026-11-13"
+    "asOf": "2026-11-20"
    }
   },
   "VWO": {
@@ -7637,17 +7637,17 @@
     ],
     [
      "2026-11",
-     50.62
+     53.55
     ]
    ],
    "lastPrice": {
-    "close": 50.62,
-    "date": "2026-11-20"
+    "close": 53.55,
+    "date": "2026-11-23"
    },
-   "lastRefreshed": "2026-11-20",
+   "lastRefreshed": "2026-11-23",
    "fetched": {
-    "prices": "2026-11-21T04:15:15.945Z",
-    "profile": "2026-11-17T05:16:38.392Z"
+    "prices": "2026-11-24T07:05:05.514Z",
+    "profile": "2026-11-24T07:07:28.075Z"
    },
    "profile": {
     "ter": 0.0006,
@@ -7683,7 +7683,7 @@
      }
     ],
     "holdingsCount": 12,
-    "asOf": "2026-11-13"
+    "asOf": "2026-11-20"
    }
   },
   "SCHD": {
@@ -8425,17 +8425,17 @@
     ],
     [
      "2026-11",
-     33.94
+     34.39
     ]
    ],
    "lastPrice": {
-    "close": 33.94,
-    "date": "2026-11-20"
+    "close": 34.39,
+    "date": "2026-11-23"
    },
-   "lastRefreshed": "2026-11-20",
+   "lastRefreshed": "2026-11-23",
    "fetched": {
-    "prices": "2026-11-21T04:15:28.940Z",
-    "profile": "2026-11-17T05:16:51.393Z"
+    "prices": "2026-11-24T07:05:18.135Z",
+    "profile": "2026-11-24T07:07:41.093Z"
    },
    "profile": {
     "ter": 0.0006,
@@ -8445,19 +8445,19 @@
     "sectors": [
      {
       "name": "CONSUMER STAPLES",
-      "weight": 0.204
+      "weight": 0.209
      },
      {
       "name": "HEALTHCARE",
-      "weight": 0.189
+      "weight": 0.177
      },
      {
       "name": "ENERGY",
-      "weight": 0.147
+      "weight": 0.15
      },
      {
       "name": "INDUSTRIALS",
-      "weight": 0.119
+      "weight": 0.121
      },
      {
       "name": "INFORMATION TECHNOLOGY",
@@ -8470,33 +8470,33 @@
     ],
     "holdings": [
      {
-      "symbol": "TXN",
-      "name": "TEXAS INSTRUMENTS INC",
-      "weight": 0.048
-     },
-     {
       "symbol": "PG",
       "name": "PROCTER & GAMBLE CO",
-      "weight": 0.0429
+      "weight": 0.0458
+     },
+     {
+      "symbol": "TXN",
+      "name": "TEXAS INSTRUMENTS INC",
+      "weight": 0.0457
      },
      {
       "symbol": "KO",
       "name": "COCA-COLA CO",
-      "weight": 0.042
+      "weight": 0.0441
      },
      {
-      "symbol": "CVX",
-      "name": "CHEVRON CORP",
-      "weight": 0.0416
+      "symbol": "HD",
+      "name": "THE HOME DEPOT INC",
+      "weight": 0.0419
      },
      {
-      "symbol": "COP",
-      "name": "CONOCOPHILLIPS",
-      "weight": 0.0411
+      "symbol": "AMGN",
+      "name": "AMGEN INC",
+      "weight": 0.0407
      }
     ],
     "holdingsCount": 102,
-    "asOf": "2026-11-13"
+    "asOf": "2026-11-20"
    }
   },
   "VIG": {
@@ -9502,17 +9502,17 @@
     ],
     [
      "2026-11",
-     235.69
+     240.82
     ]
    ],
    "lastPrice": {
-    "close": 235.69,
-    "date": "2026-11-20"
+    "close": 240.82,
+    "date": "2026-11-23"
    },
-   "lastRefreshed": "2026-11-20",
+   "lastRefreshed": "2026-11-23",
    "fetched": {
-    "prices": "2026-11-21T04:15:42.020Z",
-    "profile": "2026-11-17T05:17:04.483Z"
+    "prices": "2026-11-24T07:05:31.131Z",
+    "profile": "2026-11-24T07:07:54.169Z"
    },
    "profile": {
     "ter": 0.0004,
@@ -9522,58 +9522,58 @@
     "sectors": [
      {
       "name": "INFORMATION TECHNOLOGY",
-      "weight": 0.265
+      "weight": 0.246
      },
      {
       "name": "FINANCIALS",
-      "weight": 0.202
+      "weight": 0.203
      },
      {
       "name": "HEALTHCARE",
-      "weight": 0.186
+      "weight": 0.194
      },
      {
       "name": "INDUSTRIALS",
-      "weight": 0.113
+      "weight": 0.108
      },
      {
       "name": "CONSUMER STAPLES",
-      "weight": 0.091
+      "weight": 0.096
      },
      {
       "name": "CONSUMER DISCRETIONARY",
-      "weight": 0.042
+      "weight": 0.044
      }
     ],
     "holdings": [
      {
-      "symbol": "MSFT",
-      "name": "MICROSOFT CORP",
-      "weight": 0.0491
-     },
-     {
       "symbol": "AAPL",
       "name": "APPLE INC",
-      "weight": 0.0489
-     },
-     {
-      "symbol": "AVGO",
-      "name": "BROADCOM INC",
-      "weight": 0.043
+      "weight": 0.0476
      },
      {
       "symbol": "LLY",
       "name": "ELI LILLY AND CO",
-      "weight": 0.041
+      "weight": 0.0472
+     },
+     {
+      "symbol": "MSFT",
+      "name": "MICROSOFT CORP",
+      "weight": 0.0469
+     },
+     {
+      "symbol": "AVGO",
+      "name": "BROADCOM INC",
+      "weight": 0.0376
      },
      {
       "symbol": "JPM",
       "name": "JPMORGAN CHASE & CO",
-      "weight": 0.039
+      "weight": 0.0373
      }
     ],
-    "holdingsCount": 343,
-    "asOf": "2026-11-13"
+    "holdingsCount": 303,
+    "asOf": "2026-11-20"
    }
   },
   "VNQ": {
@@ -10643,17 +10643,17 @@
     ],
     [
      "2026-11",
-     92.56
+     93.67
     ]
    ],
    "lastPrice": {
-    "close": 92.56,
-    "date": "2026-11-20"
+    "close": 93.67,
+    "date": "2026-11-23"
    },
-   "lastRefreshed": "2026-11-20",
+   "lastRefreshed": "2026-11-23",
    "fetched": {
-    "prices": "2026-11-21T04:15:54.967Z",
-    "profile": "2026-11-17T05:17:17.429Z"
+    "prices": "2026-11-24T07:05:44.142Z",
+    "profile": "2026-11-24T07:08:07.160Z"
    },
    "profile": {
     "ter": 0.0013,
@@ -10663,38 +10663,38 @@
     "sectors": [
      {
       "name": "REAL ESTATE",
-      "weight": 0.844
+      "weight": 0.848
      }
     ],
     "holdings": [
      {
       "symbol": "VRTPX",
       "name": "VANGUARD REAL ESTATE II INDEX",
-      "weight": 0.1451
+      "weight": 0.1456
      },
      {
       "symbol": "WELL",
       "name": "WELLTOWER INC",
-      "weight": 0.0912
+      "weight": 0.0892
      },
      {
       "symbol": "PLD",
       "name": "PROLOGIS INC",
-      "weight": 0.0686
+      "weight": 0.0649
      },
      {
       "symbol": "EQIX",
       "name": "EQUINIX INC",
-      "weight": 0.0565
+      "weight": 0.0544
      },
      {
       "symbol": "AMT",
       "name": "AMERICAN TOWER CORP",
-      "weight": 0.0432
+      "weight": 0.0476
      }
     ],
     "holdingsCount": 155,
-    "asOf": "2026-11-13"
+    "asOf": "2026-11-20"
    }
   },
   "GLD": {
@@ -11764,17 +11764,17 @@
     ],
     [
      "2026-11",
-     322.87
+     333.02
     ]
    ],
    "lastPrice": {
-    "close": 322.87,
-    "date": "2026-11-20"
+    "close": 333.02,
+    "date": "2026-11-23"
    },
-   "lastRefreshed": "2026-11-20",
+   "lastRefreshed": "2026-11-23",
    "fetched": {
-    "prices": "2026-11-21T04:16:07.974Z",
-    "profile": "2026-11-17T05:17:30.347Z"
+    "prices": "2026-11-24T07:05:57.082Z",
+    "profile": "2026-11-24T07:08:20.145Z"
    },
    "profile": {
     "ter": 0.004,
@@ -11784,7 +11784,7 @@
     "sectors": [],
     "holdings": [],
     "holdingsCount": 0,
-    "asOf": "2026-11-13"
+    "asOf": "2026-11-20"
    }
   },
   "AGG": {
@@ -12854,17 +12854,17 @@
     ],
     [
      "2026-11",
-     96.15
+     96.24
     ]
    ],
    "lastPrice": {
-    "close": 96.15,
-    "date": "2026-11-20"
+    "close": 96.24,
+    "date": "2026-11-23"
    },
-   "lastRefreshed": "2026-11-20",
+   "lastRefreshed": "2026-11-23",
    "fetched": {
-    "prices": "2026-11-21T04:13:44.915Z",
-    "profile": "2026-11-17T05:17:43.387Z"
+    "prices": "2026-11-24T07:03:34.075Z",
+    "profile": "2026-11-24T07:08:33.149Z"
    },
    "profile": {
     "ter": 0.0003,
@@ -12874,7 +12874,7 @@
     "sectors": [],
     "holdings": [],
     "holdingsCount": 0,
-    "asOf": "2026-11-13"
+    "asOf": "2026-11-20"
    }
   }
  },
