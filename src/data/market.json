@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-26T05:21:39.241Z",
+ "generatedAt": "2026-11-27T05:16:30.652Z",
  "sources": {
   "alphaVantage": {
    "name": "Alpha Vantage",
@@ -11,8 +11,8 @@
   }
  },
  "fx": {
-  "usdczk": 22.329,
-  "date": "2026-11-25",
+  "usdczk": 22.283,
+  "date": "2026-11-26",
   "monthly": {
    "2005-01": 23.118,
    "2005-02": 22.449,
@@ -276,7 +276,7 @@
    "2026-08": 20.8,
    "2026-09": 21.522,
    "2026-10": 21.814,
-   "2026-11": 22.329
+   "2026-11": 22.283
   },
   "source": "ČNB – kurzy devizového trhu",
   "sourceUrl": "https://www.cnb.cz/cs/financni-trhy/devizovy-trh/kurzy-devizoveho-trhu/kurzy-devizoveho-trhu/denni_kurz.txt"
@@ -1108,7 +1108,7 @@
    },
    "lastRefreshed": "2026-11-25",
    "fetched": {
-    "prices": "2026-11-26T05:21:54.668Z",
+    "prices": "2026-11-27T05:16:45.820Z",
     "profile": "2026-11-24T07:06:10.150Z"
    },
    "profile": {
@@ -2249,7 +2249,7 @@
    },
    "lastRefreshed": "2026-11-25",
    "fetched": {
-    "prices": "2026-11-26T05:22:07.628Z",
+    "prices": "2026-11-27T05:16:58.870Z",
     "profile": "2026-11-24T07:06:23.158Z"
    },
    "profile": {
@@ -3390,7 +3390,7 @@
    },
    "lastRefreshed": "2026-11-25",
    "fetched": {
-    "prices": "2026-11-26T05:22:20.627Z",
+    "prices": "2026-11-27T05:17:11.897Z",
     "profile": "2026-11-24T07:06:36.258Z"
    },
    "profile": {
@@ -4531,7 +4531,7 @@
    },
    "lastRefreshed": "2026-11-25",
    "fetched": {
-    "prices": "2026-11-26T05:22:33.705Z",
+    "prices": "2026-11-27T05:17:24.891Z",
     "profile": "2026-11-24T07:06:49.325Z"
    },
    "profile": {
@@ -5504,7 +5504,7 @@
    },
    "lastRefreshed": "2026-11-25",
    "fetched": {
-    "prices": "2026-11-26T05:22:46.597Z",
+    "prices": "2026-11-27T05:17:37.862Z",
     "profile": "2026-11-24T07:07:02.184Z"
    },
    "profile": {
@@ -6521,7 +6521,7 @@
    },
    "lastRefreshed": "2026-11-25",
    "fetched": {
-    "prices": "2026-11-26T05:22:59.581Z",
+    "prices": "2026-11-27T05:17:50.887Z",
     "profile": "2026-11-24T07:07:15.337Z"
    },
    "profile": {
@@ -7646,7 +7646,7 @@
    },
    "lastRefreshed": "2026-11-25",
    "fetched": {
-    "prices": "2026-11-26T05:23:12.750Z",
+    "prices": "2026-11-27T05:18:03.858Z",
     "profile": "2026-11-24T07:07:28.075Z"
    },
    "profile": {
@@ -8434,7 +8434,7 @@
    },
    "lastRefreshed": "2026-11-25",
    "fetched": {
-    "prices": "2026-11-26T05:23:25.721Z",
+    "prices": "2026-11-27T05:18:16.877Z",
     "profile": "2026-11-24T07:07:41.093Z"
    },
    "profile": {
@@ -9511,7 +9511,7 @@
    },
    "lastRefreshed": "2026-11-25",
    "fetched": {
-    "prices": "2026-11-26T05:23:38.744Z",
+    "prices": "2026-11-27T05:18:29.942Z",
     "profile": "2026-11-24T07:07:54.169Z"
    },
    "profile": {
@@ -10652,7 +10652,7 @@
    },
    "lastRefreshed": "2026-11-25",
    "fetched": {
-    "prices": "2026-11-26T05:23:51.713Z",
+    "prices": "2026-11-27T05:18:42.929Z",
     "profile": "2026-11-24T07:08:07.160Z"
    },
    "profile": {
@@ -11773,7 +11773,7 @@
    },
    "lastRefreshed": "2026-11-25",
    "fetched": {
-    "prices": "2026-11-26T05:24:04.755Z",
+    "prices": "2026-11-27T05:18:55.899Z",
     "profile": "2026-11-24T07:08:20.145Z"
    },
    "profile": {
@@ -12863,7 +12863,7 @@
    },
    "lastRefreshed": "2026-11-25",
    "fetched": {
-    "prices": "2026-11-26T05:21:41.711Z",
+    "prices": "2026-11-27T05:16:32.857Z",
     "profile": "2026-11-24T07:08:33.149Z"
    },
    "profile": {
